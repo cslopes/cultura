@@ -1,0 +1,98 @@
+<?php echo $this->render('header.phtml'); ?>
+<?php echo $this->render('menu-evento.phtml'); ?>
+
+<script type="text/javascript">
+       dojo.require("dijit.form.Form");
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.NumberTextBox");
+       dojo.require("dijit.form.DateTextBox");
+       dojo.require("dijit.form.FilteringSelect");
+       dojo.require("dijit.form.ComboBox");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div><br />
+<?php endif; ?>
+
+<!-- div class="help" id="helpPrograma">
+<p>Um programa é caracterizado por consistir em  um conjunto articulado de eventos e outras ações
+de extensão como eventos, eventos e prestação de serviços, tendo como base sempre a tríplice coluna
+extensão, pesquisa, e ensino. Tendo caráter  orgânico-institucional, clareza de diretrizes e orientação
+para um  objetivo comum, sendo executado a longo e médio prazo.</p>
+</div-->
+
+<form id="geralForm" action="<?php echo $this->baseUrl ?>/evento/geral" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->evento->id ?>" />
+	
+<p>	
+	<label for="idAreaTematica">Área Temática:</label>
+	<select name="idAreaTematica" dojoType="dijit.form.FilteringSelect">
+	<?php foreach($this->areasTematicas as $areaTematica) : ?>
+		<option value="<?php echo $areaTematica->id ?>"
+		<?php if($this->evento->idAreaTematica == $areaTematica->id) : ?>
+			selected="selected"<?php endif; ?>
+			><?php echo $areaTematica->nome ?></option>			
+	<?php endforeach; ?>
+	</select>
+</p>
+
+<p>
+	<label for="especie">Espécie:</label>
+	<select name="especie" dojoType="dijit.form.ComboBox" value="<?php echo $this->escape($this->evento->especie) ?>">
+		<option>Congresso</option>
+		<option>Semana</option>
+		<option>Fórum</option>
+	</select>
+</p>
+
+<p>
+	<label for="carater">Caráter:</label>
+	<select name="carater" dojoType="dijit.form.FilteringSelect" value="<?php echo $this->escape($this->evento->carater) ?>">
+		<option value="<?php echo Evento::CARATER_LOCAL ?>"><?php echo Evento::CARATER_LOCAL ?></option>
+		<option value="<?php echo Evento::CARATER_REGIONAL ?>"><?php echo Evento::CARATER_REGIONAL ?></option>
+		<option value="<?php echo Evento::CARATER_NACIONAL ?>"><?php echo Evento::CARATER_NACIONAL ?></option>
+		<option value="<?php echo Evento::CARATER_INTERNACIONAL ?>"><?php echo Evento::CARATER_INTERNACIONAL ?></option>
+	</select>
+</p>
+
+<p>
+	<label for="dataInicio">Data de Início:</label>
+	<input name="dataInicio" type="text" size="10" value="<?php echo $this->evento->dataInicio ?>" dojoType="dijit.form.DateTextBox" /><br />
+</p>
+
+<p id="dataFinalP">	
+	<label for="dataFinal">Data Final:</label>
+	<input id="dataFinal" name="dataFinal" type="text" size="10" value="<?php echo $this->evento->dataFinal ?>" dojoType="dijit.form.DateTextBox" /><br />
+</p>
+
+<p>
+	<label for="horario">Horario:</label>
+	<input name="horario" type="text" size="255" dojoType="dijit.form.TextBox" value="<?php echo $this->escape($this->evento->horario) ?>" />
+</p>
+
+<p>
+	<label for="cargaHoraria">Carga horária:</label>
+	<input name="cargaHoraria" type="text" dojoType="dijit.form.NumberTextBox" value="<?php echo $this->evento->cargaHoraria ?>"
+			constraints="{min:0,places:0}"
+			promptMessage="Entre a carga horária do evento"
+			invalidMessage="Valor inválido." />
+</p>
+
+<p>
+	<label for="local">Local:</label>
+	<input name="local" type="text" dojoType="dijit.form.TextBox" value="<?php echo $this->escape($this->evento->local) ?>" />
+</p>
+
+<p>	
+	<input name="button" type="submit" value="Salvar" />
+	<input name="button" type="submit" value="Proximo" />
+</p>
+</form>
+
+
+
+<?php echo $this->render('footer.phtml'); ?>

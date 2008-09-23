@@ -1,0 +1,56 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<div id="listaEventos">
+
+<?php if(count($this->eventos) == 0) : ?>
+Não existem eventos salvos.
+
+<?php else : ?>
+<table border="1" width="580px" class="tabela">
+	<thead>
+		<th width="50%"></th>
+		<th>Nome</th>
+	</thead>
+	<tbody>
+<?php if(count($this->eventos) == 0) echo 'Não existem eventos salvos.' ?>
+<?php foreach ($this->eventos as $evento) : ?>
+	<tr>
+		<td align="center">
+			<form action="<?php echo $this->baseUrl ?>/evento/rename" method="get" style="display: inline">
+				<input type="hidden" name="id" value="<?php echo $evento->id ?>" />
+				<button class="renameButton">Renomear</button>
+			</form>
+			<?php if($evento->idAreaTematica) : ?>
+				<?php if($evento->fechado) : ?>
+				<form action="<?php echo $this->baseUrl ?>/evento/imprimirFormulario" method="get" style="display:inline">
+					<input type="hidden" name="id" value="<?php echo $evento->id ?>"/>
+					<button class="printButton">Imprimir</button>
+				</form>
+				<?php else : ?>
+				<form action="<?php echo $this->baseUrl ?>/evento/fechar" method="get" style="display:inline">
+					<input type="hidden" name="id" value="<?php echo $evento->id ?>"/>
+					<button class="closeButton">Concluir</button>
+				</form>
+				<?php endif; ?>
+			<?php endif; ?>
+			<form action="<?php echo $this->baseUrl ?>/evento/del" method="get" style="display: inline">
+				<input type="hidden" name="id" value="<?php echo $evento->id?>"/>
+				<button class="deleteButton">Apagar</button>
+			</form>
+		</td>
+		<td>
+			<?php if(!$evento->fechado) : ?>
+				<a href="<?php echo $this->baseUrl ?>/evento/geral/id/<?php echo $evento->id?>"><?php echo $evento->titulo?></a>
+			<?php else : ?>
+				<?php echo $evento->titulo ?>
+			<?php endif; ?>
+		</td>
+	</tr>
+<?php endforeach; ?>
+	</tbody>
+</table>
+
+<?php endif; ?>
+	
+</div>
+<?php echo $this->render('footer.phtml'); ?>

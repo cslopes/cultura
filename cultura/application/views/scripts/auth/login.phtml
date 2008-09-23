@@ -1,0 +1,25 @@
+<?php echo $this->render('header_no_menu.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<?php if(!empty($this->message)) :?>
+<div id="message">
+<?php echo $this->escape($this->message);?>
+</div>
+<?php endif; ?>
+
+<form name="form1" action="login" method="post">
+<div>
+    <label for="uid">SIAPE</label>
+    <input type="text" name="uid"/>
+</div>
+<div>
+    <label for="pwd">Senha do SIGA</label>
+    <input type="password" name="pwd"/>
+</div><br />
+<input type="hidden" name="hash" value="" />
+<div id="formbutton">
+<input type="submit" name="login" value="Login" />
+</div>
+</form>
+
+<?php echo $this->render('footer.phtml'); ?>

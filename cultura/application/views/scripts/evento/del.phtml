@@ -1,0 +1,18 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<?php if ($this->evento) :?>
+<form action="<?php echo $this->baseUrl ?>/evento/del" method="post">
+	<input type="hidden" name="id" value="<?php echo $this->evento->id?>" />
+	<p>Tem certeza que deseja apagar o evento 
+		'<?php echo $this->escape($this->evento->titulo); ?>'?</p>
+	<div>
+		<input type="hidden" name="idRecursos" value="<?php echo $this->evento->idRecursos; ?>" />
+		<input type="submit" name="del" value="Yes" />
+		<input type="submit" name="del" value="No" />
+	</div>
+</form>
+<?php else: ?>
+<p>Evento não encontrado.</p>
+<?php echo $this->error ?>
+<?php endif;?>
+<?php echo $this->render('footer.phtml'); ?>

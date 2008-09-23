@@ -1,0 +1,30 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<div>
+
+<?php if(count($this->eventos) == 0) : ?>
+	<p>Não existem eventos salvos.</p>
+<?php else : ?>
+<table border="1" width="580px" class="tabela">
+	<thead>
+		<tr>
+			<th>Título</th>
+			<th>Unidade</th>
+			<th width="27%">Modificado Em</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($this->eventos as $evento) : ?>
+		<tr>
+			<td><a href="<?php echo $this->baseUrl ?>/admin/evento/detail/id/<?php echo $evento->id?>"><?php echo $evento->titulo?></a></td>
+			<td><?php echo $evento->findParentCoordenador()->findParentDepartamento()->findParentUnidade()->nome ?></td>
+			<td><?php echo date_format(date_create($evento->modificadoEm), "d/m/Y - H:i:s")  ?></td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>	
+<?php endif; ?>
+
+</div>
+<?php echo $this->render('footer.phtml'); ?>

@@ -1,0 +1,32 @@
+<script>
+       dojo.require("dijit.form.TextBox");
+</script>
+
+<?php echo $this->debug ?>
+
+<form method="post" id="formDepartamento">
+<input name="id" type="hidden" value="<?php echo $this->model->id ?>" />
+
+<div id="errors">
+<?php if($this->errors) : ?>
+	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+<?php endif; ?>
+</div><br />
+
+<p>	<label>Unidade:</label>
+	<select name="idUnidade" id="idUnidade">
+		<option>Selecione...</option>
+	<?php foreach ($this->unidadeList as $unidade) : ?>
+		<option value="<?php echo $unidade->id ?>"
+		<?php if($unidade->id == $this->model->idUnidade) : ?>
+			selected="selected"
+		<?php endif; ?>	
+		><?php echo $unidade->nome ?></option>
+	<?php endforeach; ?>
+	</select></p>
+
+<p>
+	<label for="nome">Nome:</label>
+	<input type="text" id="nome" name="nome" maxlength="255" dojoType="dijit.form.TextBox" required="true"
+		   value="<?php echo $this->escape($this->model->nome) ?>" />
+</p>

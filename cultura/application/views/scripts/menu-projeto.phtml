@@ -1,0 +1,11 @@
+<h2>Projeto: <?php echo $this->projeto->titulo ?></h2>
+
+<div id="projetoMenu">
+	<ul>
+		<li><a href="<?php echo $this->baseUrl?>/projeto/geral/id/<?php echo $this->projeto->id ?>">Geral</a></li>
+		<li><a href="<?php echo $this->baseUrl?>/projeto/equipe/id/<?php echo $this->projeto->id ?>">Equipe</a></li>
+		<li><a href="<?php echo $this->baseUrl?>/projeto/parceiros/id/<?php echo $this->projeto->id ?>">Parceiros</a></li>
+		<li><a href="<?php echo $this->baseUrl?>/projeto/descricao/id/<?php echo $this->projeto->id ?>">Descrição</a></li>
+		<li><a href="<?php echo $this->baseUrl?>/projeto/recursos/id/<?php echo $this->projeto->id ?>">Recursos</a></li>
+	</ul>
+</div>

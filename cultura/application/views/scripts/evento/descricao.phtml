@@ -1,0 +1,117 @@
+<?php echo $this->render('header.phtml'); ?>
+<?php echo $this->render('menu-evento.phtml'); ?>
+
+<script>
+       dojo.require("dijit.form.Textarea");
+       dojo.require("dijit.form.NumberSpinner");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div><br />
+<?php endif; ?>
+
+<form id="formDescricao" action="<?php echo $this->baseUrl ?>/evento/descricao" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->evento->id ?>" />
+	
+<!-- div id="helpFundamento" class="help">
+<p>Descrição referenciada que demonstre claramente que o evento está inserido dentro da proposta de indissociabilidade dos
+parâmetros de Ensino, Pesquisa, Extensão.</p>
+</div-->
+<div>
+	<label for="publicoAlvo">Público alvo:</label>
+	<!-- img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpFundamento', true)"  onmouseout="javascript:setVisible('helpFundamento', false)"/--><br />
+	<textarea name="publicoAlvo" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->evento->publicoAlvo) ?>
+    </textarea>
+</div><br />
+
+<div>
+	<label for="expectativaPublico">Expectativa de público:</label>
+	<input name="expectativaPublico" dojoType="dijit.form.NumberSpinner"
+                value="<?php echo $this->evento->expectativaPublico ?>"
+                constraints="{min:0,places:0}"
+                maxlength="20"> pessoas.
+</div><br />
+
+<fieldset id="pessoasEnvolvidas">
+<legend>Pessoas envolvidas</legend>
+<div>
+	<label for="docentesEnvolvidos">Docentes:</label>
+	<input name="docentesEnvolvidos" dojoType="dijit.form.NumberSpinner"
+                value="<?php echo $this->evento->docentesEnvolvidos ?>"
+                constraints="{min:0,max:200,places:0}"
+                maxlength="20"> pessoas.
+</div>
+
+<div>
+	<label for="bolsistasGraduacaoEnvolvidos">Bolsistas da graduação:</label>
+	<input name="bolsistasGraduacaoEnvolvidos" dojoType="dijit.form.NumberSpinner"
+                value="<?php echo $this->evento->bolsistasGraduacaoEnvolvidos ?>"
+                constraints="{min:0,max:200,places:0}"
+                maxlength="20"> pessoas.
+</div>
+
+<div>
+	<label for="bolsistasPosGraduacaoEnvolvidos">Bolsistas da pós-graduação:</label>
+	<input name="bolsistasPosGraduacaoEnvolvidos" dojoType="dijit.form.NumberSpinner"
+                value="<?php echo $this->evento->bolsistasPosGraduacaoEnvolvidos ?>"
+                constraints="{min:0,max:200,places:0}"
+                maxlength="20"> pessoas.
+</div>
+
+<div>
+	<label for="voluntariosEnvolvidos">Voluntários:</label>
+	<input name="voluntariosEnvolvidos" dojoType="dijit.form.NumberSpinner"
+                value="<?php echo $this->evento->voluntariosEnvolvidos ?>"
+                constraints="{min:0,max:200,places:0}"
+                maxlength="20"> pessoas.
+</div>
+
+<div>
+	<label for="tecnicosEnvolvidos">Técnicos:</label>
+	<input name="tecnicosEnvolvidos" dojoType="dijit.form.NumberSpinner"
+                value="<?php echo $this->evento->tecnicosEnvolvidos ?>"
+                constraints="{min:0,max:200,places:0}"
+                maxlength="20"> pessoas.
+</div>
+
+<div>
+	<label for="comunidadeEnvolvida">Comunidade:</label>
+	<input name="comunidadeEnvolvida" dojoType="dijit.form.NumberSpinner"
+                value="<?php echo $this->evento->comunidadeEnvolvida ?>"
+                constraints="{min:0,max:200,places:0}"
+                maxlength="20"> pessoas.
+</div>
+</fieldset><br />
+
+<div>
+	<label for="objetivos">Objetivos:</label><br />
+	<textarea name="objetivos" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->evento->objetivos) ?>
+    </textarea>
+</div><br />
+
+<div id="helpResumo" class="help">
+<p>O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e o público alvo que permitam uma
+melhor visualização do evento , além do local de realização, horários de atendimento ou de execução do evento,  telefone  de
+secretaria  ou  do serviço  (se for  o caso). Este  resumo será  divulgado na  página da UFJF  e, portanto, o texto deverá ser
+revisado e é de responsabilidade do coordenador.</p>
+</div>
+<div>
+	<label for="resumo">Resumo:</label>
+	<br />
+	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->evento->resumo) ?>
+    </textarea>
+</div><br />
+
+<div>	
+	<input name="button" type="submit" value="Salvar" />
+	<input name="button" type="submit" value="Proximo" />
+</div>
+</form>
+<?php echo $this->render('footer.phtml'); ?>

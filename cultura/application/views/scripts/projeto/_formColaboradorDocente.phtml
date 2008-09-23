@@ -1,0 +1,88 @@
+<script>
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.FilteringSelect");
+       dojo.require("dijit.form.Button");
+       dojo.require("dijit.form.ValidationTextBox");
+       dojo.require("dijit.form.NumberTextBox");
+</script>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div><br />
+<?php endif; ?>
+
+<form action="<?php echo $this->action ?>" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->idProjeto ?>" />
+	<?php if($this->colaboradorDocente) : ?>
+	<input name="idColaboradorDocente" type="hidden" value="<?php echo $this->colaboradorDocente->id ?>" />
+	<?php endif; ?>
+	
+<div>
+	<label for="nome">Nome:</label>
+	<input type="text" name="nome" maxlength="255" dojoType="dijit.form.TextBox" required="true" value="<?php echo $this->escape($this->colaboradorDocente->nome)?>" />
+</div>
+
+<div>
+	<label for="siape">SIAPE:</label>
+	<input type="text" name="siape" maxlength="7" dojoType="dijit.form.TextBox" required="true" value="<?php echo $this->escape($this->colaboradorDocente->siape)?>" />
+</div>
+
+<div>	
+	<label for="idDepartamento">Departamento:</label>
+	<select name="idDepartamento" dojoType="dijit.form.FilteringSelect">
+	<?php foreach($this->departamentos as $departamento) : ?>
+		<option value="<?php echo $departamento->id ?>"
+		<?php if($departamento->id == $this->colaboradorDocente->idDepartamento) : ?>
+			selected="selected" 
+		<?php endif ?>
+		><?php echo $departamento->nome ?></option>			
+	<?php endforeach; ?>
+	</select>
+</div>
+
+<div>
+	<label for="email">Email:</label>
+	<input type="text" name="email" maxlength="255"	dojoType="dijit.form.ValidationTextBox"
+                regExp="^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})"
+				promptMessage="Digite um e-mail válido"
+                required="true"
+                invalidMessage="E-mail inválido"
+                value="<?php echo $this->escape($this->colaboradorDocente->email)?>" />
+</div>
+
+<div>
+	<label for="nome">Telefone:</label>
+	<input type="text" name="telefone" maxlength="13" dojoType="dijit.form.ValidationTextBox"
+                regExp="\([1-9]\d{1}\)\d{4}-\d{4}"
+				promptMessage="Digite um telefone no formato '(XX)XXXX-XXXX'"
+                required="true"
+                invalidMessage="Telefone inválido"
+                value="<?php echo $this->escape($this->colaboradorDocente->telefone)?>" />
+</div>
+
+<div>
+	<label for="nome">Celular:</label>
+	<input type="text" name="celular" maxlength="13" dojoType="dijit.form.ValidationTextBox"
+                regExp="\([1-9]\d{1}\)\d{4}-\d{4}"
+				promptMessage="Digite um celular no formato '(XX)XXXX-XXXX'"
+                required="false"
+                invalidMessage="Telefone inválido"
+                value="<?php echo $this->escape($this->colaboradorDocente->celular)?>" />
+</div>
+
+<div>
+	<label for="cargaHorariaSemanal">Carga horária semanal</label>
+	<input name="cargaHorariaSemanal" type="text" dojoType="dijit.form.NumberTextBox"
+                constraints="{min:0,max:44,places:0}"
+                promptMessage= "Digite a carga horária semanal"
+                required= "true"
+                invalidMessage= "Valor inválido"
+                value="<?php echo $this->escape($this->colaboradorDocente->cargaHorariaSemanal) ?>">
+</div>
+
+<div>	
+	<button type="button" onclick="history.go(-1)">Voltar</button>
+	<input name="button" type="submit" value="Salvar" />
+</div>
+</form>

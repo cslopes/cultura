@@ -1,0 +1,278 @@
+<?php echo $this->render('header.phtml'); ?>
+<?php echo $this->render('menu-evento.phtml'); ?>
+
+<script>
+	dojo.require("dijit.form.TextBox");
+    dojo.require("dijit.form.NumberTextBox");
+    dojo.require("dijit.form.ValidationTextBox");
+    dojo.require("dijit.form.CheckBox");
+    dojo.require("dijit.TitlePane");
+       
+    var total;
+    var subtotal;
+    var valor; 
+    var diaria;
+    var passagem;
+	var alimentacao;
+	var bolsa;
+	var pagamentoCoordenador;
+	var pagamentoEquipe;
+	var pagamentoPJ;
+	var pagamentoPF;
+	var equipamentos;
+	var material;
+    
+    dojo.addOnLoad(
+    	function(){
+        	valor = dijit.byId('recursosExternosValor');
+        	diaria = dijit.byId('diariaExterno');
+			passagem = dijit.byId('passagemExterno');
+			alimentacao = dijit.byId('alimentacaoExterno');
+			bolsaDiscente = dijit.byId('bolsaDiscente');
+			pagamentoCoordenador = dijit.byId('pagamentoCoordenador');
+			pagamentoEquipe = dijit.byId('pagamentoEquipe');
+			pagamentoPJ = dijit.byId('pagamentoPJExterno');
+			pagamentoPF = dijit.byId('pagamentoPFExterno');
+			equipamentos = dijit.byId('equipamentos');
+			material = dijit.byId('material');
+			<?php if($this->recursos->id) : ?>
+			dojo.byId("recursosPane").style.display = "block";	
+			<?php endif; ?>
+			atualizaValores();
+    	}
+	);
+	
+	function atualizaValores() {
+		taxaFundacao = valor.getValue() * 0.05;
+		taxaFomento = valor.getValue() * 0.066;
+		taxaUnidade = valor.getValue() * 0.034;
+		dojo.byId('taxaFundacao').innerHTML = taxaFundacao;
+		dojo.byId('taxaFomento').innerHTML = taxaFomento;
+		dojo.byId('taxaUnidade').innerHTML = taxaUnidade;
+		
+		diariaValor = diaria.getValue() > 0 ? diaria.getValue() : 0;
+		passagemValor = passagem.getValue() > 0 ? passagem.getValue() : 0;
+		alimentacaoValor = alimentacao.getValue() > 0 ? alimentacao.getValue() : 0;
+		bolsaDiscenteValor = bolsaDiscente.getValue() > 0 ? bolsaDiscente.getValue() : 0;
+		pagamentoCoordenadorValor = pagamentoCoordenador.getValue() > 0 ? pagamentoCoordenador.getValue() : 0;
+		pagamentoEquipeValor = pagamentoEquipe.getValue() > 0 ? pagamentoEquipe.getValue() : 0;
+		pagamentoPJValor = pagamentoPJ.getValue() > 0 ? pagamentoPJ.getValue() : 0;
+		pagamentoPFValor = pagamentoPF.getValue() > 0 ? pagamentoPF.getValue() : 0;
+		equipamentosValor = equipamentos.getValue() > 0 ? equipamentos.getValue() : 0;
+		materialValor = material.getValue() > 0 ? material.getValue() : 0;
+		
+		subtotal = diariaValor + passagemValor + alimentacaoValor + bolsaDiscenteValor + 
+				   pagamentoCoordenadorValor + pagamentoEquipeValor + pagamentoPJValor +
+				   pagamentoPFValor + equipamentosValor + materialValor;
+				   
+		total = subtotal + taxaFundacao + taxaFomento + taxaUnidade
+						  
+		if(subtotal > valor.getValue() - (taxaFundacao + taxaFomento + taxaUnidade))
+			dojo.byId('subtotal').style.color = 'red';
+		else
+			dojo.byId('subtotal').style.color = 'black';
+		
+		if(total > valor.getValue())
+			dojo.byId('total').style.color = 'red';
+		else
+			dojo.byId('total').style.color = 'black';
+		
+		dojo.byId('subtotal').innerHTML = subtotal;
+		dojo.byId('total').innerHTML = total;
+	}
+	
+	function possuiRecursos(b) {
+ 			if (b) {
+ 				dojo.byId("recursosPane").style.display = "block";
+ 			} else {
+ 				dojo.byId("recursosPane").style.display = "none";
+ 			}
+ 		}
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+<form id="formRecursos" action="<?php echo $this->baseUrl ?>/evento/recursos" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->evento->id ?>" />
+	
+<p>Possui recursos externos?
+<input name="possuiRecursos" id="sim" type="radio" value="1" dojoType="dijit.form.RadioButton"
+	<?php if($this->recursos->id) : ?>
+		checked="checked"
+	<?php endif; ?> onchange="possuiRecursos(true)" />
+	<label for="sim" class="none"> Sim </label>
+<input name="possuiRecursos" id="nao" type="radio" value="0" dojoType="dijit.form.RadioButton"
+	<?php if(!$this->recursos->id) : ?>
+		checked="checked"
+	<?php endif; ?> onchange="possuiRecursos(false)" />
+	<label for="nao" class="none"> Não </label>
+</p>	
+	
+<div id="recursosPane" dojoType="dijit.TitlePane" title="Planilha de recursos" open="true">
+
+<div>
+	<label for="gestora">Fundação gestora:</label>
+	<input name="gestora" type="text" size="255" value="<?php echo $this->recursos->gestora ?>" dojoType="dijit.form.TextBox" />
+</div>
+<div>
+	<label for="ano">Ano*:</label>
+	<input name="ano" type="text" maxlength="4" regExp="\d{4}" value="<?php echo $this->recursos->ano ?>" dojoType="dijit.form.ValidationTextBox" />
+</div><br />	
+<div>
+	<table>
+		<thead>
+		<tr>
+			<th colspan="3">Previsão da receita</th>
+		<tr>
+			<th></th>
+			<th>Fonte</th>
+			<th>R$</th>
+		</tr>
+		</thead>
+		<tbody>
+		<!-- tr>
+			<th>Recursos da UFJF (exceto bolsa de extensão)</th>
+			<td><input name="recursosUfjfFonte" type="text" value="<?php /*echo $this->recursos->recursosUfjfFonte ?>" dojoType="dijit.form.TextBox" /></td>
+			<td><input name="recursosUfjfValor" type="text" value="<?php echo $this->recursos->recursosUfjfValor */?>" dojoType="dijit.form.NumberTextBox" /></td>
+		</tr-->
+		<tr>
+			<th width="128px">Recursos externos</th>
+			<td><input name="recursosExternosFonte" type="text" value="<?php echo $this->recursos->recursosExternosFonte ?>" dojoType="dijit.form.TextBox" /></td>
+			<td><input id="recursosExternosValor" name="recursosExternosValor"
+			 		type="text" value="<?php echo $this->recursos->recursosExternosValor ?>"
+			 		dojoType="dijit.form.NumberTextBox"
+			 		constraints="{min:0}"
+			 		onchange="atualizaValores()" /></td>
+		</tr>
+		</tbody>
+	</table>
+</div><br />
+<div>
+	<table>
+		<thead>
+		<tr>
+			<th colspan="2">Elementos de despesas</th>
+			<!-- th>UFJF (R$)</th>
+			<th>Externos</th-->
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<th width="337">Diárias</th>
+			<!-- td><input name="diariaUfjf" type="text" value="<?php// echo $this->recursos->diariaUfjf ?>" dojoType="dijit.form.NumberTextBox" /></td-->
+			<td><input id="diariaExterno" name="diariaExterno" type="text"
+					value="<?php echo $this->recursos->diariaExterno ?>"
+					dojoType="dijit.form.NumberTextBox" size="2" width="2"
+					onkeyup="atualizaValores()" /></td>
+		</tr>
+		<tr>
+			<th>Passagens / locomoção</th>
+			<!-- td><input name="passagemUfjf" type="text" value="<?php// echo $this->recursos->passagemUfjf ?>" dojoType="dijit.form.NumberTextBox" /></td-->
+			<td><input id="passagemExterno" name="passagemExterno" type="text"
+					value="<?php echo $this->recursos->passagemExterno ?>" 
+					dojoType="dijit.form.NumberTextBox"
+					onkeyup="atualizaValores()" /></td>
+		</tr>
+		<tr>
+			<th>Alimentação</th>
+			<!-- td><input name="alimentacaoUfjf" type="text" value="<?php// echo $this->recursos->alimentacaoUfjf ?>" dojoType="dijit.form.NumberTextBox" /></td-->
+			<td><input id="alimentacaoExterno" name="alimentacaoExterno" type="text" 
+					value="<?php echo $this->recursos->alimentacaoExterno ?>" 
+					dojoType="dijit.form.NumberTextBox"
+					onkeyup="atualizaValores()" /></td>
+		</tr>
+		<tr>
+			<th>Bolsas para discentes</th>
+			<!-- td></td-->
+			<td><input id="bolsaDiscente" name="bolsaDiscente" type="text"
+					value="<?php echo $this->recursos->bolsaDiscente ?>" 
+					dojoType="dijit.form.NumberTextBox"
+					onkeyup="atualizaValores()" /></td>
+		</tr>
+		<tr>
+			<th>Pagamento do coordenador</th>
+			<!-- td></td-->
+			<td><input id="pagamentoCoordenador" name="pagamentoCoordenador" type="text" 
+					value="<?php echo $this->recursos->pagamentoCoordenador ?>" 
+					dojoType="dijit.form.NumberTextBox"
+					onkeyup="atualizaValores()" /></td>
+		</tr>
+		<tr>
+			<th>Pagamento da equipe (UFJF)</th>
+			<!-- td></td-->
+			<td><input id="pagamentoEquipe" name="pagamentoEquipe" type="text"
+					value="<?php echo $this->recursos->pagamentoEquipe ?>" 
+					dojoType="dijit.form.NumberTextBox"
+					onkeyup="atualizaValores()" /></td>
+		</tr>
+		<tr>
+			<th>Pagamento de Pessoa Jurídica</th>
+			<!-- td><input name="pagamentoPJUfjf" type="text" value="<?php// echo $this->recursos->pagamentoPJUfjf ?>" dojoType="dijit.form.NumberTextBox" /></td-->
+			<td><input id="pagamentoPJExterno" name="pagamentoPJExterno" type="text" 
+					value="<?php echo $this->recursos->pagamentoPJExterno ?>" 
+					dojoType="dijit.form.NumberTextBox"
+					onkeyup="atualizaValores()" /></td>
+		</tr>
+		<tr>
+			<th>Pagamento de Pessoas Física</th>
+			<!-- td><input name="pagamentoPFUfjf" type="text" value="<?php// echo $this->recursos->pagamentoPFUfjf ?>" dojoType="dijit.form.NumberTextBox" /></td-->
+			<td><input id="pagamentoPFExterno" name="pagamentoPFExterno" type="text"
+					value="<?php echo $this->recursos->pagamentoPFExterno ?>" 
+					dojoType="dijit.form.NumberTextBox"
+					onkeyup="atualizaValores()" /></td>
+		</tr>
+		<tr>
+			<th>Equipamentos / Material permanente</th>
+			<!-- td></td-->
+			<td><input id="equipamentos" name="equipamentos" type="text" 
+					value="<?php echo $this->recursos->equipamentos ?>" 
+					dojoType="dijit.form.NumberTextBox"
+					onkeyup="atualizaValores()" /></td>
+		</tr>
+		<tr>
+			<th>Material de consumo</th>
+			<!-- td></td-->
+			<td><input id="material" name="material" type="text" 
+					value="<?php echo $this->recursos->material ?>" 
+					dojoType="dijit.form.NumberTextBox"
+					onkeyup="atualizaValores()" /></td>
+		</tr>
+		<tr>
+			<th><b>Subtotal<b></th>
+			<!-- td></td-->
+			<td id="subtotal" style="font-weight: bold"></td>
+		</tr>
+		<tr>
+			<th>Taxa fundo de fomento UFJF 6,6%<br />(Resolução 07/2000 - UFJF)</th>
+			<!-- td></td-->
+			<td id="taxaFomento"></td>
+		</tr>
+		<tr>
+			<th>Taxa Unidade 3,4%<br />(Resolução 07/2000 - UFJF)</th>
+			<!-- td></td-->
+			<td id="taxaUnidade"></td>
+		</tr>
+		<tr>
+			<th>Taxas fundação 5%</th>
+			<!-- td></td-->
+			<td id="taxaFundacao"></td>
+		</tr>
+		<tr>
+			<th><b>Total<b></th>
+			<!-- td></td-->
+			<td id="total" style="font-weight: bold"></td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+</div>
+<br />
+<p>	
+	<input name="button" type="submit" value="Salvar" />
+<?php if($this->salvo) : ?>
+	<button type="button" onclick="window.location.href='http://' + window.location.hostname + '<?php echo $this->baseUrl ?>/Index/listEventos'" >Imprimir</button>
+<?php endif; ?>
+</p>
+
+</form>
+<?php echo $this->render('footer.phtml'); ?>

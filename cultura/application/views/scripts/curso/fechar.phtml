@@ -1,0 +1,20 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<?php if ($this->curso) :?>
+<form action="<?php echo $this->baseUrl ?>/curso/fechar" method="post" style="width: 580px">
+	<input type="hidden" name="id" value="<?php echo $this->curso->id?>" />
+	<p>Tem certeza que deseja concluir o curso 
+		'<?php echo $this->escape($this->curso->titulo); ?>'?</p>
+	<p class="atencao">Se você concluir o curso não poderá modificá-lo mais, deverá imprimir o formulário gerado e encaminhá-lo à PROEXC depois
+	das devidas aprovações.</p>
+	<div>
+		<input type="hidden" name="idRecursos" value="<?php echo $this->curso->idRecursos; ?>" />
+		<button name="fecha" value="Yes">Sim</button>
+		<button name="fecha" value="No">Não</button>
+	</div>
+</form>
+<?php else: ?>
+<p>Curso não encontrado.</p>
+<?php echo $this->error ?>
+<?php endif;?>
+<?php echo $this->render('footer.phtml'); ?>

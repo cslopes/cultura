@@ -1,0 +1,18 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<?php if ($this->curso) :?>
+<form action="<?php echo $this->baseUrl ?>/curso/del" method="post">
+	<input type="hidden" name="id" value="<?php echo $this->curso->id?>" />
+	<p>Tem certeza que deseja apagar o curso 
+		'<?php echo $this->escape($this->curso->titulo); ?>'?</p>
+	<div>
+		<input type="hidden" name="idRecursos" value="<?php echo $this->curso->idRecursos; ?>" />
+		<input type="submit" name="del" value="Yes" />
+		<input type="submit" name="del" value="No" />
+	</div>
+</form>
+<?php else: ?>
+<p>Curso não encontrado.</p>
+<?php echo $this->error ?>
+<?php endif;?>
+<?php echo $this->render('footer.phtml'); ?>

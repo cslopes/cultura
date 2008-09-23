@@ -1,0 +1,108 @@
+<script>
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.FilteringSelect");
+       dojo.require("dijit.form.Button");
+       dojo.require("dijit.form.ValidationTextBox");
+       dojo.require("dijit.form.NumberTextBox");
+</script>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div><br />
+<?php endif; ?>
+
+<div class="help" id="helpTelefone">
+<p>Servirá para comunicação da PROEXC com o técnico. Não será disponibilizado publicamente.</p>
+</div>
+
+<div class="help" id="helpTelefonePublico">
+<p>Telefone que será disponibilizado publicamente no site da UFJF, ou em caso de eventual divulgação.</p>
+</div>
+
+<form action="<?php echo $this->action ?>" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->idProjeto ?>" />
+	<?php if($this->tecnico) : ?>
+	<input name="idTecnico" type="hidden" value="<?php echo $this->tecnico->id ?>" />
+	<?php endif; ?>
+	
+<p>
+	<label for="nome">Nome:</label>
+	<input type="text" name="nome" maxlength="255" dojoType="dijit.form.TextBox" required="true" value="<?php echo $this->escape($this->tecnico->nome)?>" />
+</p>
+
+<p>
+	<label for="siape">SIAPE:</label>
+	<input type="text" name="siape" maxlength="7" dojoType="dijit.form.TextBox" required="true" value="<?php echo $this->escape($this->tecnico->siape)?>" />
+</p>
+
+<p>	
+	<label for="idDepartamento">Departamento/Setor:</label>
+	<select name="idDepartamento" dojoType="dijit.form.FilteringSelect">
+	<?php foreach($this->departamentos as $departamento) : ?>
+		<option value="<?php echo $departamento->id ?>"
+		<?php if($departamento->id == $this->tecnico->idDepartamento) : ?>
+			selected="selected" 
+		<?php endif ?>
+		><?php echo $departamento->nome ?></option>			
+	<?php endforeach; ?>
+	</select>
+</p>
+
+<p>
+	<label for="email">Email:</label>
+	<input type="text" name="email" maxlength="255"	dojoType="dijit.form.ValidationTextBox"
+                regExp="^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})"
+				promptMessage="Digite um e-mail válido"
+                required="true"
+                invalidMessage="E-mail inválido"
+                value="<?php echo $this->escape($this->tecnico->email)?>" />
+</p>
+
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpTelefone', true)"  onmouseout="javascript:setVisible('helpTelefone', false)"/>
+<p>
+	<label for="nome">Telefone 1:</label>
+	<input type="text" name="telefone" maxlength="13" dojoType="dijit.form.ValidationTextBox"
+                regExp="\([1-9]\d{1}\)\d{4}-\d{4}"
+				promptMessage="Digite um telefone no formato '(XX)XXXX-XXXX'"
+                required="true"
+                invalidMessage="Telefone inválido"
+                value="<?php echo $this->escape($this->tecnico->telefone)?>" />
+</p>
+
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpTelefonePublico', true)"  onmouseout="javascript:setVisible('helpTelefonePublico', false)"/>
+<p>
+	<label for="nome">Telefone 2:</label>
+	<input type="text" name="telefonePublico" maxlength="13" dojoType="dijit.form.ValidationTextBox"
+                regExp="\([1-9]\d{1}\)\d{4}-\d{4}"
+				promptMessage="Digite um telefone no formato '(XX)XXXX-XXXX'"
+                required="false"
+                invalidMessage="Telefone inválido"
+                value="<?php echo $this->escape($this->tecnico->telefonePublico)?>" />
+</p>
+
+<p>
+	<label for="nome">Celular:</label>
+	<input type="text" name="celular" maxlength="13" dojoType="dijit.form.ValidationTextBox"
+                regExp="\([1-9]\d{1}\)\d{4}-\d{4}"
+				promptMessage="Digite um telefone no formato '(XX)XXXX-XXXX'"
+                required="false"
+                invalidMessage="Celular inválido"
+                value="<?php echo $this->escape($this->tecnico->celular)?>" />
+</p>
+
+<p>
+	<label for="cargaHorariaSemanal">Carga horária semanal</label>
+	<input name="cargaHorariaSemanal" type="text" dojoType="dijit.form.NumberTextBox"
+                constraints="{min:0,max:44,places:0}"
+                promptMessage= "Digite a carga horária semanal"
+                required= "true"
+                invalidMessage= "Valor inválido"
+                value="<?php echo $this->escape($this->tecnico->cargaHorariaSemanal) ?>">
+</p>
+
+<p>	
+	<button type="button" onclick="history.go(-1)">Voltar</button>
+	<input name="button" type="submit" value="Salvar" />
+</p>
+</form>

@@ -1,0 +1,63 @@
+<script>
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.Button");
+       dojo.require("dijit.form.ValidationTextBox");
+</script>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div><br />
+<?php endif; ?>
+
+<form action="<?php echo $this->action ?>" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->idProjeto ?>" />
+	<?php if($this->colaboradorExterno) : ?>
+	<input name="idColaboradorExterno" type="hidden" value="<?php echo $this->colaboradorExterno->id ?>" />
+	<?php endif; ?>
+	
+<div>
+	<label for="nome">Nome:</label>
+	<input type="text" name="nome" maxlength="255" dojoType="dijit.form.TextBox" required="true" value="<?php echo $this->escape($this->colaboradorExterno->nome)?>" />
+</div>
+
+<div>
+	<label for="cpf">CPF:</label>
+	<input type="text" name="cpf" maxlength="255" dojoType="dijit.form.TextBox" required="true" value="<?php echo $this->escape($this->colaboradorExterno->cpf)?>" />
+</div>
+
+<div>
+	<label for="email">Email:</label>
+	<input type="text" name="email" maxlength="255"	dojoType="dijit.form.ValidationTextBox"
+                regExp="^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})"
+				promptMessage="Digite um e-mail válido"
+                required="true"
+                invalidMessage="E-mail inválido"
+                value="<?php echo $this->escape($this->colaboradorExterno->email)?>" />
+</div>
+
+<div>
+	<label for="telefone">Telefone:</label>
+	<input type="text" name="telefone" maxlength="13" dojoType="dijit.form.ValidationTextBox"
+                regExp="\([1-9]\d{1}\)\d{4}-\d{4}"
+				promptMessage="Digite um telefone no formato '(XX)XXXX-XXXX'"
+                required="true"
+                invalidMessage="Telefone inválido"
+                value="<?php echo $this->escape($this->colaboradorExterno->telefone)?>" />
+</div>
+
+<div>
+	<label for="celular">Celular:</label>
+	<input type="text" name="celular" maxlength="13" dojoType="dijit.form.ValidationTextBox"
+                regExp="\([1-9]\d{1}\)\d{4}-\d{4}"
+				promptMessage="Digite um celular no formato '(XX)XXXX-XXXX'"
+                required="true"
+                invalidMessage="Telefone inválido"
+                value="<?php echo $this->escape($this->colaboradorExterno->celular)?>" />
+</div>
+
+<div>	
+	<button type="button" onclick="history.go(-1)">Voltar</button>
+	<input name="button" type="submit" value="Salvar" />
+</div>
+</form>

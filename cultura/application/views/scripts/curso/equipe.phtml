@@ -1,0 +1,62 @@
+<?php echo $this->render('header.phtml'); ?>
+<?php echo $this->render('menu-curso.phtml'); ?>
+
+<script>
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.FilteringSelect");
+       dojo.require("dijit.form.Button");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<div class="help" id="helpViceCoordenador">
+<p>O vice coordenador, docente da UFJF cadastrado no sistema PROEXC, trabalha conjuntamente com o coordenador, podendo assumir temporariamente ou
+definitivamente o curso.</p>
+</div>
+
+<form id="myForm" action="<?php echo $this->baseUrl ?>/curso/equipe" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->curso->id ?>" />
+	
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpViceCoordenador', true)"  onmouseout="javascript:setVisible('helpViceCoordenador', false)"/>
+<div>	
+	<label for="idViceCoordenador">Vice Coordenador:</label>
+	<select name="idViceCoordenador" dojoType="dijit.form.FilteringSelect">
+	<option value="0">Nenhum</option>
+	<?php foreach($this->viceCoordenadores as $viceCoordenador) : ?>
+		<option value="<?php echo $viceCoordenador->id ?>"
+		<?php if($this->curso->idViceCoordenador == $viceCoordenador->id) : ?>
+			selected="selected"<?php endif; ?>
+			><?php echo $viceCoordenador->nome ?> - <?php echo $viceCoordenador->findParentDepartamento()->nome ?></option>			
+	<?php endforeach; ?>
+	</select>
+</div><br />
+
+<div>	
+	<label for="coordenadorArea">Coordenador de Área:</label>
+	<input name="coordenadorArea" type="text" dojoType="dijit.form.TextBox" value="<?php echo $this->escape($this->curso->coordenadorArea) ?>" />
+</div><br />
+
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpColaboradoresDocentes', true)"  onmouseout="javascript:setVisible('helpColaboradoresDocentes', false)"/>
+<div>
+	<fieldset>
+	<legend>Docentes</legend>
+	<span id="colaboradorDocente">
+		<a href="<?php echo $this->baseUrl?>/curso/addColaboradorDocente/id/<?php echo $this->curso->id?>">Adicionar</a>
+		<br />
+		<?php if($this->colaboradoresDocentes) foreach($this->colaboradoresDocentes as $colaboradorDocente) : ?>
+			<?php echo $colaboradorDocente->nome ?> 
+			<a href="<?php echo $this->baseUrl?>/curso/editColaboradorDocente/id/<?php echo $this->curso->id?>/idColaboradorDocente/<?php echo $colaboradorDocente->id?>">Editar</a>
+			<a href="<?php echo $this->baseUrl?>/curso/delColaboradorDocente/id/<?php echo $this->curso->id?>/idColaboradorDocente/<?php echo $colaboradorDocente->id?>">Apagar</a>
+			<br />
+		<?php endforeach;?>
+	</span>
+	</fieldset>
+</div>
+
+<div>	
+	<input name="button" type="submit" value="Salvar" />
+	<input name="button" type="submit" value="Proximo" />
+</div>
+</form>
+
+<?php echo $this->render('footer.phtml'); ?>

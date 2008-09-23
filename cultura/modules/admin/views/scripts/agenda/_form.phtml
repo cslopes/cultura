@@ -1,0 +1,43 @@
+<script>
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.Button");
+       dojo.require("dijit.TitlePane");
+       dojo.require("dijit.Editor");
+       dojo.require("dijit.form.Form");
+       dojo.require("dijit.form.CheckBox");
+       
+       window.onload = function()
+		{
+			var oFCKeditor = new FCKeditor( 'descricao' ) ;
+			oFCKeditor.BasePath = "<?php echo $this->baseUrl ?>/public/scripts/fckeditor/" ;
+			oFCKeditor.ToolbarSet = 'agendaToolbar';
+			oFCKeditor.ReplaceTextarea() ;
+		}
+</script>
+
+<h2>Nova Agenda</h2>
+
+<form id="formAgenda" action="" method="post" onsubmit="return false">
+<input name="idAgenda" type="hidden" value="<?php echo $this->agenda->id ?>"/>
+		
+<p><label for="titulo" style="width: 75px;">Título: </label>
+   <input type="text" name="titulo" id="titulo" maxlength="255" dojoType="dijit.form.TextBox" value="<?php echo $this->escape($this->agenda->titulo) ?>"/></p>
+<p>
+	<label for="titulo" style="width: 75px;">Imagem: </label>
+   <input type="text" name="tituloImagem" id="tituloImagem" dojoType="dijit.form.TextBox" readonly="readonly" value="<?php echo $this->agenda->tituloImagem ?>" />
+   <button type="button" onclick="BrowseServer('tituloImagem');" dojoType="dijit.form.Button">Inserir imagem</button>
+   <button type="button" onclick="dojo.byId('tituloImagem').value=''" dojoType="dijit.form.Button">Remover imagem</button><br />
+	Para melhor visualização, insira uma imagem com 270px de largura e 220px de altura.
+   </p>
+<p><label for="descricao" style="width: 75px;">Descrição:</label><br />
+   <p><textarea id="descricao" name="descricao" width="200px"><?php echo $this->escape($this->agenda->descricao) ?></textarea></p>
+<p>Ativo: 
+   	<input dojoType="dijit.form.RadioButton" name="ativo" type="radio" value="1" <?php if($this->agenda->ativo) : ?>checked="checked"<?php endif; ?> />
+	<label class="none" for="continuo1">Sim</label>
+	<input dojoType="dijit.form.RadioButton" name="ativo" type="radio" value="0" <?php if(!$this->agenda->ativo) : ?>checked="checked"<?php endif; ?>" />
+	<label class="none" for="continuo2">Não</label></p>
+<p><button dojoType="dijit.form.Button" type="submit">Salvar</button></p>
+
+</form>
+
+<a href="<?php echo $this->baseUrl ?>/admin/agenda">Buscar</a>

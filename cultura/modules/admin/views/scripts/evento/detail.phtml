@@ -1,0 +1,55 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<script type="text/javascript">
+       dojo.require("dijit.form.Form");
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.Button");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<div>
+
+<table id="detail">
+	<tbody>
+	<tr>
+		<th>Evento:</th>
+		<td><?php echo $this->escape($this->evento->titulo) ?></td>
+	</tr>
+	<tr>
+		<th>Coordenador:</th>
+		<td><?php echo $this->escape($this->evento->findParentCoordenador()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Unidade:</th>
+		<td><?php echo $this->escape($this->evento->findParentCoordenador()->findParentDepartamento()->findParentUnidade()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Área Temática:</th>
+		<td><?php echo @$this->escape($this->evento->findParentAreaTematica()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Data de Início:</th>
+		<td><?php echo date_format(date_create($this->evento->dataInicio), "d/m/Y") ?></td>
+	</tr>
+	<tr>
+		<th>Data Término:</th>
+		<td><?php echo date_format(date_create($this->evento->dataFinal), "d/m/Y") ?></td>
+	</tr>
+	</tbody>
+</table>
+
+</div><br />
+
+<form id="formDetailEvento" action="<?php echo $this->baseUrl ?>/admin/evento/validate" method="post">
+<input type="hidden" name="idEvento" value="<?php echo $this->evento->id ?>" />
+<p>
+	<label for="processo">Número do Processo: </label>
+	<input type="text" name="processo" maxlength="13" dojoType="dijit.form.TextBox" required="true" />
+</p>
+<p>
+<input dojoType="dijit.form.Button" type="submit" name="submit" label="Validar" value="Validar" />
+</p>
+</form>
+
+<?php echo $this->render('footer.phtml'); ?>

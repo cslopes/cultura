@@ -1,0 +1,39 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<div id="listaCursos">
+
+<?php if(count($this->cursos) == 0) : ?>
+Não existem cursos salvos.
+
+<?php else : ?>
+<table border="1" width="580px" class="tabela">
+	<thead>
+		<th width="40%"></th>
+		<th>Nome</th>
+	</thead>
+	<tbody>
+<?php if(count($this->cursos) == 0) echo 'Não existem cursos salvos.' ?>
+<?php foreach ($this->cursos as $curso) : ?>
+	<tr>
+		<td align="center">
+		<?php if($curso->idAreaTematica && $curso->idLinhaAtuacao) : ?>
+			<form action="<?php echo $this->baseUrl ?>/curso/imprimirFormulario" method="get" style="display: inline">
+				<input type="hidden" name="id" value="<?php echo $curso->id?>" />
+				<button class="printButton">Imprimir</button>
+			</form>
+		<?php endif; ?>
+		<!-- Retirar para incluir relatório final
+		<form action="<?php echo $this->baseUrl ?>/curso/relatorioFinal" method="get" style="display: inline;">
+			<input type="hidden" name="id" value="<?php echo $curso->id?>" />
+			<button class="reportButton">Relatório Final</button>
+		</form> -->
+		<td><?php echo $curso->titulo?></td>
+	</tr>
+<?php endforeach; ?>
+	</tbody>
+</table>
+
+<?php endif; ?>
+	
+</div>
+<?php echo $this->render('footer.phtml'); ?>

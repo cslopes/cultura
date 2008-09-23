@@ -1,0 +1,104 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<script type="text/javascript">
+<!--
+	dojo.require("dijit.form.Button");
+	
+	function buscaDepartamentos() {
+    	dojo.xhrPost( {
+        	// The following URL must match that used to test the server.
+        	url: "<?php echo $this->baseUrl ?>/admin/departamento/fill", 
+        	handleAs: "json",
+			load: preencheTabela,
+	        // The ERROR function will be called in an error case.
+        	error: function(response, ioArgs) {
+          		console.error("Response: ", response);
+          		dojo.byId("errors").innerHTML = "Erro de comunicação com o servidor: " + response;
+          		return response;
+          	},
+          	timeout: 30000,
+          	content: {"idUnidade" : dojo.byId("idUnidade").value}
+        });
+	}
+	
+	function submit() {
+		dojo.xhrPost( {
+			url: "<?php echo $this->baseUrl ?>/admin/departamento/add",
+			handleAs: "text",
+			load: function(response) {
+				dojo.byId("nome").value = "";
+				dojo.byId("errors").innerHTML = "";
+				buscaDepartamentos();
+				return response;
+			},
+			error: function(response, ioArgs) {
+				console.error("Response: ", response);
+				dojo.byId("errors").innerHTML = "Nome deve conter apenas alfabéticos.";
+			},
+			timeout: 30000,
+			form: "formDepartamento"
+		});
+	}
+	
+	function apagaDepartamento(id) {
+		dojo.xhrGet( {
+			url: "<?php echo $this->baseUrl ?>/admin/departamento/delete/id/" + id,
+			handleAs: "text",
+			load: function(response) {
+				dojo.byId("nome").value = "";
+				dojo.byId("errors").innerHTML = "";
+				buscaDepartamentos();
+				return response;
+			},
+			error: function(response, ioArgs) {
+				console.error("Response: ", response);
+				dojo.byId("errors").innerHTML = "Nome deve conter apenas alfabéticos.";
+			},
+			timeout: 30000
+		});
+	}
+	
+	function preencheTabela(response) {
+		var tabela = dojo.byId("corpo");
+		tabela.innerHTML = "";
+		dojo.forEach(response,
+    		function(departamento, index, array) {
+        		var linha = document.createElement('tr');
+        		var nome = linha.insertCell(0);
+        		var del = linha.insertCell(1);
+        		
+        		nome.innerHTML = "<a href=<?php echo $this->baseUrl ?>/admin/departamento/edit/id/" + departamento.id + ">" + departamento.nome + "</a>";
+        		del.innerHTML  = "<a onclick=\"apagaDepartamento('" + departamento.id + "')\" >deletar</a>";
+        		
+        		tabela.appendChild(linha);
+    		}
+		);
+		return response;
+	}
+	
+	var idUnidade = dojo.byId("idUnidade");
+	dojo.connect(idUnidade, "onchange", buscaDepartamentos);
+//-->
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<?php echo $this->render('departamento/_form.phtml'); ?>
+
+<p>	
+	<button dojoType="dijit.form.Button" onclick="submit()">Salvar</button>
+</p>
+</form>
+
+<table border="1" width="300px" class="tabela">
+	<thead>
+		<tr>
+			<th>Nome</th>
+			<th width="20%">Ação</th>
+		</tr>
+	</thead>
+	<tbody id="corpo">
+	</tbody>
+</table>	
+
+<?php echo $this->render('footer.phtml'); ?>

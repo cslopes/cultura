@@ -1,0 +1,11 @@
+</div>
+<div id="footer">
+<?php if($this->user) : ?>
+<p id="logged-in">Logged in as <?php echo $this->escape($this->user->nome);?>.
+<a href="<?php echo $this->baseUrl ?>/admin/auth/logout">Logout</a></p>
+<?php endif; ?>
+Copyright © 2007 Integrare TI..</div>
+
+</div>
+</body>
+</html>

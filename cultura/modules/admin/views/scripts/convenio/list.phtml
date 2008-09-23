@@ -1,0 +1,38 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<script>
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.Button");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<form>
+<p><label for="argumentInput">Nome: </label>
+   <input type="text" name="s" id="argumentInput" maxlength="255" dojoType="dijit.form.TextBox" />
+   <input name="button" type="submit" value="Buscar" dojoType="dijit.form.Button" label="Buscar" />
+</p>
+</form>
+
+<?php if($this->convenioList) : ?>
+	<?php if(count($this->convenioList) == 0) : ?>
+	<p>A busca não retornou resultados.</p>
+	<?php else : ?>
+	<?php foreach ($this->convenioList as $convenio) : ?>
+		<div id="convenioDiv">
+			<h3>Nome: <a href="<?php echo $this->baseUrl ?>/admin/convenio/edit/id/<?php echo $convenio->id?>"><?php echo $this->escape($convenio->nome) ?></a>
+				- <?php echo $this->escape($convenio->registro) ?></h3>
+			<span><a href="<?php echo $this->baseUrl ?>/admin/convenio/delete/id/<?php echo $convenio->id?>">deletar</a></span>
+			<p><?php echo $this->escape($convenio->descricao) ?></p>
+			<p><b>Vigência: </b>à partir de <?php echo $convenio->dataInicio ?>
+				<?php if($convenio->dataFinal) : ?>
+					até <?php echo $convenio->dataFinal ?>
+				<?php else : ?> , prazo indeterminado.
+				<?php endif; ?>
+			</p>
+		</div>
+	<?php endforeach; ?>
+	<?php endif; ?>
+<?php endif; ?>
+
+<?php echo $this->render('footer.phtml'); ?>
