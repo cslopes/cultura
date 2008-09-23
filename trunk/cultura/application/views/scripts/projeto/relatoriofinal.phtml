@@ -1,0 +1,238 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<script type="text/javascript">
+       dojo.require("dijit.form.Form");
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.CheckBox");
+       dojo.require("dijit.form.NumberSpinner");
+       dojo.require("dijit.form.Textarea");
+</script>
+
+<h2><?php echo $this->title ?></h2>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div><br />
+<?php endif; ?>
+
+<form id="formRelatorioFinal" action="<?php echo $this->baseUrl ?>/projeto/relatorioFinal" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
+
+<?php if ($this->projeto->continuo) : ?>
+<p>	
+	<label>O projeto será renovado?</label>
+	<input dojoType="dijit.form.RadioButton" id="renovado1" name="renovado" type="radio" value="1" />
+	<label class="none" for="renovado1">Sim</label>
+	<input dojoType="dijit.form.RadioButton" id="renovado2" name="renovado" type="radio" value="0" />
+	<label class="none" for="renovado2">Não</label>
+</p>
+<?php endif; ?>
+
+<fieldset>
+<legend>Articulação com o ensino</legend>
+	<p>
+		<label for="disciplinas">Disciplinas:</label>
+		<input name="disciplinas" dojoType="dijit.form.TextBox"/>
+	</p>
+	<p>
+		<label for="estagio">Estágio:</label>
+		<input name="estagio" dojoType="dijit.form.TextBox"/>
+	</p>
+	<p>
+		<label for="credito">Crédito (flexibilização curricular):</label>
+		<input name="credito" dojoType="dijit.form.TextBox"/>
+	</p>
+</fieldset>
+
+<fieldset>
+<legend>Articulação com a pesquisa</legend>
+	<p>
+		<label for="projeto">Projeto:</label>
+		<input name="projeto" dojoType="dijit.form.TextBox"/>
+	</p>
+</fieldset>
+
+<fieldset>
+<legend>Total de pessoas da equipe de trabalho envolvidas na execução</legend>
+	<label for="docentes">Docentes: </label>
+    <input name="docentes" dojoType="dijit.form.NumberSpinner"
+    	   constraints="{min:0,max:200,places:0}"
+    	   value="0" />
+	<fieldset>
+	<legend>Alunos da graduação</legend>
+		<label for="bolsistas">Bolsistas:</label>
+		<input name="bolsistas" dojoType="dijit.form.NumberSpinner"
+			   constraints="{min:0,max:200,places:0}"
+		   	   value="0" /><br/>
+		<label for="naoBolsistas">Não-bolsistas:</label>
+		<input name="naoBolsistas" dojoType="dijit.form.NumberSpinner"
+			   constraints="{min:0,max:200,places:0}"
+			   value="0" /><br/>
+	</fieldset>
+	<label for="posGraduacao">Alunos pós-graduação:</label>
+	<input name="posGraduacao" dojoType="dijit.form.NumberSpinner"
+			   constraints="{min:0,max:200,places:0}"
+			   value="0" /><br/>
+	<label for="tecnicos">Técnicos administrativos:</label>
+	<input name="tecnicos" dojoType="dijit.form.NumberSpinner"
+			   constraints="{min:0,max:200,places:0}"
+			   value="0" /><br/>
+	<label for="outros">De outras IES ou orgãos:</label>
+	<input name="outrosEnvolvidos" dojoType="dijit.form.NumberSpinner"
+			   constraints="{min:0,max:200,places:0}"
+			   value="0" /><br/>
+	<label for="comunidade">Da comunidade externa:</label>
+	<input name="comunidade" dojoType="dijit.form.NumberSpinner"
+			   constraints="{min:0,max:200,places:0}"
+			   value="0" /><br/>
+	<label for="publicoAtingido">Público atingido</label>
+	<input name="publicoAtingido" dojoType="dijit.form.NumberSpinner"
+			   constraints="{min:0,max:100000,places:0}"
+			   value="0" />
+</fieldset><br/>
+
+<fieldset id="fieldsetAtendimentos">
+<legend>Número de atendimentos por semana</legend>
+<p>
+	<label for="atendimentosGrupo">Grupo</label>
+	<input name="atendimentosGrupo" dojoType="dijit.form.NumberSpinner"
+			   constraints="{min:0,max:100000,places:0}"
+			   value="0" />
+</p>
+<p>
+<label for="atendimentosIndividuais">Individual</label>
+<input name="atendimentosIndividuais" dojoType="dijit.form.NumberSpinner"
+			   constraints="{min:0,max:100000,places:0}"
+			   value="0" />
+</p>
+</fieldset>
+
+<fieldset id="fieldsetProducao">
+<legend>Monitoramento da produção</legend>
+	<table>
+		<tr>
+			<th><label for="livro">Livro</label></th>
+			<td><input name="livro" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px" /></td>
+			<th><label for="comunicacao">Comunicação</label></th>
+			<td><input name="comunicacao" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px" /></td>
+		</tr>
+		<tr>
+			<th><label for="programaRadio">Programa de rádio</label></th>
+			<td><input name="programaRadio" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+			<th><label for="capituloLivro">Capítulo de livro</label></th>
+			<td><input name="capituloLivro" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px" /></td>
+		</tr>
+		<tr>
+			<th><label for="relatorioTecnico">Relatório técnico</label></th>
+			<td><input name="relatorioTecnico" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+			<th><label for="programaTv">Programa de TV</label></th>
+			<td><input name="programaTv" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+		</tr>
+		<tr>
+			<th><label for="anais">Anais</label></th>
+			<td><input name="anais" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+			<th><label for="filme">Produto audiovisual - filme</label></th>
+			<td><input name="filme" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+		</tr>
+		<tr>
+			<th><label for="aplicativo">Aplicativo para computador</label></th>
+			<td><input name="aplicativo" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+			<th><label for="manual">Manual</label></th>
+			<td><input name="manual" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+		</tr>
+		<tr>
+			<th><label for="video">Produto audiovisual - vídeo</label></th>
+			<td><input name="video" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px" /></td>
+			<th><label for="jogoEducativo">Jogo educativo</label></th>
+			<td><input name="jogoEducativo" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+		</tr>
+		<tr>
+			<th><label for="jornal">Jornal</label></th>
+			<td><input name="jornal" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+			<th><label for="cd">Produto audiovisual - CD</label></th>
+			<td><input name="cd" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+		</tr>
+		<tr>
+			<th><label for="produtoArtistico">Produto artístico</label></th>
+			<td><input name="produtoArtistico" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+			<th><label for="revista">Revista</label></th>
+			<td><input name="revista" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+		</tr>
+		<tr>
+			<th><label for="dvd">Produto audiovisual - DVD</label></th>
+			<td><input name="dvd" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+			<th><label for="artigo">Artigo</label></th>
+			<td><input name="artigo" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+		</tr>
+		<tr>
+			<th><label for="outrosAudiovisual">Produto audiovisual - outros</label></th>
+			<td colspan="3"><input name="outrosAudiovisual" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/></td>
+		</tr>
+		<tr>
+			<th><label for="outrosProducao">Outros (especifique)</label></th>
+			<td colspan="3">
+				<input name="outrosProducao" dojoType="dijit.form.NumberSpinner"
+			   			constraints="{min:0,max:200,places:0}"
+			   			value="0" style="width: 60px"/>
+				<input name="tipoProducao" dojoType="dijit.form.TextBox"/></td>
+		</tr>
+		<tr>
+			<th><label for="detalheProducao" style="width: auto">Detalhamento da produção</label></th>
+			<td colspan="3"><textarea name="detalheProducao" dojoType="dijit.form.Textarea" style="width:355px"></textarea></td>
+		</tr>
+	</table>
+</fieldset><br />
+
+
+<p>
+	<label for="relatorioFinal" style="width: auto">Relatório final</label><br/>
+	Avaliação dos resultados alcançados, dificuldades encontradas, etc.<br/>
+	<textarea name="relatorioFinal" dojoType="dijit.form.Textarea" style="width:575px">
+    </textarea>
+</p>
+
+<p>
+	<input name="button" type="submit" value="Salvar" />
+	<input name="button" type="submit" value="Imprimir" />
+</p>
+
+<?php echo $this->render('footer.phtml') ?>

@@ -1,0 +1,28 @@
+<script>
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.Button");
+       dojo.require("dijit.form.Form");
+       
+</script>
+
+<?php echo $this->debug ?>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div>
+<?php endif; ?>
+
+<form method="post">
+<input name="id" type="hidden" value="<?php echo $this->model->id ?>" />
+	
+<p>
+	<label for="nome">Nome:</label>
+	<input type="text" name="nome" maxlength="255" dojoType="dijit.form.TextBox" required="true"
+		   value="<?php echo $this->escape($this->model->nome) ?>" />
+</p>
+
+<p>	
+	<input name="button" type="submit" value="Salvar" dojoType="dijit.form.Button" label="Salvar" />
+</p>
+</form>

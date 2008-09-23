@@ -1,0 +1,125 @@
+<?php echo $this->render('header.phtml'); ?>
+<?php echo $this->render('menu-projeto.phtml'); ?>
+
+<script type="text/javascript">
+       dojo.require("dijit.form.Form");
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.CheckBox");
+       dojo.require("dijit.form.DateTextBox");
+       dojo.require("dijit.form.FilteringSelect");
+       
+       function continuo(b) {
+ 			if (b) {
+ 				dojo.byId("dataFinalP").style.display = "none";
+ 			} else {
+ 				dojo.byId("dataFinalP").style.display = "block";
+ 			}
+ 		}
+ 		
+ 		<?php if($this->projeto->continuo) : ?>
+ 		dojo.addOnLoad(
+    		function(){
+        		dojo.byId("dataFinalP").style.display = "none";
+    		}
+    	);
+    	<?php endif; ?>
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div><br />
+<?php endif; ?>
+
+<div class="help" id="helpProjetoContinuo">
+<p>Projetos contínuos se caracterizam por duração com mais de dois períodos letivos ou de um ano seguido. O
+projeto contínuo não possui data para terminar.</p>
+</div>
+
+<!-- div class="help" id="helpPrograma">
+<p>Um programa é caracterizado por consistir em  um conjunto articulado de projetos e outras ações
+de extensão como cursos, eventos e prestação de serviços, tendo como base sempre a tríplice coluna
+extensão, pesquisa, e ensino. Tendo caráter  orgânico-institucional, clareza de diretrizes e orientação
+para um  objetivo comum, sendo executado a longo e médio prazo.</p>
+</div-->
+
+<div class="help" id="helpAreaTematica">
+<p>Escolha uma área temática que deve ser a mais aproximada, tematicamente, de seu projeto. Para dúvidas acesse
+Áreas Temáticas no site da PROEXC.</p>
+</div> 
+
+<div class="help" id="helpLinhaExtensao">
+<p>Escolha uma Linha de Extensão que especifique ao máximo a atividade a ser executada em seu projeto. Para dúvidas acesse
+Linhas de Extensão no site da PROEXC.</p>
+</div> 
+
+<form id="geralForm" action="<?php echo $this->baseUrl ?>/projeto/geral" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
+	
+<!-- img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpPrograma', true)"  onmouseout="javascript:setVisible('helpPrograma', false)"/>
+<p>
+	<label for="idPrograma">Programa:</label>
+	<select name="idPrograma" dojoType="dijit.form.FilteringSelect">
+	<?php /*foreach($this->programas as $programa) : ?>
+		<option value="<?php echo $programa->id ?>"
+		<?php if ($programa->id == $this->projeto->idPrograma) : ?>
+			selected="selected"<?php endif; ?>
+			><?php echo $programa->nome ?></option>
+	<?php endforeach; */?>
+	</select>
+</p-->
+
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpAreaTematica', true)"  onmouseout="javascript:setVisible('helpAreaTematica', false)"/>
+<p>	
+	<label for="idAreaTematica">Área Temática:</label>
+	<select name="idAreaTematica" dojoType="dijit.form.FilteringSelect">
+	<?php foreach($this->areasTematicas as $areaTematica) : ?>
+		<option value="<?php echo $areaTematica->id ?>"
+		<?php if($this->projeto->idAreaTematica == $areaTematica->id) : ?>
+			selected="selected"<?php endif; ?>
+			><?php echo $areaTematica->nome ?></option>			
+	<?php endforeach; ?>
+	</select>
+</p>	
+
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpLinhaExtensao', true)"  onmouseout="javascript:setVisible('helpLinhaExtensao', false)"/>
+<p>
+	<label for="idLinhaAtuacao">Linha de Extensão:</label>
+	<select name="idLinhaAtuacao" dojoType="dijit.form.FilteringSelect">
+	<?php foreach($this->linhasAtuacao as $linhaAtuacao) : ?>
+		<option value="<?php echo $linhaAtuacao->id ?>"
+		<?php if($this->projeto->idLinhaAtuacao == $linhaAtuacao->id) : ?>
+		selected="selected"<?php endif; ?>
+		><?php echo $linhaAtuacao->nome ?></option>			
+	<?php endforeach; ?>
+	</select>
+	
+</p>
+
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpProjetoContinuo', true)"  onmouseout="javascript:setVisible('helpProjetoContinuo', false)"/>
+<p>	
+	<label>Projeto contínuo:</label>
+	<input dojoType="dijit.form.RadioButton" id="continuo1" name="continuo" type="radio" value="1" <?php if($this->projeto->continuo) : ?>checked="checked"<?php endif; ?> onchange="continuo(true)" />
+	<label class="none" for="continuo1">Sim</label>
+	<input dojoType="dijit.form.RadioButton" id="continuo2" name="continuo" type="radio" value="0" <?php if(!$this->projeto->continuo) : ?>checked="checked"<?php endif; ?> onchange="continuo(false)" />
+	<label class="none" for="continuo2">Não</label>
+</p>
+<p>
+	<label for="dataInicio">Data de Início:</label>
+	<input name="dataInicio" type="text" size="10" value="<?php echo $this->projeto->dataInicio ?>" dojoType="dijit.form.DateTextBox" /><br />
+</p>
+<p id="dataFinalP">	
+	<label for="dataFinal">Data Final:</label>
+	<input id="dataFinal" name="dataFinal" type="text" size="10" value="<?php echo $this->projeto->dataFinal ?>" dojoType="dijit.form.DateTextBox" /><br />
+</p>
+<p>	
+	<input name="button" type="submit" value="Salvar" />
+	<input name="button" type="submit" value="Proximo" />
+</p>
+</form>
+
+
+
+<?php echo $this->render('footer.phtml'); ?>

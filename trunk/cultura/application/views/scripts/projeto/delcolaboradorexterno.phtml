@@ -1,0 +1,18 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<?php if ($this->colaboradorExterno) :?>
+<form action="<?php echo $this->baseUrl ?>/projeto/delColaboradorExterno" method="post">
+	<input type="hidden" name="id" value="<?php echo $this->idProjeto?>" />
+	<p>Tem certeza que deseja apagar o colaborador 
+		'<?php echo $this->escape($this->colaboradorExterno->nome); ?>'?</p>
+	<div>
+		<input type="hidden" name="idColaboradorExterno" value="<?php echo $this->colaboradorExterno->id; ?>" />
+		<input type="submit" name="del" value="Yes" />
+		<input type="submit" name="del" value="No" />
+	</div>
+</form>
+<?php else: ?>
+<p>Colaborador não encontrado.</p>
+<?php echo $this->error ?>
+<?php endif;?>
+<?php echo $this->render('footer.phtml'); ?>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+            "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title><?php echo $this->escape($this->title); ?></title>
+	<!-- link rel="stylesheet" type="text/css" media="screen" 
+        href="<?php echo $this->baseUrl?>/public/styles/site.css" /-->
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl?>/public/styles/screen.css"
+		media="screen" title="Integrare TI layout" />
+    <style type="text/css">
+        @import "<?php echo $this->baseUrl?>/public/scripts/dojo-release-1.0.0/dijit/themes/tundra/tundra.css";
+        @import "<?php echo $this->baseUrl?>/public/scripts/dojo-release-1.0.0/dojo/resources/dojo.css"
+    </style>
+    <script type="text/javascript" src="<?php echo $this->baseUrl ?>/public/scripts/menu.js"></script>
+    <script type="text/javascript" src="<?php echo $this->baseUrl?>/public/scripts/dojo-release-1.0.0/dojo/dojo.js"
+    	djConfig="parseOnLoad: true"></script>
+    <script type="text/javascript">
+       dojo.require("dojo.parser");
+    </script>
+    <script type="text/javascript" src="<?php echo $this->baseUrl ?>/public/scripts/fckeditor/fckeditor.js"></script>
+    <script type="text/javascript" src="<?php echo $this->baseUrl ?>/public/scripts/fckeditor/pick.js"></script>
+    <link rel="javascript" type="text/javascript" href="<?php echo $this->baseUrl?>/public/scripts/menu.js" />
+</head>
+<body class="tundra">
+
+<div
+	style="background: #FFCC00; width: 780px; height: 21px; text-align: left; margin: 0 auto;">
+<a href="http://www.mec.gov.br" target="_blank"> <img
+	src="<?php echo $this->baseUrl?>/public/images/logo_edu.gif" alt="Ministério da Educação"
+	style="border: 0;" /> </a> <select name="governo" class="form"
+	style="color: #000; margin: 0 83px 2px 0; padding: 0; vertical-align: top; background: #FFCC00; font: normal 11px Tahoma, Verdana, Arial, Helvetica, sans-serif;"
+	onchange="window.location=this[this.selectedIndex].value">
+	<option selected="selected" value="">Destaques do governo</option>
+	<option value="javascript:nova_jan('http://www.brasil.gov.br')">
+	Portal do Governo Federal</option>
+	<option value="javascript:nova_jan('http://www.e.gov.br')">
+	Portal de Servi&ccedil;os do Governo</option>
+	<option value="javascript:nova_jan('http://www.agenciabrasil.gov.br')">
+	Portal da Ag&ecirc;ncia de Not&iacute;cias</option>
+	<option
+		value="javascript:nova_jan('http://www.brasil.gov.br/emquestao')">
+	Em Quest&atilde;o</option>
+	<option value="javascript:nova_jan('http://www.fomezero.gov.br')">
+	Programa Fome Zero</option>
+</select> <a href="http://www.brasil.gov.br" target="_blank"> <img
+	src="<?php echo $this->baseUrl?>/public/images/brasil.gif"
+	alt="Governo Federal - Brasil, um país de todos" style="border: 0;" />
+</a></div>
+
+<div id="wrap">
+
+<div id="header"><a href="http://www.ufjf.br"><img
+	src="<?php echo $this->baseUrl?>/public/images/barra_ufjf.gif" alt="UFJF" height="30" width="489" /></a></div>
+
+<a href="index.htm"><img id="frontphoto" src="<?php echo $this->baseUrl?>/public/images/proexc.jpg"
+	alt="" height="65" width="760" /></a>
+
+<div id="primary-nav">
+<h2 class="hide">Menu:</h2>
+<ul>
+	<li><a href="<?php echo $this->baseUrl ?>/admin">Home</a></li>
+	<li class="menuparent"><a href="#">Cadastros</a>
+	<ul>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/agenda/add">Agenda</a></li>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/areaTematica/add">Área Temática</a></li>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/linhaAtuacao/add">Linha de Atuação</a></li>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/programa/add">Programa</a></li>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/titulacao/add">Titulação</a></li>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/convenio/add">Convênio</a></li>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/unidade/add">Unidade/Orgão</a></li>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/departamento/add">Departamento/Setor</a></li>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/usuario/add">Usuário</a></li>
+	</ul>
+	</li>
+	<li class="menuparent"><a href="#">Projetos</a>
+	<ul>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/projeto/validate">Validar</a></li>
+	</ul>
+	</li>
+	<li class="menuparent"><a href="#">Cursos</a>
+	<ul>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/curso/validate">Validar</a></li>
+	</ul>
+	</li>
+	<li class="menuparent"><a href="#">Eventos</a>
+	<ul>
+		<li><a href="<?php echo $this->baseUrl ?>/admin/evento/validate">Validar</a></li>
+	</ul>
+	</li>
+	<li><a href="<?php echo $this->baseUrl ?>/admin/auth/logout">Sair</a></li>
+</ul>
+
+</div>
+
+<div id="content">

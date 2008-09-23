@@ -1,0 +1,56 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<div id="listaProjetos">
+
+<?php if(count($this->projetos) == 0) : ?>
+Não existem projetos salvos.
+
+<?php else : ?>
+<table border="1" width="580px" class="tabela">
+	<thead>
+		<th width="50%"></th>
+		<th>Nome</th>
+	</thead>
+	<tbody>
+<?php if(count($this->projetos) == 0) echo 'Não existem projetos salvos.' ?>
+<?php foreach ($this->projetos as $projeto) : ?>
+	<tr>
+		<td align="center">
+			<form action="<?php echo $this->baseUrl ?>/projeto/rename" method="get" style="display: inline">
+				<input type="hidden" name="id" value="<?php echo $projeto->id ?>" />
+				<button class="renameButton">Renomear</button>
+			</form>
+			<?php if($projeto->idAreaTematica && $projeto->idLinhaAtuacao) : ?>
+				<?php if($projeto->fechado) : ?>
+				<form action="<?php echo $this->baseUrl ?>/projeto/imprimirFormulario" method="get" style="display:inline">
+					<input type="hidden" name="id" value="<?php echo $projeto->id ?>"/>
+					<button class="printButton">Imprimir</button>
+				</form>
+				<?php else : ?>
+				<form action="<?php echo $this->baseUrl ?>/projeto/fechar" method="get" style="display:inline">
+					<input type="hidden" name="id" value="<?php echo $projeto->id ?>"/>
+					<button class="closeButton">Concluir</button>
+				</form>
+				<?php endif; ?>
+			<?php endif; ?>
+			<form action="<?php echo $this->baseUrl ?>/projeto/del" method="get" style="display: inline">
+				<input type="hidden" name="id" value="<?php echo $projeto->id?>"/>
+				<button class="deleteButton">Apagar</button>
+			</form>
+		</td>
+		<td>
+			<?php if(!$projeto->fechado) : ?>
+				<a href="<?php echo $this->baseUrl ?>/projeto/geral/id/<?php echo $projeto->id?>"><?php echo $projeto->titulo?></a>
+			<?php else : ?>
+				<?php echo $projeto->titulo ?>
+			<?php endif; ?>
+		</td>
+	</tr>
+<?php endforeach; ?>
+	</tbody>
+</table>
+
+<?php endif; ?>
+	
+</div>
+<?php echo $this->render('footer.phtml'); ?>

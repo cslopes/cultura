@@ -1,0 +1,20 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<?php if ($this->projeto) :?>
+<form action="<?php echo $this->baseUrl ?>/projeto/fechar" method="post" style="width: 580px">
+	<input type="hidden" name="id" value="<?php echo $this->projeto->id?>" />
+	<p>Tem certeza que deseja concluir o projeto 
+		'<?php echo $this->escape($this->projeto->titulo); ?>'?</p>
+	<p class="atencao">Se você concluir o projeto não poderá modificá-lo mais, deverá imprimir o formulário gerado e encaminhá-lo à PROEXC depois
+	das devidas aprovações.</p>
+	<div>
+		<input type="hidden" name="idRecursos" value="<?php echo $this->projeto->idRecursos; ?>" />
+		<button name="fecha" value="Yes">Sim</button>
+		<button name="fecha" value="No">Não</button>
+	</div>
+</form>
+<?php else: ?>
+<p>Projeto não encontrado.</p>
+<?php echo $this->error ?>
+<?php endif;?>
+<?php echo $this->render('footer.phtml'); ?>

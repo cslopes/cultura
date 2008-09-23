@@ -1,0 +1,18 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<?php if ($this->projeto) :?>
+<form action="<?php echo $this->baseUrl ?>/projeto/del" method="post">
+	<input type="hidden" name="id" value="<?php echo $this->projeto->id?>" />
+	<p>Tem certeza que deseja apagar o projeto 
+		'<?php echo $this->escape($this->projeto->titulo); ?>'?</p>
+	<div>
+		<input type="hidden" name="idRecursos" value="<?php echo $this->projeto->idRecursos; ?>" />
+		<input type="submit" name="del" value="Yes" />
+		<input type="submit" name="del" value="No" />
+	</div>
+</form>
+<?php else: ?>
+<p>Projeto não encontrado.</p>
+<?php echo $this->error ?>
+<?php endif;?>
+<?php echo $this->render('footer.phtml'); ?>

@@ -1,0 +1,12 @@
+<?php echo $this->render('header.phtml'); ?>
+<p>
+<?php if((date('H') >= 0) && (date('H') < 12)) : ?>
+Bom dia
+<?php elseif((date('H') >= 12) && (date('H') < 18)) : ?>
+Boa tarde 
+<?php else : ?>
+Boa noite 
+<?php endif; ?> 
+<?php echo $this->user->nome ?>, seja bem-vindo à PROEXC.
+</p>
+<?php echo $this->render('footer.phtml'); ?>

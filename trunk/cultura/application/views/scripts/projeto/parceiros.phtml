@@ -1,0 +1,41 @@
+<?php echo $this->render('header.phtml'); ?>
+<?php echo $this->render('menu-projeto.phtml'); ?>
+
+<script>
+       dojo.require("dijit.form.Button");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<div id="helpParceiros" class="help">
+<p>Podem desempenhar papel de parceiros externos as pessoas jurídicas, qualquer que seja a atividade, e as organizações Sociais,
+não estabelecidas juridicamente, como as SPMS, que serão representadas pela  pessoa do presidente/líder ou quem a instituição
+indicar.</p>
+</div>
+
+<form action="<?php echo $this->baseUrl ?>/projeto/parceiros" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
+	
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpParceiros', true)"  onmouseout="javascript:setVisible('helpParceiros', false)"/>
+<div>
+	<fieldset>
+	<legend>Parceiros Externos</legend>
+	<span id="parceiroExterno">
+		<a href="<?php echo $this->baseUrl?>/projeto/addParceiroExterno/id/<?php echo $this->projeto->id?>">Adicionar</a>
+		<br />
+		<?php if($this->parceiros) foreach($this->parceiros as $parceiro) : ?>
+			<?php echo $parceiro->nomeInstituicao ?> 
+			<a href="<?php echo $this->baseUrl?>/projeto/editParceiroExterno/id/<?php echo $this->projeto->id?>/idParceiro/<?php echo $parceiro->id?>">Editar</a>
+			<a href="<?php echo $this->baseUrl?>/projeto/delParceiroExterno/id/<?php echo $this->projeto->id?>/idParceiro/<?php echo $parceiro->id?>">Apagar</a>
+			<br />
+		<?php endforeach;?>
+	</span>
+	</fieldset>
+</div>
+<div>	
+	<input name="button" type="submit" value="Salvar" />
+	<input name="button" type="submit" value="Proximo" />
+</div>
+</form>
+
+<?php echo $this->render('footer.phtml'); ?>

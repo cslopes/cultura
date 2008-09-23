@@ -1,0 +1,30 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<div>
+
+<?php if(count($this->cursos) == 0) : ?>
+	<p>Não existem cursos salvos.</p>
+<?php else : ?>
+<table border="1" width="580px" class="tabela">
+	<thead>
+		<tr>
+			<th>Título</th>
+			<th>Unidade</th>
+			<th width="27%">Modificado Em</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($this->cursos as $curso) : ?>
+		<tr>
+			<td><a href="<?php echo $this->baseUrl ?>/admin/curso/detail/id/<?php echo $curso->id?>"><?php echo $curso->titulo?></a></td>
+			<td><?php echo $curso->findParentCoordenador()->findParentDepartamento()->findParentUnidade()->nome ?></td>
+			<td><?php echo date_format(date_create($curso->modificadoEm), "d/m/Y - H:i:s")  ?></td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>	
+<?php endif; ?>
+
+</div>
+<?php echo $this->render('footer.phtml'); ?>

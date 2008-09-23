@@ -1,0 +1,18 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<?php if ($this->colaboradorDocente) :?>
+<form action="<?php echo $this->baseUrl ?>/projeto/delColaboradorDocente" method="post">
+	<input type="hidden" name="id" value="<?php echo $this->idProjeto?>" />
+	<p>Tem certeza que deseja apagar o docente 
+		'<?php echo $this->escape($this->colaboradorDocente->nome); ?>'?</p>
+	<div>
+		<input type="hidden" name="idColaboradorDocente" value="<?php echo $this->colaboradorDocente->id; ?>" />
+		<input type="submit" name="del" value="Yes" />
+		<input type="submit" name="del" value="No" />
+	</div>
+</form>
+<?php else: ?>
+<p>Docente não encontrado.</p>
+<?php echo $this->error ?>
+<?php endif;?>
+<?php echo $this->render('footer.phtml'); ?>

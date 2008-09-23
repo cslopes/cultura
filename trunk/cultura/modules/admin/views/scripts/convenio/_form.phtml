@@ -1,0 +1,45 @@
+<script>
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.Button");
+       dojo.require("dijit.form.Textarea");
+       dojo.require("dijit.form.DateTextBox");
+</script>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div>
+<?php endif; ?>
+
+<form method="post" style="width: 600px">
+<input name="id" type="hidden" value="<?php echo $this->convenio->id ?>" />
+	
+<p>
+	<label for="nome">Nome:</label>
+	<input type="text" id="nome" name="nome" maxlength="255" dojoType="dijit.form.TextBox" required="true"
+		   value="<?php echo $this->escape($this->convenio->nome) ?>" />
+</p>
+<p>
+	<label for="registro">Registro:</label>
+	<input type="text" name="registro" id="registro" maxlength="8" dojoType="dijit.form.TextBox" required="true"
+		   value="<?php echo $this->escape($this->convenio->registro) ?>" />
+</p>
+<p>
+	<label for="descricao">Descricao:</label>
+	<textarea name="descricao" id="descricao" dojoType="dijit.form.Textarea" style="width: 400px">
+		<?php echo $this->escape($this->convenio->descricao) ?>
+	</textarea>
+</p>
+<p>
+	<label for="dataInicio">Data início:</label>
+	<input name="dataInicio" type="text" size="10" value="<?php echo $this->convenio->dataInicio ?>" dojoType="dijit.form.DateTextBox" required="true"/>
+</p>
+<p>
+	<label for="dataFinal">Data final:</label>
+	<input name="dataFinal" type="text" size="10" value="<?php echo $this->convenio->dataFinal ?>" dojoType="dijit.form.DateTextBox" />
+</p>
+
+<p>	
+	<input name="button" type="submit" value="Salvar" dojoType="dijit.form.Button" label="Salvar" />
+</p>
+</form>

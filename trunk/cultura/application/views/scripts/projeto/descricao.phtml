@@ -1,0 +1,120 @@
+<?php echo $this->render('header.phtml'); ?>
+<?php echo $this->render('menu-projeto.phtml'); ?>
+
+<script>
+       dojo.require("dijit.form.Textarea");
+       dojo.require("dijit.form.NumberSpinner");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div><br />
+<?php endif; ?>
+
+<form id="formDescricao" action="<?php echo $this->baseUrl ?>/projeto/descricao" method="post">
+	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
+	
+<div id="helpFundamento" class="help">
+<p>Descrição referenciada que demonstre claramente que o projeto está inserido dentro da proposta de indissociabilidade dos
+parâmetros de Ensino, Pesquisa, Extensão.</p>
+</div>
+<div>
+	<label for="fundamento">Fundamentação teórica:</label>
+	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpFundamento', true)"  onmouseout="javascript:setVisible('helpFundamento', false)"/><br />
+	<textarea name="fundamento" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->projeto->fundamento) ?>
+    </textarea>
+</div><br />
+
+<div id="helpObjetivos" class="help">
+<p>Neste item deve-se inserir um texto que objetive demonstrar a intenção do projeto frente os benefícios que trará a todas as
+partes envolvidas, descrevendo de modo claro e sucinto o objetivo geral, bem como sua extensão específica para a humanização e
+para a formação acadêmica.</p>
+</div>
+<div>
+	<label for="objetivos">Objetivos:</label>
+	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpObjetivos', true)"  onmouseout="javascript:setVisible('helpObjetivos', false)"/><br />
+	<textarea name="objetivos" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->projeto->objetivos) ?>
+    </textarea>
+</div><br />
+
+<div id="helpMetodologia" class="help">
+<p>O texto deve conter a infra-estrutura que o projeto pretende usar, juntamente com uma explanação metodológica dos procedimentos
+que vão ser realizados no decorrer de seu desenvolvimento.</p>
+</div>
+<div>
+	<label for="metodologia">Metodologia:</label>
+	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpMetodologia', true)"  onmouseout="javascript:setVisible('helpMetodologia', false)"/><br />
+	<textarea name="metodologia" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->projeto->metodologia) ?>
+    </textarea>
+</div><br />
+
+<div id="helpPublicoAlvo" class="help">
+<p>Objeto principal de atuação do projeto (a que população se dedica). Sua descrição deve ser a mais específica possível,
+objetivando as metas do projeto.</p>
+</div>
+<div>
+	<label for="publicoAlvo">Público alvo:</label>
+	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpPublicoAlvo', true)"  onmouseout="javascript:setVisible('helpPublicoAlvo', false)"/><br />
+	<textarea name="publicoAlvo" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->projeto->publicoAlvo) ?>
+    </textarea>
+</div><br />
+
+<div id="helpPessoasAtendidas" class="help">
+<p>Deve conter um número estimado com bom senso e baseado na estrutura apresentada.</p>
+</div>
+<div>
+	<label for="pessoasAtendidas">Expectativa de atendimentos:</label>
+	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpPessoasAtendidas', true)"  onmouseout="javascript:setVisible('helpPessoasAtendidas', false)"/><br />
+	<textarea name="pessoasAtendidas" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->projeto->pessoasAtendidas) ?>
+    </textarea>
+</div><br />
+
+<div id="helpResumo" class="help">
+<p>O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e o público alvo que
+permitam uma melhor visualização do projeto , além do local de realização, horários de atendimento ou de execução
+do projeto. Este  resumo será  divulgado na  página da UFJF  e, portanto, o texto deverá ser revisado e é de
+responsabilidade do coordenador. Poderá conter e-mail para contato ou site.</p>
+</div>
+<div>
+	<label for="resumo">Resumo:</label>
+	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpResumo', true)"  onmouseout="javascript:setVisible('helpResumo', false)"/><br />
+	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->projeto->resumo) ?>
+    </textarea>
+</div><br />
+
+<div id="helpBolsasJustificativa" class="help">
+<p>Neste item deve-se conter um texto sucinto informando a quantidade de bolsas pretendidas somadas à descrição funcional  dos
+bolsistas, pretendendo demonstrar a utilidade de cada um na execução do projeto, bem como  a ligação de sua  tarefa no projeto
+com o mundo acadêmico.</p>
+</div>
+<div>
+	<label for="bolsasJustificativa">Justificativa para bolsas:</label>
+	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpBolsasJustificativa', true)"  onmouseout="javascript:setVisible('helpBolsasJustificativa', false)"/><br />
+	<textarea name="bolsasJustificativa" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->projeto->bolsasJustificativa) ?>
+    </textarea>
+</div><br />
+
+<div>
+	<label for="bolsasPretendidas">Bolsas pretendidas:</label>
+	<input name="bolsasPretendidas" dojoType="dijit.form.NumberSpinner"
+                value="<?php echo $this->projeto->bolsasPretendidas ?>"
+                constraints="{min:0,max:200,places:0}"
+                maxlength="20">
+</div><br />
+
+<div>	
+	<input name="button" type="submit" value="Salvar" />
+	<input name="button" type="submit" value="Proximo" />
+</div>
+</form>
+<?php echo $this->render('footer.phtml'); ?>

@@ -1,0 +1,61 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<script type="text/javascript">
+       dojo.require("dijit.form.Form");
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.Button");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<?php if($this->errors) : ?>
+<div id="errors">
+	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+</div>
+<?php endif; ?>
+
+<div>
+
+<table id="detail">
+	<tbody>
+	<tr>
+		<th>Curso:</th>
+		<td><?php echo $this->escape($this->curso->titulo) ?></td>
+	</tr>
+	<tr>
+		<th>Coordenador:</th>
+		<td><?php echo $this->escape($this->curso->findParentCoordenador()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Unidade:</th>
+		<td><?php echo $this->escape($this->curso->findParentCoordenador()->findParentDepartamento()->findParentUnidade()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Área Temática:</th>
+		<td><?php echo @$this->escape($this->curso->findParentAreaTematica()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Data de Início:</th>
+		<td><?php echo date_format(date_create($this->curso->dataInicio), "d/m/Y") ?></td>
+	</tr>
+	<tr>
+		<th>Data Término:</th>
+		<td><?php echo date_format(date_create($this->curso->dataFinal), "d/m/Y") ?></td>
+	</tr>
+	</tbody>
+</table>
+
+</div><br />
+
+<form id="formDetailCurso" action="<?php echo $this->baseUrl ?>/admin/curso/validate" method="post">
+<input type="hidden" name="idCurso" value="<?php echo $this->curso->id ?>" />
+<p>
+	<label for="processo">Número do Processo: </label>
+	<input type="text" name="processo" maxlength="13" dojoType="dijit.form.TextBox" required="true" />
+</p>
+<p>
+<input dojoType="dijit.form.Button" type="submit" name="submit" label="Validar" value="Validar" />
+</p>
+</form>
+
+<?php echo $this->render('footer.phtml'); ?>

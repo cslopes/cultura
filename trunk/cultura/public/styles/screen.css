@@ -1,0 +1,420 @@
+/* layout by Integrare TI.
+
+(5 de Julho de 2007)*/
+body {
+	margin: 0 auto;
+	padding: 0;
+	font: 76% Verdana, Tahoma, Arial, sans-serif;
+	background: #f4f4f4 url(../images/bg.gif) top center repeat-y;
+}
+
+table tbody th {
+	font-weight: normal;
+}
+
+#wrap {
+	background: #ffffff;
+	color: #303030;
+	margin: 0 auto;
+	width: 760px;
+}
+
+#header {
+	clear: both;
+	margin: 20px 0 0 0;
+	padding: 0;
+	height: 45px;
+}
+
+#header h1 {
+	width: 250px;
+	margin: 0 0 10px 0;
+	float: left;
+}
+
+#header p {
+	width: 400px;
+	float: right;
+	text-align: center;
+	color: #a0a0a0;
+	margin: 0 0 10px 0;
+	font-size: 0.8em;
+	line-height: 1.2em;
+}
+
+#frontphoto {
+	margin: 0 0 10px 0;
+	border: 0;
+}
+
+#primary-nav {
+	clear: left;
+	float: left;
+	width: 150px;
+	margin: 0 0 10px 0;
+	padding: 0;
+	font-size: 0.9em;
+}
+
+#primary-nav ul,#primary-nav ul ul {
+	margin: 0;
+	padding: 0;
+	width: 150px; /* Width of Menu Items */
+	border-bottom: 1px solid #ccc;
+	background: #fff; /* IE6 Bug */
+	font-size: 100%;
+}
+
+#primary-nav ul li {
+	position: relative;
+	list-style: none;
+}
+
+#primary-nav ul li a {
+	display: block;
+	text-decoration: none;
+	color: #777;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-bottom: 0;
+}
+
+#projetoMenu {
+	width: 580px;
+	margin: 0 0 10px 0;
+	padding: 0;
+	font-size: 1em;
+}
+
+#projetoMenu ul {
+	margin: 0;
+	padding: 0;
+	width: 580px; /* Width of Menu Items */
+	background: #fff; /* IE6 Bug */
+	font-size: 100%;
+}
+
+#projetoMenu ul li {
+	list-style: none;
+	display: inline;
+}
+
+#projetoMenu ul li a {
+	text-decoration: none;
+	color: #777;
+	padding: 5px;
+	border: 1px solid #ccc;
+	width: 100px;
+}
+
+/* Fix IE. Hide from IE Mac \*/
+* html #primary-nav ul li {
+	float: left;
+	height: 1%;
+}
+
+* html #primary-nav ul li a {
+	height: 1%;
+}
+
+/* End */
+#primary-nav ul ul {
+	position: absolute;
+	display: none;
+	left: 149px; /* Set 1px less than menu width */
+	top: 0;
+}
+
+#primary-nav ul li ul li a {
+	padding: 2px 5px;
+}  /* Sub Menu Styles */
+#primary-nav ul li:hover ul ul,#primary-nav ul li:hover ul ul ul,#primary-nav ul li.over ul ul,#primary-nav ul li.over ul ul ul
+	{
+	display: none;
+}  /* Hide sub-menus initially */
+#primary-nav ul li:hover ul,#primary-nav ul li li:hover ul,#primary-nav ul li li li:hover ul,#primary-nav ul li.over ul,#primary-nav ul li li.over ul,#primary-nav ul li li li.over ul
+	{
+	display: block;
+}  /* The magic */
+#primary-nav ul li.menuparent {
+	background: transparent url(../images/arrow.gif) right center no-repeat;
+}
+
+#primary-nav ul li.menuparent:hover,#primary-nav ul li.over {
+	background-color: #f9f9f9;
+}
+
+#primary-nav ul li a:hover {
+	color: #E2144A;
+}
+
+#extras {
+	clear: left;
+	float: left;
+	font-size: 0.9em;
+	margin: 10px 0 10px 0;
+	padding: 10px;
+	width: 130px;
+	color: #505050;
+	background-color: #f4f4f4;
+	line-height: 1.3em;
+}
+
+#extras p {
+	margin: 0 0 1.5em 0;
+}
+
+#content {
+	margin: 0 0 20px 160px;
+	border-left: 1px solid #f0f0f0;
+	border-right: 1px solid #f0f0f0;
+	padding: 0 10px 0 10px;
+	line-height: 1.6em;
+	text-align: left;
+	/*background-color: #FFF0EA;*/
+}
+
+#errors {
+	color: red;
+}
+
+table.tabela {
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+
+table.tabela thead {
+	text-align: center;
+	background-color: #fcc;
+}
+
+table.tabela tbody td{
+	padding: 0px 5px 0px 5px;
+}
+
+#content h2 {
+	font-size: 1.5em;
+	margin: 0 0 0.5em 0;
+}
+
+/*#content img {
+	padding: 1px;
+	display: inline;
+	background: #cccccc;
+	border: 4px solid #f0f0f0;
+}*/
+h3 {
+	font-size: 1.3em;
+	margin: 0 0 10px 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #286ea0;
+}
+
+a img {
+	border: 0;
+}
+
+#detail {
+	margin-left: 10px;
+	width: 560px;
+	border: 1px solid #000;
+	background-color: #fcc;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#detail th {
+	width: 135px;
+	text-align: right;
+	font-weight: bold;
+}
+
+#detail p {
+	padding: 0px;
+	margin: 0px;
+}
+
+form {
+	display: block;
+	width: 350px;
+}
+
+#formDescricao, #formParceiro, #formDetailProjeto, #formRecursos, #formAgenda, #formRelatorioFinal {
+	width: auto;
+}
+
+form label {
+	float: left;
+	margin-right: 5px;
+	width: 130px;
+	text-align: right;
+}
+
+#detail label {
+	width: 300px;
+}
+
+#formParceiro label, #formDetailProjeto label {
+	width: 184px;
+}
+
+#formRelatorioFinal label {
+    width: 163px;
+}
+
+#formRelatorioFinal fieldset {
+    witdh: auto;
+}
+
+#formRelatorioFinal fieldset label {
+    width: 160px;
+}
+
+#formDescricao label, #formAgenda label {
+	width: auto;
+}
+
+form img.icon {
+	float: right;
+}
+
+form label.none {
+	width: auto;
+	float: none;
+}
+
+#pessoasEnvolvidas div label {
+	width: 180px;
+	text-align: right;
+}
+
+#formRelatorioFinal #fieldsetProducao label {
+    width: 179px;
+}
+
+div.help {
+	float: right;
+	padding: 10px;
+	width: 200px;
+	border: 1px solid #000;
+	background-color: #FFB;
+	display: none;
+	margin-bottom: 10px;
+	text-align: justify;
+	font-size: xx-small;
+}
+
+#formDescricao div.help {
+	position: absolute;
+	right: 200px;
+}
+
+form p {
+	margin-top: 0em;
+	padding: 0em 0em 0em 0em;
+}
+
+/*#myform input, textarea {
+	margin:3px 0pt;
+	width:220px;
+}*/
+#footer {
+	clear: both;
+	margin: 0 auto;
+	padding: 10px 0 20px 0;
+	border-top: 4px solid #f0f0f0;
+	width: 760px;
+	text-align: center;
+	color: #808080;
+	font-size: 0.9em;
+}
+
+#footer a {
+	color: #808080;
+	text-decoration: none;
+}
+
+#footer a:hover {
+	text-decoration: underline;
+}
+
+.left {
+	margin: 10px 10px 5px 0;
+	float: left;
+}
+
+.right {
+	margin: 10px 0 5px 10px;
+	float: right;
+}
+
+.textright {
+	text-align: right;
+}
+
+.center {
+	text-align: center;
+}
+
+.small {
+	font-size: 0.8em;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.hide {
+	display: none;
+}
+
+.atencao {
+	color: red;
+}
+
+.renameButton {
+	background:transparent url(../images/rename.gif) no-repeat scroll 3px 50%;
+	border:1px solid gray;
+	font-family:sans-serif;
+	margin:2px;
+	padding-left:20px;
+}
+
+.printButton {
+	background:transparent url(../images/pdf_icon16x16.gif) no-repeat scroll 3px 50%;
+	border:1px solid gray;
+	font-family:sans-serif;
+	margin:2px;
+	padding-left:20px;
+}
+
+.deleteButton {
+	background:transparent url(../images/delete-16x16.png) no-repeat scroll 3px 50%;
+	border:1px solid gray;
+	font-family:sans-serif;
+	margin:2px;
+	padding-left:20px;
+}
+
+.closeButton {
+	background:transparent url(../images/close-16x16.png) no-repeat scroll 3px 50%;
+	border:1px solid gray;
+	font-family:sans-serif;
+	margin:2px;
+	padding-left:20px;
+}
+
+.reportButton {
+	background:transparent url(../images/task-list-16x16.png) no-repeat scroll 3px 50%;
+	border:1px solid gray;
+	font-family:sans-serif;
+	margin:2px;
+	padding-left:20px;
+}

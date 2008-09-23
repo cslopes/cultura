@@ -1,0 +1,94 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<script type="text/javascript">
+       dojo.require("dijit.form.Form");
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.NumberSpinner");
+       dojo.require("dijit.form.Button");
+       dojo.require("dijit.form.FilteringSelect");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<div>
+
+<table id="detail">
+	<tbody>
+	<tr>
+		<th>Projeto:</th>
+		<td><?php echo $this->escape($this->projeto->titulo) ?></td>
+	</tr>
+	<tr>
+		<th>Coordenador:</th>
+		<td><?php echo $this->escape($this->projeto->findParentCoordenador()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Unidade:</th>
+		<td><?php echo $this->escape($this->projeto->findParentCoordenador()->findParentDepartamento()->findParentUnidade()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Área Temática:</th>
+		<td><?php echo @$this->escape($this->projeto->findParentAreaTematica()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Linha de Atuação:</th>
+		<td><?php echo @$this->escape($this->projeto->findParentLinhaAtuacao()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Contínuo:</th>
+		<td><?php echo $this->projeto->continuo ? 'Sim' : 'Não'; ?></td>
+	</tr>
+	<tr>
+		<th>Data de Início:</th>
+		<td><?php echo date_format(date_create($this->projeto->dataInicio), "d/m/Y") ?></td>
+	</tr>
+	<?php if (!$this->projeto->continuo) : ?>
+	<tr>
+		<th>Data Término:</th>
+		<td><?php echo date_format(date_create($this->projeto->dataFinal), "d/m/Y") ?></td>
+	</tr>
+	<?php endif; ?>
+	<tr>
+		<th>Bolsas Pretendidas:</th>
+		<td><?php echo $this->projeto->bolsasPretendidas ?></td>
+	</tr>
+	<tr>
+		<th>Justificativa:</th>
+		<td><?php echo $this->escape($this->projeto->bolsasJustificativa) ?></td>
+	</tr>
+	</tbody>
+</table>
+
+</div><br />
+
+<form id="formDetailProjeto" action="<?php echo $this->baseUrl ?>/admin/projeto/validate" method="post">
+<input type="hidden" name="idProjeto" value="<?php echo $this->projeto->id ?>" />
+<p>
+	<label for="idPrograma">Programa:</label>
+	<select name="idPrograma" dojoType="dijit.form.FilteringSelect">
+	<?php foreach($this->programas as $programa) : ?>
+		<option value="<?php echo $programa->id ?>"
+		<?php if ($programa->id == $this->projeto->idPrograma) : ?>
+			selected="selected"<?php endif; ?>
+			><?php echo $programa->nome ?></option>
+	<?php endforeach; ?>
+	</select>
+</p>
+<p>
+	<label for="processo">Número do Processo: </label>
+	<input type="text" name="processo" maxlength="13" dojoType="dijit.form.TextBox" required="true" />
+</p>
+<p>
+	<label for="bolsasConcedidas">Bolsas Concedidas: </label>
+	<input name="bolsasConcedidas" dojoType="dijit.form.NumberSpinner"
+                value="0"
+                smallDelta="1"
+                constraints="{min:0,max:200,places:0}"
+                maxlength="3">
+</p>
+<p>
+<input dojoType="dijit.form.Button" type="submit" name="submit" label="Validar" value="Validar" />
+</p>
+</form>
+
+<?php echo $this->render('footer.phtml'); ?>
