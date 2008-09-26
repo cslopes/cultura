@@ -23,6 +23,8 @@ class Admin_EventoController extends Proexc_Admin_Controller_Action {
 		$tabEvento = new Evento();
 
 		if($this->_request->isPost()) {
+			$errors = null;
+						
 			$idEvento = (int) $this->_request->getPost('idEvento');
 				
 			$validator = new Zend_Validate_NotEmpty();

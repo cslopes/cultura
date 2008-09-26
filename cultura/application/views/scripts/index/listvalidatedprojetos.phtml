@@ -19,13 +19,13 @@ Não existem projetos salvos.
 		<?php if($projeto->idAreaTematica && $projeto->idLinhaAtuacao) : ?>
 			<form action="<?php echo $this->baseUrl ?>/projeto/imprimirFormulario" method="get" style="display: inline">
 				<input type="hidden" name="id" value="<?php echo $projeto->id?>" />
-				<button class="printButton">Imprimir</button>
+				<button type="submit" class="printButton">Imprimir</button>
 			</form>
 		<?php endif; ?>
 		<!-- Retirar para incluir relatório final
 		<form action="<?php echo $this->baseUrl ?>/projeto/relatorioFinal" method="get" style="display: inline;">
 			<input type="hidden" name="id" value="<?php echo $projeto->id?>" />
-			<button class="reportButton">Relatório Final</button>
+			<button type="submit" class="reportButton">Relatório Final</button>
 		</form>
 		 -->
 		<td><?php echo $projeto->titulo?></td>

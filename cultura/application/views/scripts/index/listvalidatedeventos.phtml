@@ -16,16 +16,16 @@ Não existem eventos salvos.
 <?php foreach ($this->eventos as $evento) : ?>
 	<tr>
 		<td align="center">
-		<?php if($evento->idAreaTematica && $evento->idLinhaAtuacao) : ?>
+		<?php if($evento->idAreaTematica) : ?>
 			<form action="<?php echo $this->baseUrl ?>/evento/imprimirFormulario" method="get" style="display: inline">
 				<input type="hidden" name="id" value="<?php echo $evento->id?>" />
-				<button class="printButton">Imprimir</button>
+				<button type="submit" class="printButton">Imprimir</button>
 			</form>
 		<?php endif; ?>
 		<!-- Retirar para incluir relatório final
 		<form action="<?php echo $this->baseUrl ?>/evento/relatorioFinal" method="get" style="display: inline;">
 			<input type="hidden" name="id" value="<?php echo $evento->id?>" />
-			<button class="reportButton">Relatório Final</button>
+			<button type="submit" class="reportButton">Relatório Final</button>
 		</form> -->
 		<td><?php echo $evento->titulo?></td>
 	</tr>

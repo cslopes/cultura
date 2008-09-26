@@ -41,9 +41,10 @@ $acl->add(new Zend_Acl_Resource('agenda'))
 	->add(new Zend_Acl_Resource('usuario'))
 	->add(new Zend_Acl_Resource('index'));
 	
+$acl->allow('admin');
+
 $acl->allow('manager');
 $acl->deny('manager', 'usuario');
-$acl->allow('admin');
 
 Zend_Registry::set('acl', $acl);
 

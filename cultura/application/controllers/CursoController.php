@@ -32,7 +32,7 @@ class CursoController extends Proexc_Controller_Action {
 		// Verifica se o coordenador tem acesso a ações para cursos fechados e não-validados
 		if($this->_request->getActionName() == 'imprimirFormulario') {
 			$tabCurso = new Curso();
-			$cursos = $tabCurso->fetchClosedAndUnvalidatedByCoordenador($this->user->id);
+			$cursos = $tabCurso->fetchClosedByCoordenador($this->user->id);
 			$ok = 0;
 			foreach ($cursos as $curso) {
 				if($curso->id == $this->_request->getParam('id')){
@@ -58,7 +58,7 @@ class CursoController extends Proexc_Controller_Action {
 		}
 		
 		// Verifica se o coordenador tem acesso a ações para cursos não-validados
-		else if($this->_request->getActionName() != 'add' && $this->_request->getActionName() != 'relatorioFinal') {
+		else if($this->_request->getActionName() != 'add') {
 			$tabCurso = new Curso();
 			$cursos = $tabCurso->fetchOpenAndUnvalidatedByCoordenador($this->user->id);
 			$ok = 0;
@@ -209,7 +209,7 @@ class CursoController extends Proexc_Controller_Action {
 			}
 			$this->view->errors = $errors;
 			
-			$this->view->curso 					= new stdClass();
+			if($id > 0) $this->view->curso = $curso->find($id)->current();
 			$this->view->curso->id				= $id;
 			$this->view->curso->dataInicio		= $dataInicio;
 			$this->view->curso->dataFinal		= $dataFinal;
@@ -715,7 +715,7 @@ class CursoController extends Proexc_Controller_Action {
 			$fecha = $this->_request->getPost('fecha');
 
 			// Se clicou em 'Yes' e existe o Curso
-			if ($fecha == 'Yes' && $idCurso > 0) {
+			if ($fecha == 'Sim' && $idCurso > 0) {
 				$data = array(
 					"fechado"	=> 1
 				);

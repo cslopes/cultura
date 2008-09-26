@@ -134,6 +134,19 @@ class Projeto extends Proexc_Db_Table {
 		$where[] = 'processo IS NOT NULL';
 		return $this->fetchAll($where);
 	}
+	
+	/**
+	 * Returns a set of closed projeto by idCoordenador
+	 *
+	 * @param int $idCoordenador
+	 * @return Zend_Db_Table_Rowset_Abstract
+	 * 
+	 */
+	public function fetchClosedByCoordenador($idCoordenador) {
+		$where[] = $this->getAdapter()->quoteInto('idCoordenador = ?', $idCoordenador);
+		$where[] = "fechado = 1";
+		return $this->fetchAll($where, 'modificadoEm DESC');
+	}
 
 	/**
 	 * Returns a set of validated projeto by nome
