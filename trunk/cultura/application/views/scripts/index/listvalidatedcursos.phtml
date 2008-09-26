@@ -16,16 +16,16 @@ Não existem cursos salvos.
 <?php foreach ($this->cursos as $curso) : ?>
 	<tr>
 		<td align="center">
-		<?php if($curso->idAreaTematica && $curso->idLinhaAtuacao) : ?>
+		<?php if($curso->idAreaTematica) : ?>
 			<form action="<?php echo $this->baseUrl ?>/curso/imprimirFormulario" method="get" style="display: inline">
 				<input type="hidden" name="id" value="<?php echo $curso->id?>" />
-				<button class="printButton">Imprimir</button>
+				<button type="submit" class="printButton">Imprimir</button>
 			</form>
 		<?php endif; ?>
 		<!-- Retirar para incluir relatório final
 		<form action="<?php echo $this->baseUrl ?>/curso/relatorioFinal" method="get" style="display: inline;">
 			<input type="hidden" name="id" value="<?php echo $curso->id?>" />
-			<button class="reportButton">Relatório Final</button>
+			<button type="submit" class="reportButton">Relatório Final</button>
 		</form> -->
 		<td><?php echo $curso->titulo?></td>
 	</tr>

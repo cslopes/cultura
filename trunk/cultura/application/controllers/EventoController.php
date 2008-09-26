@@ -29,7 +29,7 @@ class EventoController extends Proexc_Controller_Action {
 		// Verifica se o coordenador tem acesso a ações para eventos fechados e não-validados
 		if($this->_request->getActionName() == 'imprimirFormulario') {
 			$tabEvento = new Evento();
-			$eventos = $tabEvento->fetchClosedAndUnvalidatedByCoordenador($this->user->id);
+			$eventos = $tabEvento->fetchClosedByCoordenador($this->user->id);
 			$ok = 0;
 			foreach ($eventos as $evento) {
 				if($evento->id == $this->_request->getParam('id')){
@@ -55,7 +55,7 @@ class EventoController extends Proexc_Controller_Action {
 		}
 		
 		// Verifica se o coordenador tem acesso a ações para eventos não-validados
-		else if($this->_request->getActionName() != 'add' && $this->_request->getActionName() != 'relatorioFinal') {
+		else if($this->_request->getActionName() != 'add') {
 			$tabEvento = new Evento();
 			$eventos = $tabEvento->fetchOpenAndUnvalidatedByCoordenador($this->user->id);
 			$ok = 0;
@@ -217,7 +217,7 @@ class EventoController extends Proexc_Controller_Action {
 			}
 			$this->view->errors = $errors;
 			
-			$this->view->evento 				= new stdClass();
+			if($id > 0) $this->view->evento = $evento->find($id)->current();
 			$this->view->evento->id				= $id;
 			$this->view->evento->especie		= $especie;
 			$this->view->evento->carater		= $carater;
@@ -529,7 +529,7 @@ class EventoController extends Proexc_Controller_Action {
 			$fecha = $this->_request->getPost('fecha');
 
 			// Se clicou em 'Yes' e existe o Evento
-			if ($fecha == 'Yes' && $idEvento > 0) {
+			if ($fecha == 'Sim' && $idEvento > 0) {
 				$data = array(
 					"fechado"	=> 1
 				);

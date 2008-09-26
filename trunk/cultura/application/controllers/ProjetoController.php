@@ -40,7 +40,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		// Verifica se o coordenador tem acesso a ações para projetos fechados e não-validados
 		if($this->_request->getActionName() == 'imprimirFormulario') {
 			$tabProjeto = new Projeto();
-			$projetos = $tabProjeto->fetchClosedAndUnvalidatedByCoordenador($this->user->id);
+			$projetos = $tabProjeto->fetchClosedByCoordenador($this->user->id);
 			$ok = 0;
 			foreach ($projetos as $projeto) {
 				if($projeto->id == $this->_request->getParam('id')){
@@ -66,7 +66,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		}
 		
 		// Verifica se o coordenador tem acesso a ações para projetos abertos e não-validados
-		else if($this->_request->getActionName() != 'add' && $this->_request->getActionName() != 'relatorioFinal') {
+		else if($this->_request->getActionName() != 'add') {
 			$tabProjeto = new Projeto();
 			$projetos = $tabProjeto->fetchOpenAndUnvalidatedByCoordenador($this->user->id);
 			$ok = 0;
@@ -1359,7 +1359,7 @@ class ProjetoController extends Proexc_Controller_Action {
 			$fecha = $this->_request->getPost('fecha');
 
 			// Se clicou em 'Yes' e existe o Projeto
-			if ($fecha == 'Yes' && $idProjeto > 0) {
+			if ($fecha == 'Sim' && $idProjeto > 0) {
 				$data = array(
 					"fechado"	=> 1
 				);

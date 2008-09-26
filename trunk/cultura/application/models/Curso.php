@@ -120,6 +120,18 @@ class Curso extends Proexc_Db_Table {
 	}
 	
 	/**
+	 * Returns a set of closed curso by idCoordenador
+	 *
+	 * @param int $idCoordenador
+	 * @return Zend_Db_Table_Rowset_Abstract
+	 */
+	public function fetchClosedByCoordenador($idCoordenador) {
+		$where[] = $this->getAdapter()->quoteInto('idCoordenador = ?', $idCoordenador);
+		$where[] = 'fechado = 1';
+		return $this->fetchAll($where);
+	}
+	
+	/**
 	 * Returns a set of validated curso by nome
 	 *
 	 * @param String $titulo

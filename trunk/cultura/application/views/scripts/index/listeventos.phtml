@@ -16,27 +16,29 @@ Não existem eventos salvos.
 <?php foreach ($this->eventos as $evento) : ?>
 	<tr>
 		<td align="center">
-			<form action="<?php echo $this->baseUrl ?>/evento/rename" method="get" style="display: inline">
-				<input type="hidden" name="id" value="<?php echo $evento->id ?>" />
-				<button class="renameButton">Renomear</button>
-			</form>
+			<?php if(!$evento->fechado) : ?>
+				<form action="<?php echo $this->baseUrl ?>/evento/rename" method="get" style="display: inline">
+					<input type="hidden" name="id" value="<?php echo $evento->id ?>" />
+					<button type="submit" class="renameButton">Renomear</button>
+				</form>
+				<form action="<?php echo $this->baseUrl ?>/evento/del" method="get" style="display: inline">
+					<input type="hidden" name="id" value="<?php echo $evento->id?>"/>
+					<button type="submit" class="deleteButton">Apagar</button>
+				</form>
+			<?php endif; ?>
 			<?php if($evento->idAreaTematica) : ?>
 				<?php if($evento->fechado) : ?>
 				<form action="<?php echo $this->baseUrl ?>/evento/imprimirFormulario" method="get" style="display:inline">
 					<input type="hidden" name="id" value="<?php echo $evento->id ?>"/>
-					<button class="printButton">Imprimir</button>
+					<button type="submit" class="printButton">Imprimir</button>
 				</form>
 				<?php else : ?>
 				<form action="<?php echo $this->baseUrl ?>/evento/fechar" method="get" style="display:inline">
 					<input type="hidden" name="id" value="<?php echo $evento->id ?>"/>
-					<button class="closeButton">Concluir</button>
+					<button type="submit" class="closeButton">Concluir</button>
 				</form>
 				<?php endif; ?>
 			<?php endif; ?>
-			<form action="<?php echo $this->baseUrl ?>/evento/del" method="get" style="display: inline">
-				<input type="hidden" name="id" value="<?php echo $evento->id?>"/>
-				<button class="deleteButton">Apagar</button>
-			</form>
 		</td>
 		<td>
 			<?php if(!$evento->fechado) : ?>
