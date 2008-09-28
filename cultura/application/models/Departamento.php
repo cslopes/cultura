@@ -25,4 +25,3 @@ class Departamento extends Proexc_Db_Table {
 	
 }
 
-?>

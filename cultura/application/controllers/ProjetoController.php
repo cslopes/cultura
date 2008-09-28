@@ -28,6 +28,7 @@ require_once 'Parceiro.php';
 require_once 'ProjetoParceiro.php';
 require_once 'Recursos.php';
 require_once 'FormularioProjeto.php';
+require_once 'RelatorioFinal.php';
 
 class ProjetoController extends Proexc_Controller_Action {
 
@@ -1388,14 +1389,124 @@ class ProjetoController extends Proexc_Controller_Action {
 	
 	function relatorioFinalAction() {
 		$this->view->title = "Relatório Final do Projeto";
-		
+		$tabRelatorioFinal = new RelatorioFinal();
 		$tabProjeto = new Projeto();
-		
+
 		$idProjeto = (int) $this->_request->getParam('id', 0);
-		if($idProjeto > 0) {
-			$this->view->projeto = $tabProjeto->find($idProjeto)->current();
+		
+		$projeto = $tabProjeto->find($idProjeto)->current();
+		$this->view->projeto = $projeto;
+		
+		if($this->_request->isPost()) {
+			$errors = null;
 			
-			if($this->view->projeto->id > 0) {
+			$renovado = (int) $this->_request->getPost('renovado'); 
+			$disciplinas = $this->_request->getPost('disciplinas');
+			$estagio = $this->_request->getPost('estagio');
+			$credito = $this->_request->getPost('credito');
+			$projeto = $this->_request->getPost('projeto');
+			$docentes = $this->_request->getPost('docentes');
+			$bolsistas = (int) $this->_request->getPost('bolsistas');
+			$naoBolsistas = (int) $this->_request->getPost('naoBolsistas');
+			$posGraduacao = (int) $this->_request->getPost('posGraduacao');
+			$tecnicos = (int) $this->_request->getPost('tecnicos');
+			$outrosEnvolvidos = (int) $this->_request->getPost('outrosEnvolvidos');
+			$comunidade = (int) $this->_request->getPost('comunidade');
+			$publicoAtingido = (int) $this->_request->getPost('publicoAtingido');
+			$atendimentosGrupo = (int) $this->_request->getPost('atendimentosGrupo');
+			$atendimentosIndividuais = (int) $this->_request->getPost('atendimentosIndividuais');
+			$livro = (int) $this->_request->getPost('livro');
+			$comunicacao = (int) $this->_request->getPost('atendimentosIndividuais');
+			$programaRadio = (int) $this->_request->getPost('programaRadio');
+			$capituloLivro = (int) $this->_request->getPost('capituloLivro');
+			$relatorioTecnico = (int) $this->_request->getPost('relatorioTecnico');
+			$programaTv = (int) $this->_request->getPost('programaTv');
+			$anais = (int) $this->_request->getPost('anais');
+			$filme = (int) $this->_request->getPost('filme');
+			$aplicativo = (int) $this->_request->getPost('atendimentosIndividuais');
+			$manual = (int) $this->_request->getPost('manual');
+			$video = (int) $this->_request->getPost('video');
+			$jogoEducativo = (int) $this->_request->getPost('jogoEducativo');
+			$jornal = (int) $this->_request->getPost('jornal');
+			$cd = (int) $this->_request->getPost('cd');
+			$produtoArtistico = (int) $this->_request->getPost('produtoArtistico');
+			$revista = (int) $this->_request->getPost('revista');
+			$dvd = (int) $this->_request->getPost('dvd');
+			$artigo = (int) $this->_request->getPost('artigo');
+			$outrosAudiovisual = (int) $this->_request->getPost('outrosAudiovisual');
+			$outrosProducao = (int) $this->_request->getPost('outrosProducao');
+			$tipoProducao = $this->_request->getPost('tipoProducao');
+			$detalheProducao = $this->_request->getPost('detalheProducao');
+			$relatorioFinal = $this->_request->getPost('relatorioFinal');
+			
+			if(!$errors) {
+				$data = array(
+					'renovado'			=> $renovado,
+					'disciplinas'		=> $disciplinas,
+					'estagio'			=> $estagio,
+					'credito'			=> $credito,
+					'projeto'			=> $projeto,
+					'docentes'			=> $docentes,
+					'bolsistas'			=> $bolsistas,
+					'naoBolsistas'		=> $naoBolsistas,
+					'posGraduacao'      => $posGraduacao,
+					'tecnicos'			=> $tecnicos,
+					'outrosEnvolvidos'  => $outrosEnvolvidos,
+					'comunidade'		=> $comunidade,
+					'publicoAtingido'   => $publicoAtingido,
+					'atendimentosGrupo' => $atendimentosGrupo,
+					'atendimentosIndividuais' => $atendimentosIndividuais,
+					'livro'				=> $livro,
+					'comunicacao'		=> $comunicacao,
+					'programaRadio'		=> $programaRadio,
+					'capituloLivro'		=> $capituloLivro,
+					'relatorioTecnico'	=> $relatorioTecnico,
+					'programaTv'		=> $programaTv,
+					'anais'				=> $anais,
+					'filme'				=> $filme,
+					'aplicativo'		=> $aplicativo,
+					'manual'			=> $manual,
+					'video'				=> $video,
+					'jogoEducativo'		=> $jogoEducativo,
+					'jornal' 			=> $jornal,
+					'cd'				=> $cd,
+					'produtoArtistico'	=> $produtoArtistico,
+					'revista'			=> $revista,
+					'dvd'				=> $dvd,
+					'artigo'			=> $artigo,
+					'outrosAudiovisual'	=> $outrosAudiovisual,
+					'outrosProducao'	=> $outrosProducao,
+					'tipoProducao'		=> $tipoProducao,
+					'detalheProducao'	=> $detalheProducao,
+					'relatorioFinal'	=> $relatorioFinal,		
+				);
+				
+				if($projeto->idRelatorioFinal) {
+					$tabRelatorioFinal->updateById($data, $projeto->idRelatorioFinal);
+				} else {
+					$db = $colaboradorDocente->getDefaultAdapter();
+					$db->beginTransaction();
+					try{
+						$idRelatorioFinal = $tabRelatorioFinal->insert($data);
+						
+						$dataProjeto = array(
+							"idRelatorioFinal" => $idRelatorioFinal 
+						);
+						$tabProjeto->updateById($dataProjeto, $projeto->id);
+					}catch(Exception $e) {
+						$db->rollBack();
+						$this->view->error = $e->getMessage();
+						return;
+					}
+				}
+			}
+			// Aqui coloca na view os dados inseridos pelo usuário
+			$this->view->relatorioFinal = $tabRelatorioFinal->find($projeto->idRelatorioFinal);
+		// Get
+		} else {
+			if($projeto) {
+				if($projeto->idRelatorioFinal)
+					$this->view->relatorioFinal = $tabRelatorioFinal->find($projeto->idRelatorioFinal);
 				$this->render();
 				return;
 			}

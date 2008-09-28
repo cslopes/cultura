@@ -36,7 +36,13 @@ class Projeto extends Proexc_Db_Table {
 	'columns'		=> 'idViceCoordenador',
 	'refTableClass'	=> 'Coordenador',
 	'refcolumns'	=> 'id'
-		)
+		),
+	'RelatorioFinal' => array(
+		'columns' => 'idRelatorioFinal',
+		'refTableClass' => 'RelatorioFinal',
+		'refcolumns' => 'id'
+		)	
+		
 	);
 
 	/**

@@ -179,7 +179,7 @@
 			<th><label for="cd">Produto audiovisual - CD</label></th>
 			<td><input name="cd" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="<?php echo $this->relatorioFinal->producaoAudiovisualCDs ?>" style="width: 60px"/></td>
 		</tr>
 		<tr>
 			<th><label for="produtoArtistico">Produto artístico</label></th>
@@ -217,7 +217,7 @@
 		</tr>
 		<tr>
 			<th><label for="detalheProducao" style="width: auto">Detalhamento da produção</label></th>
-			<td colspan="3"><textarea name="detalheProducao" dojoType="dijit.form.Textarea" style="width:355px"></textarea></td>
+			<td colspan="3"><textarea name="detalheProducao" dojoType="dijit.form.Textarea" style="width:355px" value="<?php echo $this->escape(@$this->relatorioFinal->producaoDetalhamento) ?>"></textarea></td>
 		</tr>
 	</table>
 </fieldset><br />
