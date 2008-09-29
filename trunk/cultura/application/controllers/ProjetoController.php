@@ -1392,19 +1392,17 @@ class ProjetoController extends Proexc_Controller_Action {
 		$tabRelatorioFinal = new RelatorioFinal();
 		$tabProjeto = new Projeto();
 
-		$idProjeto = (int) $this->_request->getParam('id', 0);
-		
-		$projeto = $tabProjeto->find($idProjeto)->current();
-		$this->view->projeto = $projeto;
-		
 		if($this->_request->isPost()) {
+			$idProjeto = (int) $this->_request->getPost('id');
+			$projeto = $tabProjeto->find($idProjeto)->current();
+		
 			$errors = null;
 			
 			$renovado = (int) $this->_request->getPost('renovado'); 
 			$disciplinas = $this->_request->getPost('disciplinas');
 			$estagio = $this->_request->getPost('estagio');
 			$credito = $this->_request->getPost('credito');
-			$projeto = $this->_request->getPost('projeto');
+			$projetoPost = $this->_request->getPost('projeto');
 			$docentes = $this->_request->getPost('docentes');
 			$bolsistas = (int) $this->_request->getPost('bolsistas');
 			$naoBolsistas = (int) $this->_request->getPost('naoBolsistas');
@@ -1441,50 +1439,52 @@ class ProjetoController extends Proexc_Controller_Action {
 			
 			if(!$errors) {
 				$data = array(
-					'renovado'			=> $renovado,
-					'disciplinas'		=> $disciplinas,
-					'estagio'			=> $estagio,
-					'credito'			=> $credito,
-					'projeto'			=> $projeto,
-					'docentes'			=> $docentes,
-					'bolsistas'			=> $bolsistas,
-					'naoBolsistas'		=> $naoBolsistas,
-					'posGraduacao'      => $posGraduacao,
-					'tecnicos'			=> $tecnicos,
-					'outrosEnvolvidos'  => $outrosEnvolvidos,
-					'comunidade'		=> $comunidade,
-					'publicoAtingido'   => $publicoAtingido,
-					'atendimentosGrupo' => $atendimentosGrupo,
-					'atendimentosIndividuais' => $atendimentosIndividuais,
-					'livro'				=> $livro,
-					'comunicacao'		=> $comunicacao,
-					'programaRadio'		=> $programaRadio,
-					'capituloLivro'		=> $capituloLivro,
-					'relatorioTecnico'	=> $relatorioTecnico,
-					'programaTv'		=> $programaTv,
-					'anais'				=> $anais,
-					'filme'				=> $filme,
-					'aplicativo'		=> $aplicativo,
-					'manual'			=> $manual,
-					'video'				=> $video,
-					'jogoEducativo'		=> $jogoEducativo,
-					'jornal' 			=> $jornal,
-					'cd'				=> $cd,
-					'produtoArtistico'	=> $produtoArtistico,
-					'revista'			=> $revista,
-					'dvd'				=> $dvd,
-					'artigo'			=> $artigo,
-					'outrosAudiovisual'	=> $outrosAudiovisual,
-					'outrosProducao'	=> $outrosProducao,
-					'tipoProducao'		=> $tipoProducao,
-					'detalheProducao'	=> $detalheProducao,
-					'relatorioFinal'	=> $relatorioFinal,		
+					
+					'disciplinas'						=> $disciplinas,
+					'estagio'							=> $estagio,
+					'creditos'							=> $credito,
+					'projeto'							=> $projetoPost,
+					'docentesEnvolvidos'				=> $docentes,
+					'alunosGraduacaoBolsistasEnvolvidos'=> $bolsistas,
+					'alunosGraduacaoNaoBolsistasEnvolvidos'	=> $naoBolsistas,
+					'alunosPosGraduacaoEnvolvidos'      => $posGraduacao,
+					'tecnicosAdministrativosEnvolvidos'	=> $tecnicos,
+					'pessoasOutrasIESEnvolvidas'  		=> $outrosEnvolvidos,
+					'pessoasComunidadeEnvolvidas'		=> $comunidade,
+					'publicoAtingido'   				=> $publicoAtingido,
+					'atendimentosSemanaisGrupo'			=> $atendimentosGrupo,
+					'atendimentosSemanaisIndividuais'   => $atendimentosIndividuais,
+					'producaoLivros'					=> $livro,
+					'producaoComunicacao'	   			=> $comunicacao,
+					'producaoProgramasRadio'			=> $programaRadio,
+					'producaoCapitulosLivros'			=> $capituloLivro,
+					'producaoRelatoriosTecnicos'		=> $relatorioTecnico,
+					'producaoProgramasTv'				=> $programaTv,
+					'producaoAnais'						=> $anais,
+					'producaoAudiovisualfilme'			=> $filme,
+					'producaoAplicativosComputador'		=> $aplicativo,
+					'producaoManuais'					=> $manual,
+					'producaoAudiovisualVideos'			=> $video,
+					'producaoJogosEducativos'			=> $jogoEducativo,
+					'producaoJornais'		 			=> $jornal,
+					'producaoAudiovisualCds'			=> $cd,
+					'producaoProdutosArtisticos'		=> $produtoArtistico,
+					'producaoRevistas'					=> $revista,
+					'producaoAudiovisualDvds'			=> $dvd,
+					'producaoArtigos'					=> $artigo,
+					'producaoAudiovisualOutros'			=> $outrosAudiovisual,
+					'producaoOutros'					=> $outrosProducao,
+					'producaoOutrosTexto'				=> $tipoProducao,
+					'producaoDetalhamento'				=> $detalheProducao,
+					'relatorioFinal'					=> $relatorioFinal	
 				);
-				
-				if($projeto->idRelatorioFinal) {
+				$this->view->errors = "id".$projeto->idRelatorioFinal;
+				if($projeto->idRelatorioFinal != null) {
+					$this->view->errors = "if";
 					$tabRelatorioFinal->updateById($data, $projeto->idRelatorioFinal);
 				} else {
-					$db = $colaboradorDocente->getDefaultAdapter();
+					$this->view->errors = "else";
+					$db = $tabRelatorioFinal->getDefaultAdapter();
 					$db->beginTransaction();
 					try{
 						$idRelatorioFinal = $tabRelatorioFinal->insert($data);
@@ -1495,24 +1495,31 @@ class ProjetoController extends Proexc_Controller_Action {
 						$tabProjeto->updateById($dataProjeto, $projeto->id);
 					}catch(Exception $e) {
 						$db->rollBack();
-						$this->view->error = $e->getMessage();
+						$this->view->errors = $e->getMessage();
 						return;
 					}
 				}
 			}
+			$projeto = $tabProjeto->find($idProjeto)->current();
+			$this->view->projeto = $projeto;
 			// Aqui coloca na view os dados inseridos pelo usuário
-			$this->view->relatorioFinal = $tabRelatorioFinal->find($projeto->idRelatorioFinal);
+			$this->view->relatorioFinal = $tabRelatorioFinal->find($projeto->idRelatorioFinal)->current();
+			$this->render();
 		// Get
 		} else {
+			$idProjeto = (int) $this->_request->getParam('id', 0);
+			$projeto = $tabProjeto->find($idProjeto)->current();
+		
 			if($projeto) {
+				$this->view->projeto = $projeto;
 				if($projeto->idRelatorioFinal)
-					$this->view->relatorioFinal = $tabRelatorioFinal->find($projeto->idRelatorioFinal);
+					$this->view->relatorioFinal = $tabRelatorioFinal->find($projeto->idRelatorioFinal)->current();
 				$this->render();
 				return;
 			}
 		}
 		
-		$this->_redirect("Index/listValidatedProjeto");;
+		//$this->_redirect("Index/listValidatedProjetos");;
 	}
 
 }

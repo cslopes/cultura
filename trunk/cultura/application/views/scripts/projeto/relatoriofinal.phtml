@@ -1,5 +1,4 @@
 <?php echo $this->render('header.phtml'); ?>
-
 <script type="text/javascript">
        dojo.require("dijit.form.Form");
        dojo.require("dijit.form.TextBox");
@@ -9,10 +8,12 @@
 </script>
 
 <h2><?php echo $this->title ?></h2>
+<?php echo "lenha " .$this->projeto->idRelatorioFinal . " : " . $this->projeto->titulo . " : " . $this->projeto->idAreaTematica ?>
 
 <?php if($this->errors) : ?>
 <div id="errors">
-<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+<?php //foreach ($this->errors as $error) echo $error . "<br />" ?>
+<?php echo $this->errors . "<br />" ?>
 </div><br />
 <?php endif; ?>
 
