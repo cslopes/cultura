@@ -24,9 +24,15 @@
 				- <?php echo $this->escape($convenio->registro) ?></h3>
 			<span><a href="<?php echo $this->baseUrl ?>/admin/convenio/delete/id/<?php echo $convenio->id?>">deletar</a></span>
 			<p><?php echo $this->escape($convenio->descricao) ?></p>
-			<p><b>Vigência: </b>à partir de <?php echo $convenio->dataInicio ?>
+			<p><b>Vigência: </b>à partir de <?php $ano = strtok($convenio->dataInicio,"-");
+												  $mes = strtok("-");
+												  $dia = strtok("-");	
+												  echo $dia."-".$mes."-".$ano ?>
 				<?php if($convenio->dataFinal) : ?>
-					até <?php echo $convenio->dataFinal ?>
+					até <?php $ano = strtok($convenio->dataFinal,"-");
+							  $mes = strtok("-");
+							  $dia = strtok("-"); 
+							  echo $dia."-".$mes."-".$ano ?>
 				<?php else : ?> , prazo indeterminado.
 				<?php endif; ?>
 			</p>

@@ -1,3 +1,6 @@
+<script>
+	dojo.i18n.getLocalization();
+</script>
 <?php
 error_reporting(E_ALL|E_STRICT);
 date_default_timezone_set('America/Sao_Paulo');
@@ -19,6 +22,11 @@ Zend_Loader::loadClass('Zend_Auth');
 Zend_Loader::loadClass('Zend_Acl');
 Zend_Loader::loadClass('Zend_Acl_Role');
 Zend_Loader::loadClass('Zend_Acl_Resource');
+Zend_Loader::loadClass('Zend_Translate');
+Zend_Loader::loadClass('Zend_Validate');
+Zend_Loader::loadClass('Zend_Locale');
+
+
 
 // Zend Acl
 // Define os acessos na área administrativa
@@ -48,9 +56,14 @@ $acl->deny('manager', 'usuario');
 
 Zend_Registry::set('acl', $acl);
 
+
+
+
+
 // load configuration
 $config = new Zend_Config_Ini('./application/config.ini', 'general');
 Zend_Registry::set('config', $config);
+
 
 // setup database
 $db = Zend_Db::factory($config->database);

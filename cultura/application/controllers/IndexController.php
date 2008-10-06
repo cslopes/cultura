@@ -8,11 +8,15 @@ require_once 'Curso.php';
 require_once 'Evento.php';
 
 class IndexController extends Proexc_Controller_Action {
-
+	
+	
+	
 	function init()
     {
-    	parent::init();
+    	
+		parent::init();
         $this->view->title = 'index';
+		
     }
 
     function indexAction()
