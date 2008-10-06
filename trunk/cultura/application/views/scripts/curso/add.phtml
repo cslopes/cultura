@@ -9,7 +9,7 @@
 
 <?php if($this->errors) : ?>
 <div id="errors">
-	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
+	<?php    foreach ($this->errors as $error) echo $error  ; ?>
 </div>
 <?php endif; ?>
 
@@ -18,4 +18,5 @@
 <input type="text" name="titulo" dojoType="dijit.form.TextBox" />
 <input type="submit" value="Criar" label="Criar" dojoType="dijit.form.Button" />
 </form>
-<?php echo $this->render('footer.phtml'); ?>
+
+<?php echo $this->render('footer.phtml');  ?>
