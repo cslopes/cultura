@@ -22,7 +22,7 @@ class Convenio extends Proexc_Db_Table {
 	public function findByNome($nome) {
 		$nome = "%" . $nome . "%";
 		$where = $this->getAdapter()->quoteInto("nome LIKE ?", $nome);
-		return $this->fetchAll($where);
+		return $this->fetchAll($where,'nome');
 	}
 	
 }
