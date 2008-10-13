@@ -7,13 +7,11 @@
        dojo.require("dijit.form.Textarea");
 </script>
 
-<h2><?php echo $this->title ?></h2>
-<?php echo "lenha " .$this->projeto->idRelatorioFinal . " : " . $this->projeto->titulo . " : " . $this->projeto->idAreaTematica ?>
+<h2><?php echo $this->title ?> <?php echo $this->escape($this->projeto->titulo) ?></h2>
 
 <?php if($this->errors) : ?>
 <div id="errors">
-<?php //foreach ($this->errors as $error) echo $error . "<br />" ?>
-<?php echo $this->errors . "<br />" ?>
+<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
 </div><br />
 <?php endif; ?>
 
@@ -34,7 +32,7 @@
 <legend>Articulação com o ensino</legend>
 	<p>
 		<label for="disciplinas">Disciplinas:</label>
-		<input name="disciplinas" dojoType="dijit.form.TextBox"/>
+		<input name="disciplinas" value="<?php echo $this->escape($this->relatorioFinal->disciplinas) ?>" dojoType="dijit.form.TextBox"/>
 	</p>
 	<p>
 		<label for="estagio">Estágio:</label>

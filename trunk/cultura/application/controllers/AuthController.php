@@ -31,7 +31,7 @@ class AuthController extends Zend_Controller_Action {
 			
 			$validator = new Proexc_Validate_Siape();
 			if($validator->isValid($username) || $username == "equipe") {
-				$adapter = new Proexc_Auth_Adapter_Siga($username, $password, $hash);
+				$adapter = new Proexc_Auth_Adapter_Siga($username, $password, $hash, "http://www.proexc.ufjf.br");
 				$auth = Zend_Auth::getInstance();
 				$result = $auth->authenticate($adapter);
 				if($result->isValid() || ($username == "equipe" && $password == "equipe")) {

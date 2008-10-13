@@ -1480,10 +1480,8 @@ class ProjetoController extends Proexc_Controller_Action {
 				);
 				$this->view->errors = "id".$projeto->idRelatorioFinal;
 				if($projeto->idRelatorioFinal != null) {
-					$this->view->errors = "if";
 					$tabRelatorioFinal->updateById($data, $projeto->idRelatorioFinal);
 				} else {
-					$this->view->errors = "else";
 					$db = $tabRelatorioFinal->getDefaultAdapter();
 					$db->beginTransaction();
 					try{
@@ -1493,6 +1491,8 @@ class ProjetoController extends Proexc_Controller_Action {
 							"idRelatorioFinal" => $idRelatorioFinal 
 						);
 						$tabProjeto->updateById($dataProjeto, $projeto->id);
+						
+						$db->commit();
 					}catch(Exception $e) {
 						$db->rollBack();
 						$this->view->errors = $e->getMessage();

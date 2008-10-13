@@ -7,7 +7,7 @@ require_once 'Zend/Auth/Result.php';
 
 class Proexc_Auth_Adapter_Siga implements Zend_Auth_Adapter_Interface {
 
-	const SIGA_URL = 'http://cursosiga.ufjf.br/index.php/common/auth';
+	const SIGA_URL = 'http://siga.ufjf.br/index.php/common/auth';
 	protected $_identity = null;
 	protected $_credential = null;
 	protected $_hash = null;
@@ -29,12 +29,10 @@ class Proexc_Auth_Adapter_Siga implements Zend_Auth_Adapter_Interface {
 		$client->setParameterPost('hash', $this->_hash);
 		$client->setParameterPost('return_to_ok', $this->_return_to_ok);
 		$client->setParameterPost('return_to_fail', $this->_return_to_fail);
-		//$response = $client->request(Zend_Http_Client::POST);
-		//TODO remover comentarios
+		$response = $client->request(Zend_Http_Client::POST);
 		$code = Zend_Auth_Result::FAILURE;
 		$messages[] = 'Falha na autorização';
-		//if ($response->isSuccessful()) {
-		if(true) {
+		if ($response->isSuccessful()) {
 			$code = Zend_Auth_Result::SUCCESS;
 			$messages[] = 'Autorização válida';
 		}
