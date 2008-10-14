@@ -30,17 +30,17 @@
 
 <fieldset>
 <legend>Articulação com o ensino</legend>
-	<p>
+	<p>	
 		<label for="disciplinas">Disciplinas:</label>
-		<input name="disciplinas" value="<?php echo $this->escape($this->relatorioFinal->disciplinas) ?>" dojoType="dijit.form.TextBox"/>
+		<input name="disciplinas" value="<?php echo @$this->escape($this->relatorioFinal->disciplinas) ?>" dojoType="dijit.form.TextBox"/>
 	</p>
 	<p>
 		<label for="estagio">Estágio:</label>
-		<input name="estagio" dojoType="dijit.form.TextBox"/>
+		<input name="estagio" dojoType="dijit.form.TextBox" value="<?php echo @$this->escape($this->relatorioFinal->estagio) ?>"/>
 	</p>
 	<p>
 		<label for="credito">Crédito (flexibilização curricular):</label>
-		<input name="credito" dojoType="dijit.form.TextBox"/>
+		<input name="credito" dojoType="dijit.form.TextBox" value="<?php echo @$this->escape($this->relatorioFinal->creditos) ?>"/>
 	</p>
 </fieldset>
 
@@ -48,7 +48,7 @@
 <legend>Articulação com a pesquisa</legend>
 	<p>
 		<label for="projeto">Projeto:</label>
-		<input name="projeto" dojoType="dijit.form.TextBox"/>
+		<input name="projeto" dojoType="dijit.form.TextBox" value="<?php echo @$this->escape($this->relatorioFinal->projeto)?>"/>
 	</p>
 </fieldset>
 
@@ -57,38 +57,38 @@
 	<label for="docentes">Docentes: </label>
     <input name="docentes" dojoType="dijit.form.NumberSpinner"
     	   constraints="{min:0,max:200,places:0}"
-    	   value="0" />
+    	   value="<?php echo @$this->escape($this->relatorioFinal->docentesEnvolvidos)?>"/>
 	<fieldset>
 	<legend>Alunos da graduação</legend>
 		<label for="bolsistas">Bolsistas:</label>
 		<input name="bolsistas" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:200,places:0}"
-		   	   value="0" /><br/>
+		   	   value="<?php echo @$this->escape($this->relatorioFinal->alunosGraduacaoBolsistasEnvolvidos)?>"/><br/>
 		<label for="naoBolsistas">Não-bolsistas:</label>
 		<input name="naoBolsistas" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:200,places:0}"
-			   value="0" /><br/>
+			   value="<?php echo @$this->escape($this->relatorioFinal->alunosGraduacaoNaoBolsistasEnvolvidos)?>"/><br/>
 	</fieldset>
 	<label for="posGraduacao">Alunos pós-graduação:</label>
 	<input name="posGraduacao" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:200,places:0}"
-			   value="0" /><br/>
+			   value="<?php echo @$this->escape($this->relatorioFinal->alunosPosGraduacaoEnvolvidos)?>"/><br/>
 	<label for="tecnicos">Técnicos administrativos:</label>
 	<input name="tecnicos" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:200,places:0}"
-			   value="0" /><br/>
+			   value="<?php echo @$this->escape($this->relatorioFinal->tecnicosAdministrativosEnvolvidos)?>"/><br/>
 	<label for="outros">De outras IES ou orgãos:</label>
 	<input name="outrosEnvolvidos" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:200,places:0}"
-			   value="0" /><br/>
+			   value="<?php echo @$this->escape($this->relatorioFinal->pessoasOutrasIESEnvolvidas)?>"/><br/>
 	<label for="comunidade">Da comunidade externa:</label>
 	<input name="comunidade" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:200,places:0}"
-			   value="0" /><br/>
+			   value="0" value="<?php echo @$this->escape($this->relatorioFinal->pessoasComunidadeEnvolvidas)?>" /><br/>
 	<label for="publicoAtingido">Público atingido</label>
 	<input name="publicoAtingido" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:100000,places:0}"
-			   value="0" />
+			   value="0" value="<?php echo @$this->escape($this->relatorioFinal->publicoAtingido)?>" />
 </fieldset><br/>
 
 <fieldset id="fieldsetAtendimentos">
@@ -97,13 +97,13 @@
 	<label for="atendimentosGrupo">Grupo</label>
 	<input name="atendimentosGrupo" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:100000,places:0}"
-			   value="0" />
+			   value="0" value="<?php echo @$this->escape($this->relatorioFinal->atendimentosSemanaisGrupo)?>"/>
 </p>
 <p>
 <label for="atendimentosIndividuais">Individual</label>
 <input name="atendimentosIndividuais" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:100000,places:0}"
-			   value="0" />
+			   value="0" value="<?php echo @$this->escape($this->relatorioFinal->atendimentosSemanaisIndividuais)?>"/>
 </p>
 </fieldset>
 
@@ -114,104 +114,104 @@
 			<th><label for="livro">Livro</label></th>
 			<td><input name="livro" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px" /></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoLivros)?>"/></td>
 			<th><label for="comunicacao">Comunicação</label></th>
 			<td><input name="comunicacao" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px" /></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoComunicacao)?>"/></td>
 		</tr>
 		<tr>
 			<th><label for="programaRadio">Programa de rádio</label></th>
 			<td><input name="programaRadio" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoProgramasRadio)?>"/></td>
 			<th><label for="capituloLivro">Capítulo de livro</label></th>
 			<td><input name="capituloLivro" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px" /></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoCapitulosLivros)?>"/></td>
 		</tr>
 		<tr>
 			<th><label for="relatorioTecnico">Relatório técnico</label></th>
 			<td><input name="relatorioTecnico" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoRelatoriosTecnicos)?>"/></td>
 			<th><label for="programaTv">Programa de TV</label></th>
 			<td><input name="programaTv" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoProgramasTV)?>"/></td>
 		</tr>
 		<tr>
 			<th><label for="anais">Anais</label></th>
 			<td><input name="anais" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoAnais)?>"/></td>
 			<th><label for="filme">Produto audiovisual - filme</label></th>
 			<td><input name="filme" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoAudiovisualFilme)?>"/></td>
 		</tr>
 		<tr>
 			<th><label for="aplicativo">Aplicativo para computador</label></th>
 			<td><input name="aplicativo" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoAplicativosComputador)?>"/></td>
 			<th><label for="manual">Manual</label></th>
 			<td><input name="manual" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoManuais)?>"/></td>
 		</tr>
 		<tr>
 			<th><label for="video">Produto audiovisual - vídeo</label></th>
 			<td><input name="video" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px" /></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoAudiovisualVideos)?>"/></td>
 			<th><label for="jogoEducativo">Jogo educativo</label></th>
 			<td><input name="jogoEducativo" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoJogosEducativos)?>"/></td>
 		</tr>
 		<tr>
 			<th><label for="jornal">Jornal</label></th>
 			<td><input name="jornal" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoJornais)?>"/></td>
 			<th><label for="cd">Produto audiovisual - CD</label></th>
 			<td><input name="cd" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="<?php echo $this->relatorioFinal->producaoAudiovisualCDs ?>" style="width: 60px"/></td>
+			   			value="<?php echo @$this->relatorioFinal->producaoAudiovisualCDs ?>" style="width: 60px"/></td>
 		</tr>
 		<tr>
 			<th><label for="produtoArtistico">Produto artístico</label></th>
 			<td><input name="produtoArtistico" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoProdutosArtisticos)?>"/></td>
 			<th><label for="revista">Revista</label></th>
 			<td><input name="revista" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoRevistas)?>"/></td>
 		</tr>
 		<tr>
 			<th><label for="dvd">Produto audiovisual - DVD</label></th>
 			<td><input name="dvd" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoAudiovisualDVDs)?>"/></td>
 			<th><label for="artigo">Artigo</label></th>
 			<td><input name="artigo" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoArtigos)?>"/></td>
 		</tr>
 		<tr>
 			<th><label for="outrosAudiovisual">Produto audiovisual - outros</label></th>
 			<td colspan="3"><input name="outrosAudiovisual" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/></td>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoAudiovisualOutros)?>"/></td>
 		</tr>
 		<tr>
 			<th><label for="outrosProducao">Outros (especifique)</label></th>
 			<td colspan="3">
 				<input name="outrosProducao" dojoType="dijit.form.NumberSpinner"
 			   			constraints="{min:0,max:200,places:0}"
-			   			value="0" style="width: 60px"/>
+			   			value="0" style="width: 60px" value="<?php echo @$this->escape($this->relatorioFinal->producaoOutros)?>"/>
 				<input name="tipoProducao" dojoType="dijit.form.TextBox"/></td>
 		</tr>
 		<tr>
@@ -225,7 +225,7 @@
 <p>
 	<label for="relatorioFinal" style="width: auto">Relatório final</label><br/>
 	Avaliação dos resultados alcançados, dificuldades encontradas, etc.<br/>
-	<textarea name="relatorioFinal" dojoType="dijit.form.Textarea" style="width:575px">
+	<textarea name="relatorioFinal" dojoType="dijit.form.Textarea" style="width:575px" value="<?php echo @$this->escape($this->relatorioFinal->relatorioFinal)?>">
     </textarea>
 </p>
 
