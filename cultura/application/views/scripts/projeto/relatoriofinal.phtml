@@ -15,6 +15,7 @@
 </div><br />
 <?php endif; ?>
 
+
 <form id="formRelatorioFinal" action="<?php echo $this->baseUrl ?>/projeto/relatorioFinal" method="post">
 	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
 
@@ -51,6 +52,7 @@
 		<input name="projeto" dojoType="dijit.form.TextBox" value="<?php echo @$this->escape($this->relatorioFinal->projeto)?>"/>
 	</p>
 </fieldset>
+
 
 <fieldset>
 <legend>Total de pessoas da equipe de trabalho envolvidas na execução</legend>
