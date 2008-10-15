@@ -1391,7 +1391,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		$this->view->title = "Relatório Final do Projeto";
 		$tabRelatorioFinal = new RelatorioFinal();
 		$tabProjeto = new Projeto();
-		
+
 		if($this->_request->isPost()) {
 			$idProjeto = (int) $this->_request->getPost('id');
 			$projeto = $tabProjeto->find($idProjeto)->current();
@@ -1478,7 +1478,7 @@ class ProjetoController extends Proexc_Controller_Action {
 					'producaoDetalhamento'				=> $detalheProducao,
 					'relatorioFinal'					=> $relatorioFinal	
 				);
-					if($projeto->idRelatorioFinal != null) {
+				if($projeto->idRelatorioFinal != null) {
 					$tabRelatorioFinal->updateById($data, $projeto->idRelatorioFinal);
 				} else {
 					$db = $tabRelatorioFinal->getDefaultAdapter();
