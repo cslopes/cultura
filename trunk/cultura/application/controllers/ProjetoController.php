@@ -1387,6 +1387,48 @@ class ProjetoController extends Proexc_Controller_Action {
 		$this->_redirect("Index/listProjetos");
 	}
 	
+	function fecharRelatorioAction(){
+		// Título da página
+		$this->view->title = "Concluir Relatório Final";
+
+		// Cria um objeto referente à tabela Relatorio Final
+		$relatorioFinal = new relatorioFinal();
+
+		// Se a requisição for um método post
+		if ($this->_request->isPost()) {
+			// Pega os dados
+			$idRelatorio = (int)$this->_request->getPost('id');
+			$fecha = $this->_request->getPost('fecha');
+
+			// Se clicou em 'Yes' e existe o Relatorio
+			if ($fecha == 'Sim' && $idRelatorio > 0) {
+				$data = array(
+					"fechado"	=> 1
+				);
+				
+				$relatorioFinal->updateById($data, $idRelatorio);
+			}
+			// A transação é do tipo 'get'
+		} else {
+			// Pega os dados passados na url
+			$idRelatorio = (int)$this->_request->getParam('id');
+
+			// Testa o id
+			if ($idRelatorio > 0) {
+				// somente mostra se achou o projeto
+				$this->view->relatorioFinal = $relatorioFinal->fetchRow('id='.$idRelatorio);
+
+				if ($this->view->relatorioFinal->id > 0) {
+					$this->render();
+					return;
+				}
+			}
+		}
+		// volta se não renderizou (se o relatorio não existe)
+		$this->_redirect("Index/listProjetos");
+		
+	}
+	
 	function relatorioFinalAction() {
 		$this->view->title = "Relatório Final do Projeto";
 		$tabRelatorioFinal = new RelatorioFinal();
