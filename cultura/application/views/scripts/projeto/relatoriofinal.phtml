@@ -231,9 +231,24 @@
     </textarea>
 </p>
 
-<p>
-	<input name="button" type="submit" value="Salvar" />
-	<input name="button" type="submit" value="Imprimir" />
-</p>
+<p>	
 
+<table>
+<tr>	
+	<?php if (! @$this->relatorioFinal->fechado):  ?>
+		<td><input name="button" type="submit" value="Salvar" /></td>
+		</form>
+		<?php if(@$this->relatorioFinal->id): ?>
+			<form action="<?php echo $this->baseUrl ?>/projeto/fecharRelatorio" method="get" style="display:inline">
+				<input type="hidden" name="id" value="<?php echo @$this->escape($this->relatorioFinal->id) ?>"/>
+				<td><button type="submit">Concluir</button></td>
+			
+		<?php endif; ?>	
+	<?php else :?>
+		<td><input name="button" type="submit" value="Imprimir" /></td>
+	<?php endif; ?>
+</tr>	
+</table>	
+</p>
+	
 <?php echo $this->render('footer.phtml') ?>
