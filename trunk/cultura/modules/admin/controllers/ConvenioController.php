@@ -36,6 +36,12 @@ class Admin_ConvenioController extends Proexc_Admin_Controller_Action {
 			$this->view->convenioList = $tabConvenio->findByNome($argument);
 		}
 	}
+	
+	function listTerminoAction(){
+		$this->view->title = 'Consultar Término de Convênios';
+			
+	
+	}
 
 	function editAction()
 	{
