@@ -1,0 +1,18 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<?php if ($this->relatorioFinal) :?>
+<form action="<?php echo $this->baseUrl ?>/projeto/fecharRelatorio" method="post" style="width: 580px">
+	<input type="hidden" name="id" value="<?php echo $this->relatorioFinal->id?>" />
+	<p>Tem certeza que deseja concluir o Relatório Final ?</p>
+	<p class="atencao">Se você concluir o relatório não poderá modificá-lo mais.</p>
+	<div>
+	<!--<input type="hidden" name="idRecursos" value="<?php echo $this->projeto->idRecursos; ?>" /> -->
+		<input type="submit" name="fecha" value="Sim"/>
+		<input type="submit" name="fecha" value="Não" />
+	</div>
+</form>
+<?php else: ?>
+<p>Relatório não encontrado.</p>
+<?php echo $this->error ?>
+<?php endif;?>
+<?php echo $this->render('footer.phtml'); ?>
