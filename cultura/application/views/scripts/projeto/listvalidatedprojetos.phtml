@@ -1,0 +1,40 @@
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+<div id="listaProjetos">
+
+<?php if(count($this->projetos) == 0) : ?>
+Não existem projetos salvos.
+
+<?php else : ?>
+<table border="1" width="580px" class="tabela">
+	<thead>
+		<th width="40%"></th>
+		<th>Nome</th>
+	</thead>
+	<tbody>
+<?php if(count($this->projetos) == 0) echo 'Não existem projetos salvos.' ?>
+<?php foreach ($this->projetos as $projeto) : ?>
+	<tr>
+		<td align="center">
+		<?php if($projeto->idAreaTematica && $projeto->idLinhaAtuacao) : ?>
+			<form action="<?php echo $this->baseUrl ?>/projeto/imprimirFormulario" method="get" style="display: inline">
+				<input type="hidden" name="id" value="<?php echo $projeto->id?>" />
+				<button type="submit" class="printButton">Imprimir</button>
+			</form>
+		<?php endif; ?>
+		<!-- Retirar para incluir relatório final-->
+		<form action="<?php echo $this->baseUrl ?>/projeto/relatorioFinal" method="get" style="display: inline;">
+			<input type="hidden" name="id" value="<?php echo $projeto->id?>" />
+			<button type="submit" class="reportButton">Relatório Final</button>
+		</form>
+		 
+		<td><?php echo $projeto->titulo?></td>
+	</tr>
+<?php endforeach; ?>
+	</tbody>
+</table>
+
+<?php endif; ?>
+	
+</div>
+<?php echo $this->render('footer.phtml'); ?>

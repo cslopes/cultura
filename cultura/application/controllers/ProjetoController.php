@@ -29,6 +29,7 @@ require_once 'ProjetoParceiro.php';
 require_once 'Recursos.php';
 require_once 'FormularioProjeto.php';
 require_once 'RelatorioFinal.php';
+require_once 'FormularioRelatorioProjeto.php';
 
 class ProjetoController extends Proexc_Controller_Action {
 
@@ -63,6 +64,24 @@ class ProjetoController extends Proexc_Controller_Action {
 					break;
 				}
 			}
+			if(!$ok) $this->_redirect('/');
+		}
+		
+		//Verifica se o coordenador tem acesso a ação de fechar um relatório final
+		else if($this->_request->getActionName() == 'fecharRelatorio') {
+			$tabRelatorio = new relatorioFinal();
+			$ok = 0;
+			if(($this->_request->isPost())){
+				$relatorios = $tabRelatorio->find($this->_request->getPost('id'));
+				if(@count($relatorios) != 0){
+					$ok = 1;
+				}
+			}else{
+				$relatorios = $tabRelatorio->find($this->_request->getParam('id'));
+				if(@count($relatorios) != 0){
+					$ok = 1;
+				}
+			}	
 			if(!$ok) $this->_redirect('/');
 		}
 		
@@ -1276,6 +1295,21 @@ class ProjetoController extends Proexc_Controller_Action {
 			$formulario = new FormularioProjeto($projeto);
 			$formulario->Output('formulario.pdf', 'D');
 		}
+	}
+	
+	function imprimirRelatorioProjetoAction(){
+		$this->_helper->viewRenderer->setNoRender(true);
+		
+		$id = (int) $this->_request->getParam('id');
+		if($id > 0){
+			$tabProjeto = new Projeto();
+			$projeto = $tabProjeto->fetchRow('id = ' . $id);
+			
+		/*	$formulario = new FormularioRelatorioProjeto($projeto);
+			$formulario->Output('relatoriofinal.pdf','D');
+		*/
+		}
+		
 	}
 
 	function delAction() {
