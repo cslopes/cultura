@@ -53,6 +53,18 @@ class ProjetoController extends Proexc_Controller_Action {
 			if(!$ok) $this->_redirect('/');
 		}
 		
+	// 
+		if($this->_request->getActionName() == 'imprimirRelatorioProjeto') {
+			$tabRelatorio = new relatorioFinal();
+			$relatorio = $tabRelatorio->find($this->_request->getParam('id'));
+			$ok = 0;
+			if(@count($relatorio) != 0){
+				$ok = 1;	
+			}
+			if(!$ok) $this->_redirect('/');
+		}
+		
+		
 		// Verifica se o coordenador tem acesso a ações para projetos abertos e validados
 		else if($this->_request->getActionName() == 'relatorioFinal') {
 			$tabProjeto = new Projeto();
@@ -1303,11 +1315,11 @@ class ProjetoController extends Proexc_Controller_Action {
 		$id = (int) $this->_request->getParam('id');
 		if($id > 0){
 			$tabProjeto = new Projeto();
-			$projeto = $tabProjeto->fetchRow('id = ' . $id);
+			$projeto = $tabProjeto->fetchRow('idRelatorioFinal = '. $id);
 			
-		/*	$formulario = new FormularioRelatorioProjeto($projeto);
+			$formulario = new FormularioRelatorioProjeto($projeto);
 			$formulario->Output('relatoriofinal.pdf','D');
-		*/
+		
 		}
 		
 	}
