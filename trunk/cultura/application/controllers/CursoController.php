@@ -1,16 +1,18 @@
-<?php
+﻿<?php
 
 require_once 'Zend/Date.php';
 require_once 'Zend/Validate/Int.php';
 require_once 'Zend/Validate/NotEmpty.php';
 require_once 'Zend/Validate/Date.php';
 require_once 'Zend/Validate/Alpha.php';
+
 require_once 'Zend/Validate/EmailAddress.php';
 require_once 'Zend/Validate/Regex.php';
 require_once 'Zend/Validate/Between.php';
 
 require_once 'Proexc/Controller/Action.php';
 require_once 'Proexc/Validate/Siape.php';
+require_once 'Proexc/Validate/Alpha.php';
 
 require_once 'Curso.php';
 require_once 'CursoColaboradorDocente.php';
@@ -32,7 +34,7 @@ class CursoController extends Proexc_Controller_Action {
 		// Verifica se o coordenador tem acesso a ações para cursos fechados e não-validados
 		if($this->_request->getActionName() == 'imprimirFormulario') {
 			$tabCurso = new Curso();
-			$cursos = $tabCurso->fetchClosedByCoordenador($this->user->id);
+			$cursos = $tabCurso->fetchClosedAndUnvalidatedByCoordenador($this->user->id);
 			$ok = 0;
 			foreach ($cursos as $curso) {
 				if($curso->id == $this->_request->getParam('id')){
@@ -44,9 +46,9 @@ class CursoController extends Proexc_Controller_Action {
 		}
 		
 		// Verifica se o coordenador tem acesso a ações para cursos abertos e validados
-		else if($this->_request->getActionName() == 'relatorioFinal') {
+		if($this->_request->getActionName() == 'relatorioFinal') {
 			$tabCurso = new Curso();
-			$cursos = $tabCurso->fetchValidatedByCoordenador($this->user->id);
+			$cursos = $tabCurso->fetchOpenAndValidatedByCoordenador($this->user->id);
 			$ok = 0;
 			foreach ($cursos as $curso) {
 				if($curso->id == $this->_request->getParam('id')){
@@ -58,7 +60,7 @@ class CursoController extends Proexc_Controller_Action {
 		}
 		
 		// Verifica se o coordenador tem acesso a ações para cursos não-validados
-		else if($this->_request->getActionName() != 'add') {
+		if($this->_request->getActionName() != 'add' && $this->_request->getActionName() != 'relatorioFinal') {
 			$tabCurso = new Curso();
 			$cursos = $tabCurso->fetchOpenAndUnvalidatedByCoordenador($this->user->id);
 			$ok = 0;
@@ -81,11 +83,11 @@ class CursoController extends Proexc_Controller_Action {
 		$this->view->title = "Cadastrar Novo Curso";
 
 		$curso = new Curso();
-
+		
 		if($this->_request->isPost()) {
 			$errors = null;
 
-			$validator = new Zend_Validate_Alpha(true);
+			$validator = new Proexc_Validate_Alpha(true);
 			$titulo = trim($this->_request->getPost('titulo'));
 			if(!$validator->isValid($titulo)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -121,7 +123,7 @@ class CursoController extends Proexc_Controller_Action {
 
 			$id = (int) $this->_request->getPost('id');
 			
-			$validator = new Zend_Validate_Alpha(true);
+			$validator = new Proexc_Validate_Alpha(true);
 			$titulo = trim($this->_request->getPost('titulo'));
 			if(!$validator->isValid($titulo)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -209,7 +211,7 @@ class CursoController extends Proexc_Controller_Action {
 			}
 			$this->view->errors = $errors;
 			
-			if($id > 0) $this->view->curso = $curso->find($id)->current();
+			$this->view->curso 					= new stdClass();
 			$this->view->curso->id				= $id;
 			$this->view->curso->dataInicio		= $dataInicio;
 			$this->view->curso->dataFinal		= $dataFinal;
@@ -249,7 +251,7 @@ class CursoController extends Proexc_Controller_Action {
 			$idViceCoordenador = (int) $this->_request->getPost('idViceCoordenador');
 			$idViceCoordenador = $idViceCoordenador ? $idViceCoordenador : null;
 			
-			$validator = new Zend_Validate_Alpha(true);
+			$validator = new Proexc_Validate_Alpha(true);
 			$coordenadorArea = trim($this->_request->getPost('coordenadorArea'));
 			if(!$validator->isValid($coordenadorArea)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -376,7 +378,7 @@ class CursoController extends Proexc_Controller_Action {
 			$idCurso = (int) $this->_request->getPost('id');
 			$idColaboradorDocente = (int) $this->_request->getPost('idColaboradorDocente');
 
-			$validator = new Zend_Validate_Alpha(true);
+			$validator = new Proexc_Validate_Alpha(true);
 			$nome = trim($this->_request->getPost('nome'));
 			if(!$validator->isValid($nome))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -703,7 +705,7 @@ class CursoController extends Proexc_Controller_Action {
 
 	function fecharAction() {
 		// Título da página
-		$this->view->title = "Concluir Curso";
+		$this->view->title = "Fechar Curso";
 
 		// Cria um objeto referente à tabela Curso
 		$curso = new Curso();
@@ -715,7 +717,7 @@ class CursoController extends Proexc_Controller_Action {
 			$fecha = $this->_request->getPost('fecha');
 
 			// Se clicou em 'Yes' e existe o Curso
-			if ($fecha == 'Sim' && $idCurso > 0) {
+			if ($fecha == 'Yes' && $idCurso > 0) {
 				$data = array(
 					"fechado"	=> 1
 				);
