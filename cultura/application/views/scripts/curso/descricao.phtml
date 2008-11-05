@@ -46,12 +46,14 @@ parâmetros de Ensino, Pesquisa, Extensão.</p>
 
 <div id="helpResumo" class="help">
 <p>O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e o público alvo que permitam uma
-melhor visualização do curso , além do local de realização, horários de atendimento ou de execução do curso,  telefone  de
-secretaria  ou  do serviço  (se for  o caso). Este  resumo será  divulgado na  página da UFJF  e, portanto, o texto deverá ser
-revisado e é de responsabilidade do coordenador.</p>
+melhor visualização do curso. Devem ser informados, a carga horária do curso, o local e horário de realização, local e horário
+para inscrições e telefone para informações. </p>
 </div>
+
 <div>
 	<label for="resumo">Resumo:</label>
+<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" 
+onmouseover="setVisible('helpResumo', true)"  onmouseout="javascript:setVisible('helpResumo', false)"/>	
 	<br />
 	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px">
     	<?php echo $this->escape($this->curso->resumo) ?>

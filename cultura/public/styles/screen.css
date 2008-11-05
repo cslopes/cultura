@@ -243,7 +243,7 @@ a img {
 
 form {
 	display: block;
-	width: 350px;
+	width: 360px;
 }
 
 #formDescricao, #formParceiro, #formDetailProjeto, #formRecursos, #formAgenda, #formRelatorioFinal {
@@ -302,7 +302,7 @@ form label.none {
 div.help {
 	float: right;
 	padding: 10px;
-	width: 200px;
+	width: 190px;
 	border: 1px solid #000;
 	background-color: #FFB;
 	display: none;

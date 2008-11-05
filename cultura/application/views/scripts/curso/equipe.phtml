@@ -9,10 +9,20 @@
 
 <h2><?php echo $this->escape($this->title); ?></h2>
 
+<!-- helps  -->
 <div class="help" id="helpViceCoordenador">
 <p>O vice coordenador, docente da UFJF cadastrado no sistema PROEXC, trabalha conjuntamente com o coordenador, podendo assumir temporariamente ou
 definitivamente o curso.</p>
 </div>
+
+<div class="help" id="helpCoordenadorDeArea">
+<p>O Coordenador de Área é um professor da UFJF responsável por uma área específica dentro do curso.</p>
+</div>
+
+<div class="help" id="helpColaboradoresDocentes">
+<p>Professor(es) ministrantes do Curso.</p>
+</div>
+<!-- /helps -->
 
 <form id="myForm" action="<?php echo $this->baseUrl ?>/curso/equipe" method="post">
 	<input name="id" type="hidden" value="<?php echo $this->curso->id ?>" />
@@ -31,6 +41,9 @@ definitivamente o curso.</p>
 	</select>
 </div><br />
 
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" 
+onmouseover="setVisible('helpCoordenadorDeArea', true)"  
+onmouseout="javascript:setVisible('helpCoordenadorDeArea', false)"/>
 <div>	
 	<label for="coordenadorArea">Coordenador de Área:</label>
 	<input name="coordenadorArea" type="text" dojoType="dijit.form.TextBox" value="<?php echo $this->escape($this->curso->coordenadorArea) ?>" />

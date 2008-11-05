@@ -35,7 +35,7 @@ class Admin_AgendaController extends Proexc_Admin_Controller_Action {
 			$argument = $this->_request->getParam('s', null);
 			$this->view->agendaList = $tabAgenda->findByTitulo($argument);
 		} else {
-			$this->view->agendaList = $tabAgenda->fetchAll(null, 'timestamp desc', 10);
+			$this->view->agendaList = $tabAgenda->fetchAll(null, 'dataAtualizacao desc', 10);
 		}
 	}
 	
@@ -86,20 +86,22 @@ class Admin_AgendaController extends Proexc_Admin_Controller_Action {
 			if($tituloImagem == '') $tituloImagem = null;
 				
 			$descricao = $this->_request->getPost('descricao');
+			$descricao = str_replace("\\\"", "\"", $descricao);
 			$ativo = (int) $this->_request->getPost('ativo');
-
+			
 			if(!$errors) {
 				$data = array(
     				'titulo'		=> $titulo,
 					'tituloImagem'	=> $tituloImagem,
 					'descricao'		=> $descricao,
-					'timestamp'		=> null,
 					'ativo'			=> $ativo,
 					'login'			=> $this->user->login
 				);
 
-				if($tipo == 'add')
+				if($tipo == 'add') {
+					$data['timestamp'] = date("y/m/d H:i:s");					
 					$tabAgenda->insert($data);
+				}
 				else if($tipo == 'edit') 
 					$tabAgenda->updateById($data, $idAgenda);
 					

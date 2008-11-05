@@ -55,10 +55,10 @@ class ProjetoController extends Proexc_Controller_Action {
 		
 	// 
 		if($this->_request->getActionName() == 'imprimirRelatorioProjeto') {
-			$tabRelatorio = new relatorioFinal();
-			$relatorio = $tabRelatorio->find($this->_request->getParam('id'));
+			$tabProjeto = new Projeto();
+			$projeto = $tabProjeto->find($this->_request->getParam('id'));
 			$ok = 0;
-			if(@count($relatorio) != 0){
+			if(@count($projeto) != 0){
 				$ok = 1;	
 			}
 			if(!$ok) $this->_redirect('/');
@@ -1312,7 +1312,7 @@ class ProjetoController extends Proexc_Controller_Action {
 	function imprimirRelatorioProjetoAction(){
 		$this->_helper->viewRenderer->setNoRender(true);
 		
-		$id = (int) $this->_request->getParam('id');
+		$id = (int) $this->_request->getParam('id',0);
 		if($id > 0){
 			$tabProjeto = new Projeto();
 			$projeto = $tabProjeto->fetchRow('idRelatorioFinal = '. $id);
