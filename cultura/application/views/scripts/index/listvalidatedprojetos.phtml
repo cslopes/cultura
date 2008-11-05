@@ -8,27 +8,34 @@ Não existem projetos salvos.
 <?php else : ?>
 <table border="1" width="580px" class="tabela">
 	<thead>
-		<th width="40%"></th>
+		<th width="50%"></th>
 		<th>Nome</th>
 	</thead>
 	<tbody>
-<?php if(count($this->projetos) == 0) echo 'Não existem projetos salvos.' ?>
+<?php if(count($this->projetos) == 0) echo 'Não existem projetos validados.' ?>
 <?php foreach ($this->projetos as $projeto) : ?>
 	<tr>
 		<td align="center">
-		<?php if($projeto->idAreaTematica && $projeto->idLinhaAtuacao) : ?>
-			<form action="<?php echo $this->baseUrl ?>/projeto/imprimirFormulario" method="get" style="display: inline">
+		<?php if(@$projeto->findParentRelatorioFinal()->fechado) : ?>
+			<form action="<?php echo $this->baseUrl ?>/projeto/imprimirRelatorioProjeto" method="get" style="display: inline">
 				<input type="hidden" name="id" value="<?php echo $projeto->id?>" />
 				<button type="submit" class="printButton">Imprimir</button>
 			</form>
 		<?php endif; ?>
+		<?php if(@!$projeto->findParentRelatorioFinal()->fechado) : ?>
+			<form action="<?php echo $this->baseUrl ?>/projeto/relatorioFinal" method="get" style="display: inline;">
+				<input type="hidden" name="id" value="<?php echo $projeto->id?>" />
+				<button type="submit" class="reportButton">Relatório Final</button>
+			</form>
+		<?php endif; ?>
+		<?php if($projeto->idRelatorioFinal && @!$projeto->findParentRelatorioFinal()->fechado) : ?>
+			<form action="<?php echo $this->baseUrl ?>/projeto/fecharRelatorio" method="get" style="display: inline">
+				<input type="hidden" name="id" value="<?php echo $projeto->id?>" />
+				<button type="submit" class="closeButton">Concluir Relatório</button>
+			</form>
+		<?php endif; ?>
 		
-		<form action="<?php echo $this->baseUrl ?>/projeto/relatorioFinal" method="get" style="display: inline;">
-			<input type="hidden" name="id" value="<?php echo $projeto->id?>" />
-			<button type="submit" class="reportButton">Relatório Final</button>
-		</form>
-		
-		<td><?php echo $projeto->titulo?></td>
+		<td><a href="<?php echo $this->baseUrl ?>/projeto/imprimirFormulario/id/<?php echo $projeto->id ?>"><?php echo $projeto->titulo?></a></td>
 	</tr>
 <?php endforeach; ?>
 	</tbody>

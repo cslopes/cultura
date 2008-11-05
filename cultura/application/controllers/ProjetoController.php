@@ -39,75 +39,62 @@ class ProjetoController extends Proexc_Controller_Action {
 	function preDispatch() {
 		parent::preDispatch();
 		
-		// Verifica se o coordenador tem acesso a ações para projetos fechados e não-validados
+		// Verifica se o coordenador tem acesso ao projeto e está fechado
 		if($this->_request->getActionName() == 'imprimirFormulario') {
 			$tabProjeto = new Projeto();
-			$projetos = $tabProjeto->fetchClosedByCoordenador($this->user->id);
-			$ok = 0;
-			foreach ($projetos as $projeto) {
-				if($projeto->id == $this->_request->getParam('id')){
-					$ok = 1;
-					break;
-				}
-			}
+			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
+			
+			$ok = ($projeto->idCoordenador == $this->user->id && $projeto->fechado) ? 1 : 0;
 			if(!$ok) $this->_redirect('/');
 		}
 		
-	// 
-		if($this->_request->getActionName() == 'imprimirRelatorioProjeto') {
+		// Verifica se o coordenador tem acesso ao projeto e este está validado
+		elseif($this->_request->getActionName() == 'imprimirRelatorioProjeto') {
 			$tabProjeto = new Projeto();
-			$projeto = $tabProjeto->find($this->_request->getParam('id'));
-			$ok = 0;
-			if(@count($projeto) != 0){
-				$ok = 1;	
-			}
+			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
+
+			$ok = ($projeto->idCoordenador == $this->user->id && $projeto->findParentRelatorioFinal()->fechado) ? 1 : 0;
 			if(!$ok) $this->_redirect('/');
 		}
 		
 		
-		// Verifica se o coordenador tem acesso a ações para projetos abertos e validados
-		else if($this->_request->getActionName() == 'relatorioFinal') {
+		// Verifica se o coordenador tem acesso à edição de relatorio final
+		elseif($this->_request->getActionName() == 'relatorioFinal') {
 			$tabProjeto = new Projeto();
-			$projetos = $tabProjeto->fetchValidatedByCoordenador($this->user->id);
+			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
+			
 			$ok = 0;
-			foreach ($projetos as $projeto) {
-				if($projeto->id == $this->_request->getParam('id')){
+			
+			// Verifica se o projeto está validado e o coordenador é dono
+			if($projeto->idCoordenador == $this->user->id && $projeto->processo) {
+				// Se tiver relatório já salvo...
+				if($projeto->idRelatorioFinal) {
+					// Verifica se o relatório está aberto
+					if(!$projeto->findParentRelatorioFinal()->fechado) $ok = 1;
+				// Senão pode editar
+				}else {
 					$ok = 1;
-					break;
 				}
 			}
+			
 			if(!$ok) $this->_redirect('/');
 		}
 		
 		//Verifica se o coordenador tem acesso a ação de fechar um relatório final
-		else if($this->_request->getActionName() == 'fecharRelatorio') {
-			$tabRelatorio = new relatorioFinal();
-			$ok = 0;
-			if(($this->_request->isPost())){
-				$relatorios = $tabRelatorio->find($this->_request->getPost('id'));
-				if(@count($relatorios) != 0){
-					$ok = 1;
-				}
-			}else{
-				$relatorios = $tabRelatorio->find($this->_request->getParam('id'));
-				if(@count($relatorios) != 0){
-					$ok = 1;
-				}
-			}	
+		elseif($this->_request->getActionName() == 'fecharRelatorio') {
+			$tabProjeto = new Projeto();
+			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
+			
+			$ok = ($projeto->idCoordenador == $this->user->id && $projeto->idRelatorioFinal) ? 1 : 0; 
 			if(!$ok) $this->_redirect('/');
 		}
 		
 		// Verifica se o coordenador tem acesso a ações para projetos abertos e não-validados
-		else if($this->_request->getActionName() != 'add') {
+		elseif($this->_request->getActionName() != 'add') {
 			$tabProjeto = new Projeto();
-			$projetos = $tabProjeto->fetchOpenAndUnvalidatedByCoordenador($this->user->id);
-			$ok = 0;
-			foreach ($projetos as $projeto) {
-				if($projeto->id == $this->_request->getParam('id')){
-					$ok = 1;
-					break;
-				}
-			}
+			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
+			
+			$ok = ($projeto->idCoordenador == $this->user->id && !$projeto->fechado) ? 1 : 0;
 			if(!$ok) $this->_redirect('/');
 		}
 	}
@@ -125,7 +112,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		if($this->_request->isPost()) {
 			$errors = null;
 
-			$validator = new Zend_Validate_Alpha(true);
+			$validator = new Zend_Validate_NotEmpty();
 			$titulo = trim($this->_request->getPost('titulo'));
 			if(!$validator->isValid($titulo)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -161,7 +148,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 			$id = (int) $this->_request->getPost('id');
 			
-			$validator = new Zend_Validate_Alpha(true);
+			$validator = new Zend_Validate_NotEmpty();
 			$titulo = trim($this->_request->getPost('titulo'));
 			if(!$validator->isValid($titulo)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -176,6 +163,9 @@ class ProjetoController extends Proexc_Controller_Action {
 				$this->_redirect('index/listProjetos');
 			}
 			$this->view->errors = $errors;
+			$this->view->projeto = new stdClass();
+			$this->view->projeto->id = $id;
+			$this->view->projeto->titulo = $titulo;
 		} else {
 			$id = (int) $this->_request->getParam('id', 0);
 			if($id > 0) $this->view->projeto = $projeto->find($id)->current();
@@ -1315,7 +1305,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		$id = (int) $this->_request->getParam('id',0);
 		if($id > 0){
 			$tabProjeto = new Projeto();
-			$projeto = $tabProjeto->fetchRow('idRelatorioFinal = '. $id);
+			$projeto = $tabProjeto->fetchRow('id = '. $id);
 			
 			$formulario = new FormularioRelatorioProjeto($projeto);
 			$formulario->Output('relatoriofinal.pdf','D');
@@ -1437,41 +1427,35 @@ class ProjetoController extends Proexc_Controller_Action {
 		// Título da página
 		$this->view->title = "Concluir Relatório Final";
 
-		// Cria um objeto referente à tabela Relatorio Final
-		$relatorioFinal = new relatorioFinal();
-
+		// Cria um objeto referente à tabela Projeto
+		$tabProjeto = new Projeto();
+		// Pega os dados
+		$idProjeto = (int)$this->_request->getParam('id', 0);
+		$projeto = $tabProjeto->find($idProjeto)->current();
+		
 		// Se a requisição for um método post
 		if ($this->_request->isPost()) {
 			// Pega os dados
-			$idRelatorio = (int)$this->_request->getPost('id');
 			$fecha = $this->_request->getPost('fecha');
 
 			// Se clicou em 'Yes' e existe o Relatorio
-			if ($fecha == 'Sim' && $idRelatorio > 0) {
-				$data = array(
-					"fechado"	=> 1
-				);
-				
-				$relatorioFinal->updateById($data, $idRelatorio);
+			if ($fecha == 'Sim' && $idProjeto > 0) {
+				$relatorioFinal = $projeto->findParentRelatorioFinal();
+				$relatorioFinal->fechado = 1;
+				$relatorioFinal->save();
 			}
-			// A transação é do tipo 'get'
+		// A transação é do tipo 'get'
 		} else {
-			// Pega os dados passados na url
-			$idRelatorio = (int)$this->_request->getParam('id');
-
 			// Testa o id
-			if ($idRelatorio > 0) {
+			if ($projeto) {
 				// somente mostra se achou o projeto
-				$this->view->relatorioFinal = $relatorioFinal->fetchRow('id='.$idRelatorio);
-
-				if ($this->view->relatorioFinal->id > 0) {
-					$this->render();
-					return;
-				}
+				$this->view->projeto = $projeto;
+				$this->render();
+				return;
 			}
 		}
 		// volta se não renderizou (se o relatorio não existe)
-		$this->_redirect("Index/listProjetos");
+		$this->_redirect("Index/listValidatedProjetos");
 		
 	}
 	
@@ -1586,6 +1570,7 @@ function relatorioFinalAction() {
 						return;
 					}
 				}
+				$this->_redirect('Index/listValidatedProjetos');
 			}
 			$projeto = $tabProjeto->find($idProjeto)->current();
 			$this->view->projeto = $projeto;

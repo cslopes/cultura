@@ -239,25 +239,10 @@
 </p>
 
 <p>	
-
-<table>
-<tr>	
-	<?php if (! @$this->relatorioFinal->fechado):  ?>
-		<td><input name="button" type="submit" value="Salvar" /></td>
-		</form>
-		<?php if(@$this->relatorioFinal->id): ?>
-			<form action="<?php echo $this->baseUrl ?>/projeto/fecharRelatorio" method="get" style="display:inline">
-				<input type="hidden" name="id" value="<?php echo @$this->escape($this->relatorioFinal->id) ?>"/>
-				<td><button type="submit">Concluir</button></form></td>
-			
-		<?php endif; ?>	
-	<?php else :?>
-			<form action="<?php echo $this->baseUrl ?>/projeto/imprimirRelatorioProjeto" method="get" style="display:inline">
-			<input type="hidden" name="id" value="<?php echo @$this->escape($this->projeto->id) ?>"/>
-		<td><input name="button" type="submit" value="Imprimir" /></form></td>
-	<?php endif; ?>
-</tr>	
-</table>	
+	<input name="button" type="submit" value="Salvar" />
 </p>
+	
+</form>
+
 	
 <?php echo $this->render('footer.phtml') ?>
