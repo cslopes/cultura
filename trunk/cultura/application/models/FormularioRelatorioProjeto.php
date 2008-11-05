@@ -36,13 +36,17 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->projeto = $projeto;
 				
 		parent::__construct($projeto->idCoordenador, $this->projeto->titulo, $orientation, $unit, $format);
-		$this->AddPage();
-		$this->Output();
 	}
 	
+	/**
+	 * Write all the content and calls the output method.
+	 *
+	 */
+	function Output($name = '', $dest = '') {
+		$this->AddPage();
+		parent::Output($name, $dest);
+	}
 	
 
 	
 }
-
-?>
