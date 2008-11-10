@@ -11,6 +11,12 @@ require_once 'Zend/Validate/Int.php';
 
 require_once 'Proexc/Controller/Action.php';
 require_once 'Proexc/Validate/Siape.php';
+require_once 'Proexc/Validate/Alpha.php';
+require_once 'Proexc/Validate/Date.php';
+require_once 'Proexc/Validate/Regex.php';
+require_once 'Proexc/Validate/Int.php';
+require_once 'Proexc/Validate/NotEmpty.php';
+require_once 'Proexc/Validate/EmailAddress.php';
 
 require_once 'Projeto.php';
 require_once 'Programa.php';
@@ -38,6 +44,8 @@ class ProjetoController extends Proexc_Controller_Action {
 	 */
 	function preDispatch() {
 		parent::preDispatch();
+
+
 		
 		// Verifica se o coordenador tem acesso ao projeto e está fechado
 		if($this->_request->getActionName() == 'imprimirFormulario') {
@@ -47,19 +55,47 @@ class ProjetoController extends Proexc_Controller_Action {
 			$ok = ($projeto->idCoordenador == $this->user->id && $projeto->fechado) ? 1 : 0;
 			if(!$ok) $this->_redirect('/');
 		}
+
 		
+
+		// Verifica se o coordenador tem acesso a ações para projetos fechados e não-validados
+		if($this->_request->getActionName() == 'imprimirFormulario') {
+			$tabProjeto = new Projeto();
+			$projetos = $tabProjeto->fetchClosedByCoordenador($this->user->id);
+			$ok = 0;
+			foreach ($projetos as $projeto) {
+				if($projeto->id == $this->_request->getParam('id')){
+					$ok = 1;
+					break;
+				}
+			}
+		}
 		// Verifica se o coordenador tem acesso ao projeto e este está validado
-		elseif($this->_request->getActionName() == 'imprimirRelatorioProjeto') {
+		else if($this->_request->getActionName() == 'imprimirRelatorioProjeto') {
 			$tabProjeto = new Projeto();
 			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
 
 			$ok = ($projeto->idCoordenador == $this->user->id && $projeto->findParentRelatorioFinal()->fechado) ? 1 : 0;
+
 			if(!$ok) $this->_redirect('/');
 		}
 		
-		
+
+		// Verifica se o coordenador tem acesso a ações para projetos abertos e validados
+		else if($this->_request->getActionName() == 'relatorioFinal') {
+			$tabProjeto = new Projeto();
+			$projetos = $tabProjeto->fetchValidatedByCoordenador($this->user->id);
+			$ok = 0;
+			foreach ($projetos as $projeto) {
+				if($projeto->id == $this->_request->getParam('id')){
+					$ok = 1;
+					break;
+				}
+			}
+
+		}
 		// Verifica se o coordenador tem acesso à edição de relatorio final
-		elseif($this->_request->getActionName() == 'relatorioFinal') {
+		else if($this->_request->getActionName() == 'relatorioFinal') {
 			$tabProjeto = new Projeto();
 			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
 			
@@ -86,6 +122,7 @@ class ProjetoController extends Proexc_Controller_Action {
 			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
 			
 			$ok = ($projeto->idCoordenador == $this->user->id && $projeto->idRelatorioFinal) ? 1 : 0; 
+
 			if(!$ok) $this->_redirect('/');
 		}
 		
@@ -112,7 +149,11 @@ class ProjetoController extends Proexc_Controller_Action {
 		if($this->_request->isPost()) {
 			$errors = null;
 
+
+			$validator = new Proexc_Validate_NotEmpty();
+
 			$validator = new Zend_Validate_NotEmpty();
+
 			$titulo = trim($this->_request->getPost('titulo'));
 			if(!$validator->isValid($titulo)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -134,6 +175,8 @@ class ProjetoController extends Proexc_Controller_Action {
 
 		$this->render();
 	}
+
+
 
 	/**
 	 * Controller para renomear o curso
@@ -174,7 +217,8 @@ class ProjetoController extends Proexc_Controller_Action {
 		$this->render();
 	}
 
-	/**
+
+		/**
 	 * Formulário de projeto para preenchimento dos dados gerais.
 	 */
 	function geralAction() {
@@ -191,7 +235,7 @@ class ProjetoController extends Proexc_Controller_Action {
 			$idLinhaAtuacao = (int) $this->_request->getPost('idLinhaAtuacao');
 			$continuo = (boolean) $this->_request->getPost('continuo');
 
-			$validator = new Zend_Validate_Date();
+			$validator = new Proexc_Validate_Date();
 			$dataInicio = $this->_request->getPost('dataInicio');
 			if(!$validator->isValid($dataInicio)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -410,7 +454,7 @@ class ProjetoController extends Proexc_Controller_Action {
 			$idProjeto = (int) $this->_request->getPost('id');
 			$idTecnico = (int) $this->_request->getPost('idTecnico');
 
-			$validator = new Zend_Validate_Alpha(true);
+			$validator = new Proexc_Validate_Alpha(true);
 			$nome = trim($this->_request->getPost('nome'));
 			if(!$validator->isValid($nome))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -422,12 +466,12 @@ class ProjetoController extends Proexc_Controller_Action {
 
 			$idDepartamento = (int) $this->_request->getPost('idDepartamento');
 
-			$validator = new Zend_Validate_EmailAddress();
+			$validator = new Proexc_Validate_EmailAddress();
 			$email = trim($this->_request->getPost('email'));
 			if(!$validator->isValid($email))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
 
-			$validator = new Zend_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
+			$validator = new Proexc_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
 			$telefone = trim($this->_request->getPost('telefone'));
 			if(!$validator->isValid($telefone))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -440,7 +484,7 @@ class ProjetoController extends Proexc_Controller_Action {
 			if($celular && !$validator->isValid($celular))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
 			
-			$validator = new Zend_Validate_Int();
+			$validator = new Proexc_Validate_Int();
 			$cargaHorariaSemanal = trim($this->_request->getPost('cargaHorariaSemanal'));
 			if(!$validator->isValid($cargaHorariaSemanal))
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -611,7 +655,7 @@ class ProjetoController extends Proexc_Controller_Action {
 			$idProjeto = (int) $this->_request->getPost('id');
 			$idColaboradorDocente = (int) $this->_request->getPost('idColaboradorDocente');
 
-			$validator = new Zend_Validate_Alpha(true);
+			$validator = new Proexc_Validate_Alpha(true);
 			$nome = trim($this->_request->getPost('nome'));
 			if(!$validator->isValid($nome))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -623,12 +667,12 @@ class ProjetoController extends Proexc_Controller_Action {
 			
 			$idDepartamento = (int) $this->_request->getPost('idDepartamento');
 
-			$validator = new Zend_Validate_EmailAddress();
+			$validator = new Proexc_Validate_EmailAddress();
 			$email = trim($this->_request->getPost('email'));
 			if(!$validator->isValid($email))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
 
-			$validator = new Zend_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
+			$validator = new Proexc_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
 			$telefone = trim($this->_request->getPost('telefone'));
 			if(!$validator->isValid($telefone))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -637,7 +681,7 @@ class ProjetoController extends Proexc_Controller_Action {
 			if($celular && !$validator->isValid($celular))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
 			
-			$validator = new Zend_Validate_Int();
+			$validator = new Proexc_Validate_Int();
 			$cargaHorariaSemanal = trim($this->_request->getPost('cargaHorariaSemanal'));
 			if(!$validator->isValid($cargaHorariaSemanal))
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -802,19 +846,19 @@ class ProjetoController extends Proexc_Controller_Action {
 			$idProjeto = (int) $this->_request->getPost('id');
 			$idColaboradorExterno = (int) $this->_request->getPost('idColaboradorExterno');
 
-			$validator = new Zend_Validate_Alpha(true);
+			$validator = new Proexc_Validate_Alpha(true);
 			$nome = trim($this->_request->getPost('nome'));
 			if(!$validator->isValid($nome))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
 
 			$cpf = trim($this->_request->getPost('cpf'));
 
-			$validator = new Zend_Validate_EmailAddress();
+			$validator = new Proexc_Validate_EmailAddress();
 			$email = trim($this->_request->getPost('email'));
 			if(!$validator->isValid($email))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
 
-			$validator = new Zend_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
+			$validator = new Proexc_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
 			$telefone = trim($this->_request->getPost('telefone'));
 			if(!$validator->isValid($telefone))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -940,17 +984,17 @@ class ProjetoController extends Proexc_Controller_Action {
 			$idProjeto = (int) $this->_request->getPost('id');
 			$idParceiro = (int) $this->_request->getPost('idParceiro');
 
-			$validatorAlpha = new Zend_Validate_Alpha(true);
+			$validatorAlpha = new Proexc_Validate_Alpha(true);
 			$nomeInstituicao = trim($this->_request->getPost('nomeInstituicao'));
 			if(!$validatorAlpha->isValid($nomeInstituicao))
 				foreach ($validatorAlpha->getMessages() as $message) $errors[] = $message;
 
-			$validatorRequired = new Zend_Validate_NotEmpty();
+			$validatorRequired = new Proexc_Validate_NotEmpty();
 			$cnpj = trim($this->_request->getPost('cnpj'));
 			if(!$validatorRequired->isValid($cnpj))
 				foreach ($validatorRequired->getMessages() as $message) $errors[] = $message;
 
-			$validatorTelefone = new Zend_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
+			$validatorTelefone = new Proexc_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
 			$telefone = trim($this->_request->getPost('telefone'));
 			if(!$validatorTelefone->isValid($telefone))
 				foreach ($validatorTelefone->getMessages() as $message) $errors[] = $message;
@@ -1298,6 +1342,8 @@ class ProjetoController extends Proexc_Controller_Action {
 			$formulario->Output('formulario.pdf', 'D');
 		}
 	}
+
+
 	
 	function imprimirRelatorioProjetoAction(){
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -1313,6 +1359,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		}
 		
 	}
+
 
 	function delAction() {
 		// Título da página
@@ -1386,14 +1433,27 @@ class ProjetoController extends Proexc_Controller_Action {
 		// Título da página
 		$this->view->title = "Concluir Projeto";
 
+
 		// Cria um objeto referente à tabela Projeto
-		$projeto = new Projeto();
+//		$projeto = new Projeto();
+
+
+		// Cria um objeto referente à tabela Projeto
+		$tabProjeto = new Projeto();
+		// Pega os dados
+		$idProjeto = (int)$this->_request->getParam('id', 0);
+		$projeto = $tabProjeto->find($idProjeto)->current();
+		
 
 		// Se a requisição for um método post
 		if ($this->_request->isPost()) {
 			// Pega os dados
+
 			$idProjeto = (int)$this->_request->getPost('id');
+
+
 			$fecha = $this->_request->getPost('fecha');
+
 
 			// Se clicou em 'Yes' e existe o Projeto
 			if ($fecha == 'Sim' && $idProjeto > 0) {
@@ -1402,64 +1462,49 @@ class ProjetoController extends Proexc_Controller_Action {
 				);
 				
 				$projeto->updateById($data, $idProjeto);
-			}
-			// A transação é do tipo 'get'
-		} else {
-			// Pega os dados passados na url
-			$idProjeto = (int)$this->_request->getParam('id');
-
-			// Testa o id
-			if ($idProjeto > 0) {
-				// somente mostra se achou o projeto
-				$this->view->projeto = $projeto->fetchRow('id='.$idProjeto);
-
-				if ($this->view->projeto->id > 0) {
-					$this->render();
-					return;
-				}
-			}
-		}
-		// volta se não renderizou (se o projeto não existe)
-		$this->_redirect("Index/listProjetos");
-	}
-	
-	function fecharRelatorioAction(){
-		// Título da página
-		$this->view->title = "Concluir Relatório Final";
-
-		// Cria um objeto referente à tabela Projeto
-		$tabProjeto = new Projeto();
-		// Pega os dados
-		$idProjeto = (int)$this->_request->getParam('id', 0);
-		$projeto = $tabProjeto->find($idProjeto)->current();
-		
-		// Se a requisição for um método post
-		if ($this->_request->isPost()) {
-			// Pega os dados
-			$fecha = $this->_request->getPost('fecha');
 
 			// Se clicou em 'Yes' e existe o Relatorio
 			if ($fecha == 'Sim' && $idProjeto > 0) {
 				$relatorioFinal = $projeto->findParentRelatorioFinal();
 				$relatorioFinal->fechado = 1;
 				$relatorioFinal->save();
+
 			}
 		// A transação é do tipo 'get'
 		} else {
+
+			// Pega os dados passados na url
+			$idProjeto = (int)$this->_request->getParam('id');
+
+
+
 			// Testa o id
+
+			if ($idProjeto > 0) {
+
 			if ($projeto) {
+
 				// somente mostra se achou o projeto
+
+				$this->view->projeto = $projeto->fetchRow('id='.$idProjeto);
+
+				if ($this->view->projeto->id > 0) {
+					$this->render();
+					return;
+				}
+
 				$this->view->projeto = $projeto;
 				$this->render();
 				return;
+
 			}
 		}
-		// volta se não renderizou (se o relatorio não existe)
+		// volta se não renderizou (se o projeto não existe)
 		$this->_redirect("Index/listValidatedProjetos");
-		
 	}
-	
-function relatorioFinalAction() {
+		}
+	}
+	function relatorioFinalAction() {
 		$this->view->title = "Relatório Final do Projeto";
 		$tabRelatorioFinal = new RelatorioFinal();
 		$tabProjeto = new Projeto();
@@ -1590,8 +1635,7 @@ function relatorioFinalAction() {
 				return;
 			}
 		}
-		
+		//c
 		//$this->_redirect("Index/listValidatedProjetos");;
 	}
-	
 }

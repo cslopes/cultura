@@ -1,17 +1,10 @@
 ﻿<?php
 	//classe que herda de EmailAddress
 	
-	require_once 'Zend/Validate/Abstract.php';
+	require_once 'Zend/Validate/EmailAddress.php';
 	
 	class Proexc_Validate_EmailAddress extends Zend_Validate_EmailAddress{
 	
-	const INVALID            = 'emailAddressInvalid';
-    const INVALID_HOSTNAME   = 'emailAddressInvalidHostname';
-    const INVALID_MX_RECORD  = 'emailAddressInvalidMxRecord';
-    const DOT_ATOM           = 'emailAddressDotAtom';
-    const QUOTED_STRING      = 'emailAddressQuotedString';
-    const INVALID_LOCAL_PART = 'emailAddressInvalidLocalPart';
-
 	
 	protected $_messageTemplates = array(
         self::INVALID            => "'%value%' não é um endereço de email válido no formato local-part@hostname",
@@ -23,6 +16,3 @@
     );
 	
 	}
-
-
-?>

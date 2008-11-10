@@ -2,19 +2,16 @@
 
 //Classe que herda de Zend_Validate_Regex
 
-require_once 'Zend/Validate/Abstract.php';
+require_once 'Zend/Validate/Regex.php';
 	
 	class Proexc_Validate_Regex extends Zend_Validate_Regex {
 	
-	const NOT_MATCH = 'regexNotMatch';
+	
 	
 	 protected $_messageTemplates = array(
         self::NOT_MATCH => "'ERRO : %value%' não esta no padrão esperado: '%pattern%'"
     );
 	
-	 protected $_messageVariables = array(
-        'pattern' => '_pattern'
-    );
 	
 	
 	 public function isValid($value)
@@ -41,6 +38,3 @@ require_once 'Zend/Validate/Abstract.php';
 
 
 }
-
-
-?>
