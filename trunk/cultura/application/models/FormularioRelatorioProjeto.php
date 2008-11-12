@@ -90,11 +90,15 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->SetFont('vera', 'B', 11);
 		$position = $this->increasePosition();
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. DESCRIÇÃO', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
+		$this->SetFont('vera','', 11);
 		$this->Cell(self::BLOCK_SIZE, 5, 'Articulação com o ensino', 'LTR', 1);
 		$this->writeInnerBlock('Disciplinas:', $this->relatorio->disciplinas);
 		$this->writeInnerBlock('Estágio:', $this->relatorio->estagio);
 		$this->writeInnerBlock('Crédito (flexibilização curricular)', $this->projeto->publicoAlvo);
-		$this->writeInnerBlock('RESUMO', $this->projeto->resumo);
+		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
+		$this->SetFont('vera','', 11);
+		$this->Cell(self::BLOCK_SIZE, 5, 'Articulação com a pesquisa', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
 		$this->SetY($this->GetY() + 4);
 	}
