@@ -90,7 +90,7 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->SetFont('vera', 'B', 11);
 		$position = $this->increasePosition();
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. DESCRIÇÃO', 'LTR', 1);
-		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
+//		$this->Cell(self::BLOCK_SIZE, 4, '', 'LTR', 1);
 		$this->SetFont('vera','', 11);
 //		$this->Cell(self::BLOCK_SIZE, 5, 'Articulação com o ensino', 'LTR', 1);
 //		$this->writeInnerBlock('Disciplinas:', $this->relatorio->disciplinas);
@@ -126,12 +126,50 @@ class FormularioRelatorioProjeto extends Formulario {
 		"   Técnicos Administrativos: ".$this->relatorio->tecnicosAdministrativosEnvolvidos."\n".
 		"   De outras IES ou orgãos: ".$this->relatorio->pessoasOutrasIESEnvolvidas."\n".
 		"   Da comunidade externa: ".$this->relatorio->pessoasComunidadeEnvolvidas."\n".
-		"   Público atingido: ".$this->relatorio->publicoAtingido."\n";
-		$this->MultiCell(self::BLOCK_SIZE,1,$descricao,'LTRB','L');	
-		
+		"   Público atingido: ".$this->relatorio->publicoAtingido."\n \n".
+		"Aticulação Externa: \n".
+		"   Parceiros Externos: \n\n".
+		"Número de atendimentos por semana \n".
+		"   Grupo: ".$this->relatorio->atendimentosSemanaisGrupo."   Individual: ".
+		$this->relatorio->atendimentosSemanaisIndividuais."\n";
+		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
+		$this->MultiCell(self::BLOCK_SIZE,1,$descricao,'LR','L');	
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
-	
 		$this->SetY($this->GetY() + 4);
+		$this->AddPage();
+		
+		$position = $this->increasePosition();
+		$this->SetFont('vera', 'B', 11);
+		$this->Cell(self::BLOCK_SIZE, 5, $position . '. MONITORAMENTO DA PRODUÇÃO', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
+		
+		
+		$descricao = "Livro: ".$this->relatorio->producaoLivros."   Comunicação: ".
+		$this->relatorio->producaoComunicacao."\n".
+		"Programa de Rádio: ".$this->relatorio->producaoProgramasRadio."   Capítulo de Livro: ".
+		$this->relatorio->producaoCapitulosLivros."\n".
+		"Relatório Técnico: ".$this->relatorio->producaoRelatoriosTecnicos."   Programas de TV: ".
+		$this->relatorio->producaoProgramasTV."\n".
+		"Anais: ".$this->relatorio->producaoAnais."   Produto Audiovisual - Filme: ".
+		$this->relatorio->producaoAudiovisualFilme."\n".
+		"Aplicativo para computador: ".$this->relatorio->producaoAplicativosComputador."   Manual: ".
+		$this->relatorio->producaoManuais."\n".
+		"Produto Audiovisual - Vídeo: ".$this->relatorio->producaoAudiovisualFilme."   Jogo Educativo: ".
+		$this->relatorio->producaoJogosEducativos."\n".
+		"Jornal: ".$this->relatorio->producaoJornais."   Produto Audiovisual - CD: ".
+		$this->relatorio->producaoAudiovisualCDs."\n".
+		"Produto Artístico: ".$this->relatorio->producaoProdutosArtisticos."   Revista: ".
+		$this->relatorio->producaoRevistas."\n".
+		"Produto Audiovisual - DVD".$this->relatorio->producaoAudiovisualDVDs."   Artigo: ".
+		$this->relatorio->producaoArtigos."\n".
+		"Produto Audiovisual - Outros: ".$this->relatorio->producaoAudiovisualOutros."\n".
+		"Outros: ".$this->relatorio->producaoOutros."   ".$this->relatorio->producaoOutrosTexto."\n".
+		"Detalhamento da Produção: ".$this->relatorio->producaoDetalhamento;
+		$this->MultiCell(self::BLOCK_SIZE,1,$descricao,'LR','J');
+		
+		
+		
+		
 	}
 	
 	
