@@ -90,50 +90,40 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->SetFont('vera', 'B', 11);
 		$position = $this->increasePosition();
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. DESCRIÇÃO', 'LTR', 1);
-//		$this->Cell(self::BLOCK_SIZE, 4, '', 'LTR', 1);
-		$this->SetFont('vera','', 11);
-//		$this->Cell(self::BLOCK_SIZE, 5, 'Articulação com o ensino', 'LTR', 1);
-//		$this->writeInnerBlock('Disciplinas:', $this->relatorio->disciplinas);
-//		$this->writeInnerBlock('Estágio:', $this->relatorio->estagio);
-//		$this->writeInnerBlock('Crédito (flexibilização curricular):', $this->projeto->creditos);
-//		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
-//		$this->SetFont('vera','', 11);
-//		$this->Cell(self::BLOCK_SIZE, 5, 'Articulação com a pesquisa', 'LTR', 1);
-//		$this->writeInnerBlock('Projeto:', $this->relatorio->projeto);
-//		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
-//		$this->SetFont('vera','', 11);
-//		$this->Cell(self::BLOCK_SIZE, 5, 'Total de pessoas da equipe de trabalho envolvidas na execução', 'LTR', 1);
-//		$this->writeInnerBlock('Docentes:', $this->relatorio->docentesEnvolvidos);
-//		$this->writeInnerBlock('Alunos da Graduação', 'Bolsistas: '.$this->relatorio->alunosGraduacaoBolsistasEnvolvidos.'    Não Bolsistas: '.$this->relatorio->alunosGraduacaoNaoBolsistasEnvolvidos.'                                  ');
-//		$this->writeInnerBlock('Alunos Pós-Graduação:', $this->relatorio->alunosPosGraduacaoEnvolvidos);
-//		$this->writeInnerBlock('Técnicos Administrativos:', $this->relatorio->tecnicosAdministrativosEnvolvidos);
-//		$this->writeInnerBlock('De outras IES ou orgãos:', $this->relatorio->pessoasOutrasIESEnvolvidas);
-//		$this->writeInnerBlock('Da comunidade externa:', $this->relatorio->pessoasComunidadeEnvolvidas);
-//		$this->writeInnerBlock('Público atingido:', $this->relatorio->publicoAtingido);
-//		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
-		$descricao = "Articulação com o ensino: \n".
-		"   Disciplinas: ".$this->relatorio->disciplinas."\n".
-		"   Estágio: ".$this->relatorio->estagio."\n".
-		"   Crédito (Flexibilização curricular): ".$this->relatorio->creditos."\n\n".
-		"Articulação com a pesquisa: \n".
-		"   Projeto: ".$this->relatorio->projeto."\n\n".
-		"Total de pessoas da equipe de trabalho envolvidas na execução: \n".
-		"   Alunos da Graduação: \n".
-		"      Bolsistas: ".$this->relatorio->alunosGraduacaoBolsistasEnvolvidos."   Não Bolsistas: ".
-		$this->relatorio->alunosGraduacaoNaoBolsistasEnvolvidos."\n".
-		"   Docentes: ".$this->relatorio->docentesEnvolvidos."\n".
-		"   Alunos Pós-Graduação: ".$this->relatorio->alunosPosGraduacaoEnvolvidos."\n". 
-		"   Técnicos Administrativos: ".$this->relatorio->tecnicosAdministrativosEnvolvidos."\n".
-		"   De outras IES ou orgãos: ".$this->relatorio->pessoasOutrasIESEnvolvidas."\n".
-		"   Da comunidade externa: ".$this->relatorio->pessoasComunidadeEnvolvidas."\n".
-		"   Público atingido: ".$this->relatorio->publicoAtingido."\n \n".
-		"Aticulação Externa: \n".
-		"   Parceiros Externos: \n\n".
-		"Número de atendimentos por semana \n".
-		"   Grupo: ".$this->relatorio->atendimentosSemanaisGrupo."   Individual: ".
-		$this->relatorio->atendimentosSemanaisIndividuais."\n";
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
-		$this->MultiCell(self::BLOCK_SIZE,1,$descricao,'LR','L');	
+		$this->SetFont('vera','B', 10);
+		$this->Cell(self::BLOCK_SIZE, 5, 'Articulação com o ensino', 'LTR', 1);
+		$this->SetFont('vera','',10);
+		$this->Cell(self::BLOCK_SIZE, 5, 'Disciplinas: '.$this->relatorio->disciplinas,'LR',1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'Estágio: '.$this->relatorio->estagio,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Crédito (flexibilização curricular): '.$this->relatorio->creditos,'LR',1);
+		$this->SetFont('vera','B', 10);
+		$this->Cell(self::BLOCK_SIZE, 5, 'Articulação com a pesquisa', 'LTR', 1);
+		$this->SetFont('vera','',10);
+		$this->Cell(self::BLOCK_SIZE,5,'Projeto: '.$this->relatorio->projeto,'LR',1);
+		$this->SetFont('vera','B', 10);
+		$this->Cell(self::BLOCK_SIZE, 5, 'Total de pessoas da equipe de trabalho envolvidas na execução', 'LTR', 1);
+		$this->SetFont('vera','',10);
+		$this->Cell(self::BLOCK_SIZE,5,'Docentes: '.$this->relatorio->docentesEnvolvidos,'LR',1);
+		$this->SetFont('vera','B', 10);
+		$this->Cell(self::BLOCK_SIZE,5,'Alunos da Graduação','LTR',1);
+		$this->SetFont('vera','', 10);
+		$this->Cell(self::BLOCK_SIZE,5,'Bolsistas: '.$this->relatorio->alunosGraduacaoBolsistasEnvolvidos,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Não - Bolsistas: '.$this->relatorio->alunosGraduacaoNaoBolsistasEnvolvidos,'LBR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Alunos Pós-Graduação: '.$this->relatorio->alunosPosGraduacaoEnvolvidos,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Técnicos Administrativos: '.$this->relatorio->tecnicosAdministrativosEnvolvidos,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'De outras IES ou orgãos: '.$this->relatorio->pessoasOutrasIESEnvolvidas,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Da comunidade externa: '.$this->relatorio->pessoasComunidadeEnvolvidas,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Público atingido: '.$this->relatorio->publicoAtingido,'LR',1);
+		$this->SetFont('vera','B', 10);
+		$this->Cell(self::BLOCK_SIZE,5,'Ariculação Externa','LTR',1);
+		$this->SetFont('vera','', 10);
+		$this->Cell(self::BLOCK_SIZE,5,'Parceiros Externos: ','LR',1);
+		$this->SetFont('vera','B', 10);
+		$this->Cell(self::BLOCK_SIZE,5,'Número de atendimentos por semana','LTR',1);
+		$this->SetFont('vera','', 10);
+		$this->Cell(self::BLOCK_SIZE,5,'Individuais: '.$this->relatorio->atendimentosSemanaisIndividuais,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Grupo: '.$this->relatorio->atendimentosSemanaisGrupo,'LR',1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
 		$this->SetY($this->GetY() + 4);
 		$this->AddPage();
@@ -142,37 +132,77 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->SetFont('vera', 'B', 11);
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. MONITORAMENTO DA PRODUÇÃO', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
-		
-		
-		$descricao = "Livro: ".$this->relatorio->producaoLivros."   Comunicação: ".
-		$this->relatorio->producaoComunicacao."\n".
-		"Programa de Rádio: ".$this->relatorio->producaoProgramasRadio."   Capítulo de Livro: ".
-		$this->relatorio->producaoCapitulosLivros."\n".
-		"Relatório Técnico: ".$this->relatorio->producaoRelatoriosTecnicos."   Programas de TV: ".
-		$this->relatorio->producaoProgramasTV."\n".
-		"Anais: ".$this->relatorio->producaoAnais."   Produto Audiovisual - Filme: ".
-		$this->relatorio->producaoAudiovisualFilme."\n".
-		"Aplicativo para computador: ".$this->relatorio->producaoAplicativosComputador."   Manual: ".
-		$this->relatorio->producaoManuais."\n".
-		"Produto Audiovisual - Vídeo: ".$this->relatorio->producaoAudiovisualFilme."   Jogo Educativo: ".
-		$this->relatorio->producaoJogosEducativos."\n".
-		"Jornal: ".$this->relatorio->producaoJornais."   Produto Audiovisual - CD: ".
-		$this->relatorio->producaoAudiovisualCDs."\n".
-		"Produto Artístico: ".$this->relatorio->producaoProdutosArtisticos."   Revista: ".
-		$this->relatorio->producaoRevistas."\n".
-		"Produto Audiovisual - DVD".$this->relatorio->producaoAudiovisualDVDs."   Artigo: ".
-		$this->relatorio->producaoArtigos."\n".
-		"Produto Audiovisual - Outros: ".$this->relatorio->producaoAudiovisualOutros."\n".
-		"Outros: ".$this->relatorio->producaoOutros."   ".$this->relatorio->producaoOutrosTexto."\n".
-		"Detalhamento da Produção: ".$this->relatorio->producaoDetalhamento;
-		$this->MultiCell(self::BLOCK_SIZE,1,$descricao,'LR','J');
-		
-		
-		
-		
+		$this->SetFont('vera', 11);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Livro: '.$this->relatorio->producaoLivros,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Comunicação: '.$this->relatorio->producaoComunicacao,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Programa de Rádio: '.$this->relatorio->producaoProgramasRadio,'LTRB',1);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Capítulo de Livro: '.$this->relatorio->producaoCapitulosLivros,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Relatório Técnico: '.$this->relatorio->producaoRelatoriosTecnicos,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Programas de TV: '.$this->relatorio->producaoProgramasTV,'LTRB',1);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Anais: '.$this->relatorio->producaoAnais,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - Filme: '.$this->relatorio->producaoAudiovisualFilme,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Aplicativo para computador: '.$this->relatorio->producaoAplicativosComputador,'LTRB',1);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Manual: '.$this->relatorio->producaoManuais,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - Vídeo: '.$this->relatorio->producaoAudiovisualVideos,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Jogo Educativo: '.$this->relatorio->producaoJogosEducativos,'LTRB',1);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Jornal: '.$this->relatorio->producaoJornais,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - CD: '.$this->relatorio->producaoAudiovisualCDs,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Artístico: '.$this->relatorio->producaoProdutosArtisticos,'LTRB',1);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Revista: '.$this->relatorio->producaoRevistas,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - DVD: '.$this->relatorio->producaoAudiovisualDVDs,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Artigo: '.$this->relatorio->producaoArtigos,'LTRB',1);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - Outros: '.$this->relatorio->producaoAudiovisualOutros,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Outros: '.$this->relatorio->producaoOutros,'LTB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,$this->relatorio->producaoOutrosTexto,'LTRB',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Detalhamento da Produção: ','LTR',1);
+		$this->MultiCell(self::BLOCK_SIZE,1,$this->relatorio->producaoDetalhamento,'LRB','L');
+		$this->Cell(self::BLOCK_SIZE, 7, '', '', 1);
+	
 	}
 	
-	
+protected function writeSignatures($idRecursos = false) {
+//		$this->AddPage();
+
+		$this->SetFont('vera', 'B', 11);
+		$this->Cell(self::BLOCK_SIZE, 5, 'ASSINATURA DO COORDENADOR', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
+
+		$this->SetFont('vera', '', 9);
+		$this->Cell(self::BLOCK_SIZE, 4, 'Em __/__/____', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
+		$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 4, 'Coordenador do Projeto', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
+		$this->SetY($this->GetY() + 4);
+
+		$this->SetFont('vera', 'B', 11);
+		$this->Cell(self::BLOCK_SIZE, 5, 'APROVAÇÕES', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
+
+		$this->SetFont('vera', '', 9);
+		$this->Cell(self::BLOCK_SIZE, 4, 'Aprovação do Departamento em __/__/____', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
+		$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 4, 'Chefe do Departamento', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 15, '', 'LR', 1);
+		$this->Cell(self::BLOCK_SIZE, 4, 'Aprovação no Conselho de Unidade __/__/____', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
+		$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 4, 'Chefe de Unidade', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 15, '', 'LR', 1);
+		if($idRecursos) {
+			$this->Cell(self::BLOCK_SIZE, 4, 'Ciente em __/__/____', 'LR', 1, 'C');
+			$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
+			$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
+			$this->Cell(self::BLOCK_SIZE, 4, 'Fundação Gestora', 'LR', 1, 'C');
+			$this->Cell(self::BLOCK_SIZE, 15, '', 'LR', 1);
+		}
+		//$this->Cell(self::BLOCK_SIZE, 4, 'De acordo', 'LR', 1, 'C');
+		//$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
+		//$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
+		//$this->Cell(self::BLOCK_SIZE, 4, 'Coordenação do Projeto de Controle Interno e de Fundações / PROFIC', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 5, '', 'LBR', 1);
+	}
 	
 	/**
 	 * Write all the content and calls the output method.
@@ -188,6 +218,7 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->writeLinhaExtensao();
 		$this->writeCoordenador();
 		$this->writeDescricao();
+		$this->writeSignatures($this->projeto->idRecursos);
 		parent::Output($name, $dest);
 	}
 	
