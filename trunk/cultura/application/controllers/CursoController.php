@@ -87,7 +87,7 @@ class CursoController extends Proexc_Controller_Action {
 		if($this->_request->isPost()) {
 			$errors = null;
 
-			$validator = new Proexc_Validate_Alpha(true);
+			$validator = new Zend_Validate_NotEmpty();
 			$titulo = trim($this->_request->getPost('titulo'));
 			if(!$validator->isValid($titulo)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -123,7 +123,7 @@ class CursoController extends Proexc_Controller_Action {
 
 			$id = (int) $this->_request->getPost('id');
 			
-			$validator = new Proexc_Validate_Alpha(true);
+			$validator = new Zend_Validate_NotEmpty();
 			$titulo = trim($this->_request->getPost('titulo'));
 			if(!$validator->isValid($titulo)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
