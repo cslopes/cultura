@@ -1433,60 +1433,42 @@ class ProjetoController extends Proexc_Controller_Action {
 		// Título da página
 		$this->view->title = "Concluir Projeto";
 
-
-		// Cria um objeto referente à tabela Projeto
-//		$projeto = new Projeto();
-
-
 		// Cria um objeto referente à tabela Projeto
 		$tabProjeto = new Projeto();
+		
 		// Pega os dados
 		$idProjeto = (int)$this->_request->getParam('id', 0);
 		$projeto = $tabProjeto->find($idProjeto)->current();
 		
-
 		// Se a requisição for um método post
 		if ($this->_request->isPost()) {
 			// Pega os dados
-
 			$idProjeto = (int)$this->_request->getPost('id');
-
-
 			$fecha = $this->_request->getPost('fecha');
-
 
 			// Se clicou em 'Yes' e existe o Projeto
 			if ($fecha == 'Sim' && $idProjeto > 0) {
-				$data = array(
-					"fechado"	=> 1
-				);
-				
-				$projeto->updateById($data, $idProjeto);
-
-			// Se clicou em 'Yes' e existe o Relatorio
-			if ($fecha == 'Sim' && $idProjeto > 0) {
-				$relatorioFinal = $projeto->findParentRelatorioFinal();
-				$relatorioFinal->fechado = 1;
-				$relatorioFinal->save();
-
+//				$data = array(
+//					"fechado"	=> 1
+//				);
+//				
+//				$projeto->updateById($data, $idProjeto);
+				$projeto->fechado = 1;
+				$projeto->save();
+						
 			}
-		// A transação é do tipo 'get'
+
+			// A transação é do tipo 'get'
 		} else {
 
 			// Pega os dados passados na url
 			$idProjeto = (int)$this->_request->getParam('id');
-
-
-
 			// Testa o id
 
 			if ($idProjeto > 0) {
-
 			if ($projeto) {
-
 				// somente mostra se achou o projeto
-
-				$this->view->projeto = $projeto->fetchRow('id='.$idProjeto);
+				$this->view->projeto = $projeto;
 
 				if ($this->view->projeto->id > 0) {
 					$this->render();
@@ -1496,14 +1478,70 @@ class ProjetoController extends Proexc_Controller_Action {
 				$this->view->projeto = $projeto;
 				$this->render();
 				return;
-
 			}
 		}
 		// volta se não renderizou (se o projeto não existe)
 		$this->_redirect("Index/listValidatedProjetos");
-	}
 		}
 	}
+	
+	function fecharRelatorioAction(){
+		// Título da página
+		$this->view->title = "Concluir Relatório Final de Projeto";
+
+		// Cria um objeto referente à tabela Projeto
+		$tabProjeto = new Projeto();
+		
+		//Cria um objeto referente à tabela RelatorioFinal
+		$tabRelFinal = new RelatorioFinal();
+		
+		// Pega os dados
+		$idProjeto = (int)$this->_request->getParam('id', 0);
+		$projeto = $tabProjeto->find($idProjeto)->current();
+		
+		
+		// Se a requisição for um método post
+		if ($this->_request->isPost()) {
+			// Pega os dados
+			$idProjeto = (int)$this->_request->getPost('id');
+			$fecha = $this->_request->getPost('fecha');
+			// Se clicou em 'Yes' e existe o Relatorio
+			if ($fecha == 'Sim' && $idProjeto > 0) {
+				$relatorioFinal = $projeto->findParentRelatorioFinal();
+				$relatorioFinal->fechado = 1;
+				$relatorioFinal->save();
+			}	
+		
+		// A transação é do tipo 'get'
+		} else {
+
+			// Pega os dados passados na url
+			$idProjeto = (int)$this->_request->getParam('id');
+			// Testa o id
+			if ($idProjeto > 0) {
+			if ($projeto) {
+				// somente mostra se achou o projeto
+				$this->view->projeto = $projeto;
+
+				if ($this->view->projeto->id > 0) {
+					$this->render();
+					return;
+				}
+
+				$this->view->projeto = $projeto;
+				$this->render();
+				return;
+			}
+		}
+		// volta se não renderizou (se o projeto não existe)
+		$this->_redirect("Index/listValidatedProjetos");
+		}
+	
+	
+	
+
+	}
+
 	function relatorioFinalAction() {
 		$this->view->title = "Relatório Final do Projeto";
 		$tabRelatorioFinal = new RelatorioFinal();

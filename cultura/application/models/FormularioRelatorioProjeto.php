@@ -155,8 +155,13 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->Cell((self::BLOCK_SIZE/3),5,'Outros: '.$this->relatorio->producaoOutros,'LTB',0);
 		$this->Cell((self::BLOCK_SIZE/3),5,$this->relatorio->producaoOutrosTexto,'LTRB',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Detalhamento da Produção: ','LTR',1);
+		$this->SetFont('vera','',11);
 		$this->MultiCell(self::BLOCK_SIZE,1,$this->relatorio->producaoDetalhamento,'LRB','L');
-		$this->Cell(self::BLOCK_SIZE, 7, '', '', 1);
+		$this->SetFont('vera','B',11);
+		$this->Cell(self::BLOCK_SIZE,5,"Relatório Final: ",'LR',1);
+		$this->SetFont('vera','',11);
+		$this->MultiCell(self::BLOCK_SIZE,1,$this->relatorio->relatorioFinal,'LRB','L');
+		$this->Cell(self::BLOCK_SIZE, 6, '', '', 1);
 	
 	}
 	
