@@ -47,16 +47,6 @@ class ProjetoController extends Proexc_Controller_Action {
 
 
 		
-		// Verifica se o coordenador tem acesso ao projeto e está fechado
-		if($this->_request->getActionName() == 'imprimirFormulario') {
-			$tabProjeto = new Projeto();
-			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
-			
-			$ok = ($projeto->idCoordenador == $this->user->id && $projeto->fechado) ? 1 : 0;
-			if(!$ok) $this->_redirect('/');
-		}
-
-		
 
 		// Verifica se o coordenador tem acesso a ações para projetos fechados e não-validados
 		if($this->_request->getActionName() == 'imprimirFormulario') {
@@ -74,26 +64,12 @@ class ProjetoController extends Proexc_Controller_Action {
 		else if($this->_request->getActionName() == 'imprimirRelatorioProjeto') {
 			$tabProjeto = new Projeto();
 			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
-
+			
 			$ok = ($projeto->idCoordenador == $this->user->id && $projeto->findParentRelatorioFinal()->fechado) ? 1 : 0;
 
 			if(!$ok) $this->_redirect('/');
 		}
 		
-
-		// Verifica se o coordenador tem acesso a ações para projetos abertos e validados
-		else if($this->_request->getActionName() == 'relatorioFinal') {
-			$tabProjeto = new Projeto();
-			$projetos = $tabProjeto->fetchValidatedByCoordenador($this->user->id);
-			$ok = 0;
-			foreach ($projetos as $projeto) {
-				if($projeto->id == $this->_request->getParam('id')){
-					$ok = 1;
-					break;
-				}
-			}
-
-		}
 		// Verifica se o coordenador tem acesso à edição de relatorio final
 		else if($this->_request->getActionName() == 'relatorioFinal') {
 			$tabProjeto = new Projeto();
@@ -121,7 +97,13 @@ class ProjetoController extends Proexc_Controller_Action {
 			$tabProjeto = new Projeto();
 			$projeto = $tabProjeto->find($this->_request->getParam('id'))->current();
 			
-			$ok = ($projeto->idCoordenador == $this->user->id && $projeto->idRelatorioFinal) ? 1 : 0; 
+			if($projeto->idCoordenador == $this->user->id && $projeto->idRelatorioFinal){
+					$ok = 1;
+			}else{
+					$ok = 0;
+				}
+			
+//			$ok = ($projeto->idCoordenador == $this->user->id && $projeto->idRelatorioFinal) ? 1 : 0; 
 
 			if(!$ok) $this->_redirect('/');
 		}
@@ -136,11 +118,13 @@ class ProjetoController extends Proexc_Controller_Action {
 		}
 	}
 
+
 	/**
 	 * Controller para criação de um novo projeto. Requisita apenas o nome do projeto e cria
 	 * inserindo também o id do coordenador. Logo após criado o usuário é enviado para a tela
 	 * de edição do projeto.
 	 */
+	
 	function addAction() {
 		$this->view->title = "Cadastrar Novo Projeto";
 
