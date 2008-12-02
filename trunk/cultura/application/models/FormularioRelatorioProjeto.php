@@ -86,6 +86,8 @@ class FormularioRelatorioProjeto extends Formulario {
 	private function writeDescricao() {
 		$tabRelatorio = new RelatorioFinal();
 		$this->relatorio = $tabRelatorio->fetchRow('id='.$this->projeto->idRelatorioFinal);
+		$tabParceiro = new Parceiro();
+		$parceiros = $tabParceiro->fetchParceirosByProjeto($this->projeto->id);
 
 		$this->SetFont('vera', 'B', 11);
 		$position = $this->increasePosition();
@@ -116,10 +118,12 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->Cell(self::BLOCK_SIZE,5,'Da comunidade externa: '.$this->relatorio->pessoasComunidadeEnvolvidas,'LR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Público atingido: '.$this->relatorio->publicoAtingido,'LR',1);
 		$this->SetFont('vera','B', 10);
-		$this->Cell(self::BLOCK_SIZE,5,'Ariculação Externa','LTR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Ariculação Externa (Parceiros Externos)','LTR',1);
 		$this->SetFont('vera','', 10);
-		$this->Cell(self::BLOCK_SIZE,5,'Parceiros Externos: ','LR',1);
-		$this->SetFont('vera','B', 10);
+//		foreach ($parceiros as $parceiro){
+//			$this->Cell(self::BLOCK_SIZE,5,$parceiro,'LR',1);
+//		}
+		$this->Cell(self::BLOCK_SIZE,5,$parceiro,'LR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Número de atendimentos por semana','LTR',1);
 		$this->SetFont('vera','', 10);
 		$this->Cell(self::BLOCK_SIZE,5,'Individuais: '.$this->relatorio->atendimentosSemanaisIndividuais,'LR',1);
