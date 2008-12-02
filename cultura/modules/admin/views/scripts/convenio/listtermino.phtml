@@ -1,0 +1,44 @@
+<?php echo $this->render("header.phtml") ?>
+
+<script>
+        dojo.require("dijit.form.FilteringSelect");
+       dojo.require("dijit.form.Button");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+<table>
+<tr>
+<form>
+<td><label for="argumentInput">Ano: </label>
+   <select dojoType="dijit.form.FilteringSelect" name="ano" autocomplete="false" >
+                <option value="1" selected="selected">ano</option>
+                <option value="2" selected="selected">ano</option>
+                <option value="3" selected="selected">ano</option>
+                <option value="4" selected="selected">ano</option>
+   </select>
+</td>
+<td>   
+<label for="argumentInput">Mês: </label>
+   <select dojoType="dijit.form.FilteringSelect" name="mes" autocomplete="false" >
+                <option value="01" selected="selected" >Janeiro</option>
+                <option value="02" selected="selected">Fevereiro</option>
+                <option value="03" selected="selected">Março</option>
+                <option value="04" selected="selected">Abril</option>
+                <option value="05" selected="selected">Maio</option>
+                <option value="06" selected="selected">Junho</option>
+                <option value="07" selected="selected">Julho</option>
+                <option value="08" selected="selected">Agosto</option>
+                <option value="09" selected="selected">Setembro</option>
+                <option value="10" selected="selected">Outubro</option>
+                <option value="11" selected="selected">Novembro</option>
+                <option value="12" selected="selected">Dezembro</option>
+   </select>
+</td>   
+</tr>   
+</table><br><br><br><br>   
+   <input name="button" type="submit" value="Buscar" dojoType="dijit.form.Button" label="Buscar" />
+</p>
+</form>
+
+
+<?php echo $this->render("footer.phtml") ?>
