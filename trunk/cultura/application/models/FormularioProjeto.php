@@ -152,7 +152,7 @@ class FormularioProjeto extends Formulario {
 		$position = $this->increasePosition();
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. DESCRIÇÃO', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
-		$this->writeInnerBlock('FUNDAMENTO', $this->projeto->fundamento);
+		$this->writeInnerBlock('FUNDAMENTAÇÃO TEÓRICA', $this->projeto->fundamento);
 		$this->writeInnerBlock('OBJETIVOS', $this->projeto->objetivos);
 		$this->writeInnerBlock('METODOLOGIA', $this->projeto->metodologia);
 		$this->writeInnerBlock('PÚBLICO ALVO', $this->projeto->publicoAlvo);
