@@ -23,7 +23,7 @@ class FormularioRelatorioProjeto extends Formulario {
 	private $projeto;
 	private $relatorio;
 	
-	const TITULO = 'RELATÓRIO FINAL DE PROJETOS DE EXTENSÃO';
+	const TITULO = 'RELATï¿½RIO FINAL DE PROJETOS DE EXTENSÃƒO';
 	
 	/**
 	 * Class constructor
@@ -52,10 +52,10 @@ class FormularioRelatorioProjeto extends Formulario {
  	private function writeIdentificacao() {
 		$this->SetFont('vera', 'B', 11);
 		$position = $this->increasePosition();
-		$this->Cell(self::BLOCK_SIZE, 5, $position . '. IDENTIFICAÇÃO', 'LTRB', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, $position . '. IDENTIFICAÃ‡ÃƒO', 'LTRB', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 5, 'TÍTULO: ' . $this->projeto->titulo, 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 5, 'NÚMERO DO PROCESSO: ' . $this->projeto->processo, 'LBR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'TÃTULO: ' . $this->projeto->titulo, 'LR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'NÃšMERO DO PROCESSO: ' . $this->projeto->processo, 'LBR', 1);
 		$this->SetY($this->GetY() + 4);
 	}
 
@@ -64,14 +64,14 @@ class FormularioRelatorioProjeto extends Formulario {
 	 *
 	 */
 	private function writeLinhaExtensao() {
-		if(!$this->projeto->idLinhaAtuacao) throw new Exception('Não foi definida uma linha de extensão');
+		if(!$this->projeto->idLinhaAtuacao) throw new Exception('NÃ£o foi definida uma linha de extensï¿½o');
 		
 		$tabLinhaAtuacao = new LinhaAtuacao();
 		$linhaAtuacao = $tabLinhaAtuacao->fetchRow('id='.$this->projeto->idLinhaAtuacao);
 
 		$this->SetFont('vera', 'B', 11);
 		$position = $this->increasePosition();
-		$this->Cell(self::BLOCK_SIZE, 5, $position . '. LINHA DE EXTENSÃO', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, $position . '. LINHA DE EXTENSÃƒO', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
 		$this->SetFont('vera', '', 9);
 		$this->Cell(self::BLOCK_SIZE, 4, $linhaAtuacao->nome, 'LR', 1);
@@ -91,40 +91,40 @@ class FormularioRelatorioProjeto extends Formulario {
 
 		$this->SetFont('vera', 'B', 11);
 		$position = $this->increasePosition();
-		$this->Cell(self::BLOCK_SIZE, 5, $position . '. DESCRIÇÃO', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, $position . '. DESCRIÃ‡ÃƒO', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
 		$this->SetFont('vera','B', 10);
-		$this->Cell(self::BLOCK_SIZE, 5, 'Articulação com o ensino', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'ArticulaÃ§Ã£o com o ensino', 'LTR', 1);
 		$this->SetFont('vera','',10);
 		$this->Cell(self::BLOCK_SIZE, 5, 'Disciplinas: '.$this->relatorio->disciplinas,'LR',1);
-		$this->Cell(self::BLOCK_SIZE, 5, 'Estágio: '.$this->relatorio->estagio,'LR',1);
-		$this->Cell(self::BLOCK_SIZE,5,'Crédito (flexibilização curricular): '.$this->relatorio->creditos,'LR',1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'EstÃ¡gio: '.$this->relatorio->estagio,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'CrÃ©dito (flexibilizaÃ§Ã£o curricular): '.$this->relatorio->creditos,'LR',1);
 		$this->SetFont('vera','B', 10);
-		$this->Cell(self::BLOCK_SIZE, 5, 'Articulação com a pesquisa', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'ArticulaÃ§Ã£o com a pesquisa', 'LTR', 1);
 		$this->SetFont('vera','',10);
 		$this->Cell(self::BLOCK_SIZE,5,'Projeto: '.$this->relatorio->projeto,'LR',1);
 		$this->SetFont('vera','B', 10);
-		$this->Cell(self::BLOCK_SIZE, 5, 'Total de pessoas da equipe de trabalho envolvidas na execução', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'Total de pessoas da equipe de trabalho envolvidas na execuÃ§Ã£o', 'LTR', 1);
 		$this->SetFont('vera','',10);
 		$this->Cell(self::BLOCK_SIZE,5,'Docentes: '.$this->relatorio->docentesEnvolvidos,'LR',1);
 		$this->SetFont('vera','B', 10);
-		$this->Cell(self::BLOCK_SIZE,5,'Alunos da Graduação','LTR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Alunos da GraduaÃ§Ã£o','LTR',1);
 		$this->SetFont('vera','', 10);
 		$this->Cell(self::BLOCK_SIZE,5,'Bolsistas: '.$this->relatorio->alunosGraduacaoBolsistasEnvolvidos,'LR',1);
-		$this->Cell(self::BLOCK_SIZE,5,'Não - Bolsistas: '.$this->relatorio->alunosGraduacaoNaoBolsistasEnvolvidos,'LBR',1);
-		$this->Cell(self::BLOCK_SIZE,5,'Alunos Pós-Graduação: '.$this->relatorio->alunosPosGraduacaoEnvolvidos,'LR',1);
-		$this->Cell(self::BLOCK_SIZE,5,'Técnicos Administrativos: '.$this->relatorio->tecnicosAdministrativosEnvolvidos,'LR',1);
-		$this->Cell(self::BLOCK_SIZE,5,'De outras IES ou orgãos: '.$this->relatorio->pessoasOutrasIESEnvolvidas,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'NÃ£o - Bolsistas: '.$this->relatorio->alunosGraduacaoNaoBolsistasEnvolvidos,'LBR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Alunos PÃ³s-GraduaÃ§Ã£o: '.$this->relatorio->alunosPosGraduacaoEnvolvidos,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Tï¿½cnicos Administrativos: '.$this->relatorio->tecnicosAdministrativosEnvolvidos,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'De outras IES ou orgÃ£os: '.$this->relatorio->pessoasOutrasIESEnvolvidas,'LR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Da comunidade externa: '.$this->relatorio->pessoasComunidadeEnvolvidas,'LR',1);
-		$this->Cell(self::BLOCK_SIZE,5,'Público atingido: '.$this->relatorio->publicoAtingido,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'PÃºblico atingido: '.$this->relatorio->publicoAtingido,'LR',1);
 		$this->SetFont('vera','B', 10);
-		$this->Cell(self::BLOCK_SIZE,5,'Ariculação Externa (Parceiros Externos)','LTR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'AriculaÃ§Ã£o Externa (Parceiros Externos)','LTR',1);
 		$this->SetFont('vera','', 10);
 //		foreach ($parceiros as $parceiro){
 //			$this->Cell(self::BLOCK_SIZE,5,$parceiro,'LR',1);
 //		}
 //		$this->Cell(self::BLOCK_SIZE,5,$parceiro,'LR',1);
-		$this->Cell(self::BLOCK_SIZE,5,'Número de atendimentos por semana','LTR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'NÃºmero de atendimentos por semana','LTR',1);
 		$this->SetFont('vera','', 10);
 		$this->Cell(self::BLOCK_SIZE,5,'Individuais: '.$this->relatorio->atendimentosSemanaisIndividuais,'LR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Grupo: '.$this->relatorio->atendimentosSemanaisGrupo,'LR',1);
@@ -134,35 +134,35 @@ class FormularioRelatorioProjeto extends Formulario {
 		
 		$position = $this->increasePosition();
 		$this->SetFont('vera', 'B', 11);
-		$this->Cell(self::BLOCK_SIZE, 5, $position . '. MONITORAMENTO DA PRODUÇÃO', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, $position . '. MONITORAMENTO DA PRODUÃ‡ÃƒO', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
 		$this->SetFont('vera', 11);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Livro: '.$this->relatorio->producaoLivros,'LTRB',0);
-		$this->Cell((self::BLOCK_SIZE/3),5,'Comunicação: '.$this->relatorio->producaoComunicacao,'LTRB',0);
-		$this->Cell((self::BLOCK_SIZE/3),5,'Programa de Rádio: '.$this->relatorio->producaoProgramasRadio,'LTRB',1);
-		$this->Cell((self::BLOCK_SIZE/3),5,'Capítulo de Livro: '.$this->relatorio->producaoCapitulosLivros,'LTRB',0);
-		$this->Cell((self::BLOCK_SIZE/3),5,'Relatório Técnico: '.$this->relatorio->producaoRelatoriosTecnicos,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'ComunicaÃ§Ã£o: '.$this->relatorio->producaoComunicacao,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Programa de RÃ¡dio: '.$this->relatorio->producaoProgramasRadio,'LTRB',1);
+		$this->Cell((self::BLOCK_SIZE/3),5,'CapÃ­tulo de Livro: '.$this->relatorio->producaoCapitulosLivros,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'RelatÃ³rio TÃ©cnico: '.$this->relatorio->producaoRelatoriosTecnicos,'LTRB',0);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Programas de TV: '.$this->relatorio->producaoProgramasTV,'LTRB',1);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Anais: '.$this->relatorio->producaoAnais,'LTRB',0);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - Filme: '.$this->relatorio->producaoAudiovisualFilme,'LTRB',0);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Aplicativo para computador: '.$this->relatorio->producaoAplicativosComputador,'LTRB',1);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Manual: '.$this->relatorio->producaoManuais,'LTRB',0);
-		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - Vídeo: '.$this->relatorio->producaoAudiovisualVideos,'LTRB',0);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - VÃ­deo: '.$this->relatorio->producaoAudiovisualVideos,'LTRB',0);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Jogo Educativo: '.$this->relatorio->producaoJogosEducativos,'LTRB',1);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Jornal: '.$this->relatorio->producaoJornais,'LTRB',0);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - CD: '.$this->relatorio->producaoAudiovisualCDs,'LTRB',0);
-		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Artístico: '.$this->relatorio->producaoProdutosArtisticos,'LTRB',1);
+		$this->Cell((self::BLOCK_SIZE/3),5,'Produto ArtÃ­stico: '.$this->relatorio->producaoProdutosArtisticos,'LTRB',1);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Revista: '.$this->relatorio->producaoRevistas,'LTRB',0);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - DVD: '.$this->relatorio->producaoAudiovisualDVDs,'LTRB',0);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Artigo: '.$this->relatorio->producaoArtigos,'LTRB',1);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Produto Audiovisual - Outros: '.$this->relatorio->producaoAudiovisualOutros,'LTRB',0);
 		$this->Cell((self::BLOCK_SIZE/3),5,'Outros: '.$this->relatorio->producaoOutros,'LTB',0);
 		$this->Cell((self::BLOCK_SIZE/3),5,$this->relatorio->producaoOutrosTexto,'LTRB',1);
-		$this->Cell(self::BLOCK_SIZE,5,'Detalhamento da Produção: ','LTR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Detalhamento da ProduÃ§Ã£o: ','LTR',1);
 		$this->SetFont('vera','',11);
 		$this->MultiCell(self::BLOCK_SIZE,1,$this->relatorio->producaoDetalhamento,'LRB','L');
 		$this->SetFont('vera','B',11);
-		$this->Cell(self::BLOCK_SIZE,5,"Relatório Final: ",'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,"RelatÃ³rio Final: ",'LR',1);
 		$this->SetFont('vera','',11);
 		$this->MultiCell(self::BLOCK_SIZE,1,$this->relatorio->relatorioFinal,'LRB','L');
 		$this->Cell(self::BLOCK_SIZE, 6, '', '', 1);
@@ -185,16 +185,16 @@ protected function writeSignatures($idRecursos = false) {
 		$this->SetY($this->GetY() + 4);
 
 		$this->SetFont('vera', 'B', 11);
-		$this->Cell(self::BLOCK_SIZE, 5, 'APROVAÇÕES', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'APROVAÃ‡Ã•ES', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
 
 		$this->SetFont('vera', '', 9);
-		$this->Cell(self::BLOCK_SIZE, 4, 'Aprovação do Departamento em __/__/____', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 4, 'AprovaÃ§Ã£o do Departamento em __/__/____', 'LR', 1, 'C');
 		$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
 		$this->Cell(self::BLOCK_SIZE, 4, 'Chefe do Departamento', 'LR', 1, 'C');
 		$this->Cell(self::BLOCK_SIZE, 15, '', 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 4, 'Aprovação no Conselho de Unidade __/__/____', 'LR', 1, 'C');
+		$this->Cell(self::BLOCK_SIZE, 4, 'AprovaÃ§Ã£o no Conselho de Unidade __/__/____', 'LR', 1, 'C');
 		$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
 		$this->Cell(self::BLOCK_SIZE, 4, 'Chefe de Unidade', 'LR', 1, 'C');
@@ -203,13 +203,13 @@ protected function writeSignatures($idRecursos = false) {
 			$this->Cell(self::BLOCK_SIZE, 4, 'Ciente em __/__/____', 'LR', 1, 'C');
 			$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
 			$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
-			$this->Cell(self::BLOCK_SIZE, 4, 'Fundação Gestora', 'LR', 1, 'C');
+			$this->Cell(self::BLOCK_SIZE, 4, 'FundaÃ§Ã£o Gestora', 'LR', 1, 'C');
 			$this->Cell(self::BLOCK_SIZE, 15, '', 'LR', 1);
 		}
 		//$this->Cell(self::BLOCK_SIZE, 4, 'De acordo', 'LR', 1, 'C');
 		//$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
 		//$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
-		//$this->Cell(self::BLOCK_SIZE, 4, 'Coordenação do Projeto de Controle Interno e de Fundações / PROFIC', 'LR', 1, 'C');
+		//$this->Cell(self::BLOCK_SIZE, 4, 'Coordenaï¿½ï¿½o do Projeto de Controle Interno e de Fundaï¿½ï¿½es / PROFIC', 'LR', 1, 'C');
 		$this->Cell(self::BLOCK_SIZE, 5, '', 'LBR', 1);
 	}
 	
