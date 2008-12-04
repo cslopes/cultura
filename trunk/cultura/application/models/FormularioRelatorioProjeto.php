@@ -23,7 +23,7 @@ class FormularioRelatorioProjeto extends Formulario {
 	private $projeto;
 	private $relatorio;
 	
-	const TITULO = 'RELAT�RIO FINAL DE PROJETOS DE EXTENSÃO';
+	const TITULO = 'RELATÓRIO FINAL DE PROJETOS DE EXTENSÃO';
 	
 	/**
 	 * Class constructor
@@ -64,7 +64,7 @@ class FormularioRelatorioProjeto extends Formulario {
 	 *
 	 */
 	private function writeLinhaExtensao() {
-		if(!$this->projeto->idLinhaAtuacao) throw new Exception('Não foi definida uma linha de extens�o');
+		if(!$this->projeto->idLinhaAtuacao) throw new Exception('Não foi definida uma linha de extensão');
 		
 		$tabLinhaAtuacao = new LinhaAtuacao();
 		$linhaAtuacao = $tabLinhaAtuacao->fetchRow('id='.$this->projeto->idLinhaAtuacao);
@@ -113,7 +113,7 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->Cell(self::BLOCK_SIZE,5,'Bolsistas: '.$this->relatorio->alunosGraduacaoBolsistasEnvolvidos,'LR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Não - Bolsistas: '.$this->relatorio->alunosGraduacaoNaoBolsistasEnvolvidos,'LBR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Alunos Pós-Graduação: '.$this->relatorio->alunosPosGraduacaoEnvolvidos,'LR',1);
-		$this->Cell(self::BLOCK_SIZE,5,'T�cnicos Administrativos: '.$this->relatorio->tecnicosAdministrativosEnvolvidos,'LR',1);
+		$this->Cell(self::BLOCK_SIZE,5,'Técnicos Administrativos: '.$this->relatorio->tecnicosAdministrativosEnvolvidos,'LR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'De outras IES ou orgãos: '.$this->relatorio->pessoasOutrasIESEnvolvidas,'LR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Da comunidade externa: '.$this->relatorio->pessoasComunidadeEnvolvidas,'LR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Público atingido: '.$this->relatorio->publicoAtingido,'LR',1);
@@ -185,32 +185,15 @@ protected function writeSignatures($idRecursos = false) {
 		$this->SetY($this->GetY() + 4);
 
 		$this->SetFont('vera', 'B', 11);
-		$this->Cell(self::BLOCK_SIZE, 5, 'APROVAÇÕES', 'LTR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'GERÊNCIA DE RECURSOS', 'LTR', 1);
+		$this->SetFont('vera', '', 11);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
-
-		$this->SetFont('vera', '', 9);
-		$this->Cell(self::BLOCK_SIZE, 4, 'Aprovação do Departamento em __/__/____', 'LR', 1, 'C');
-		$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
-		$this->Cell(self::BLOCK_SIZE, 4, 'Chefe do Departamento', 'LR', 1, 'C');
-		$this->Cell(self::BLOCK_SIZE, 15, '', 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 4, 'Aprovação no Conselho de Unidade __/__/____', 'LR', 1, 'C');
-		$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
-		$this->Cell(self::BLOCK_SIZE, 4, 'Chefe de Unidade', 'LR', 1, 'C');
-		$this->Cell(self::BLOCK_SIZE, 15, '', 'LR', 1);
-		if($idRecursos) {
-			$this->Cell(self::BLOCK_SIZE, 4, 'Ciente em __/__/____', 'LR', 1, 'C');
-			$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
-			$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
-			$this->Cell(self::BLOCK_SIZE, 4, 'Fundação Gestora', 'LR', 1, 'C');
-			$this->Cell(self::BLOCK_SIZE, 15, '', 'LR', 1);
-		}
-		//$this->Cell(self::BLOCK_SIZE, 4, 'De acordo', 'LR', 1, 'C');
-		//$this->Cell(self::BLOCK_SIZE, 5, '', 'LR', 1);
-		//$this->Cell(self::BLOCK_SIZE, 4, '____________________________________________________________', 'LR', 1, 'C');
-		//$this->Cell(self::BLOCK_SIZE, 4, 'Coordena��o do Projeto de Controle Interno e de Funda��es / PROFIC', 'LR', 1, 'C');
-		$this->Cell(self::BLOCK_SIZE, 5, '', 'LBR', 1);
+		$this->MultiCell(self::BLOCK_SIZE,1,"Declaramos que os recursos do projeto ".$this->projeto->titulo." foram geridos por esta fundação em conformidade com a Resolução 07/2000 - UFJF .",'LR','L');
+		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'Juiz de Fora ________________________________________________________' , 'LR', 1,'C');
+		$this->Cell(self::BLOCK_SIZE, 4, 'FADEPE', 'LR', 1,'C');
+		$this->Cell(self::BLOCK_SIZE, 4, '', 'LRB', 1);
+		
 	}
 	
 	/**
