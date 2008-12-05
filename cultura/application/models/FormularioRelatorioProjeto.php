@@ -121,7 +121,7 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->Cell(self::BLOCK_SIZE,5,'Ariculação Externa (Parceiros Externos)','LTR',1);
 		$this->SetFont('vera','', 10);
 //		foreach ($parceiros as $parceiro){
-//			$this->Cell(self::BLOCK_SIZE,5,$parceiro,'LR',1);
+//			$this->Cell(self::BLOCK_SIZE,5,$parceiro->nomeInstituicao,'LR',1);
 //		}
 //		$this->Cell(self::BLOCK_SIZE,5,$parceiro,'LR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Número de atendimentos por semana','LTR',1);

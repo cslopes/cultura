@@ -27,7 +27,7 @@ class Admin_DepartamentoController extends Proexc_Admin_Controller_Action {
 		$this->form();
 		
 		$tabDepartamento = new Departamento();
-		$this->view->modelList = $tabDepartamento->fetchAll();
+		$this->view->modelList = $tabDepartamento->fetchAll(null,'nome ASC');
 			
 		if(!$this->_request->isPost())
 			$this->render();

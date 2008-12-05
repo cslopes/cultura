@@ -25,7 +25,7 @@ class Admin_ProgramaController extends Proexc_Admin_Controller_Action {
 		$this->form();
 		
 		$tabPrograma = new Programa();
-		$this->view->modelList = $tabPrograma->fetchAll();
+		$this->view->modelList = $tabPrograma->fetchAll(null,'nome ASC');
 			
 		$this->render();
 	}

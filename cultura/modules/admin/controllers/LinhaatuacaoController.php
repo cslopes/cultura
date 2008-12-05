@@ -25,7 +25,7 @@ class Admin_LinhaAtuacaoController extends Proexc_Admin_Controller_Action {
 		$this->form();
 		
 		$tabLinhaAtuacao = new LinhaAtuacao();
-		$this->view->modelList = $tabLinhaAtuacao->fetchAll();
+		$this->view->modelList = $tabLinhaAtuacao->fetchAll(null,'nome ASC');
 			
 		$this->render();
 	}

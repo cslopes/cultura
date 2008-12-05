@@ -36,6 +36,7 @@ require_once 'Recursos.php';
 require_once 'FormularioProjeto.php';
 require_once 'RelatorioFinal.php';
 require_once 'FormularioRelatorioProjeto.php';
+require_once 'Parceiro.php';
 
 class ProjetoController extends Proexc_Controller_Action {
 
@@ -267,11 +268,11 @@ class ProjetoController extends Proexc_Controller_Action {
 
 		// Dados para o combo de Area Temática
 		$areaTematica = new AreaTematica();
-		$this->view->areasTematicas = $areaTematica->fetchAll();
+		$this->view->areasTematicas = $areaTematica->fetchAll('id > 0','nome ASC');
 
 		// Dados para o combo de Linha de Atuação
 		$linhaAtuacao = new LinhaAtuacao();
-		$this->view->linhasAtuacao = $linhaAtuacao->fetchAll();
+		$this->view->linhasAtuacao = $linhaAtuacao->fetchAll('id > 0','nome ASC');
 
 		$this->render();
 	}
@@ -1530,6 +1531,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		$this->view->title = "Relatório Final do Projeto";
 		$tabRelatorioFinal = new RelatorioFinal();
 		$tabProjeto = new Projeto();
+		$tabParceiro = new Parceiro();
 
 		if($this->_request->isPost()) {
 			$idProjeto = (int) $this->_request->getPost('id');
@@ -1648,9 +1650,11 @@ class ProjetoController extends Proexc_Controller_Action {
 		} else {
 			$idProjeto = (int) $this->_request->getParam('id', 0);
 			$projeto = $tabProjeto->find($idProjeto)->current();
+			$parceiros = $tabParceiro->fetchParceirosByProjeto($idProjeto);
 		
 			if($projeto) {
 				$this->view->projeto = $projeto;
+				$this->view->parceiros = $parceiros;
 				if($projeto->idRelatorioFinal)
 					$this->view->relatorioFinal = $tabRelatorioFinal->find($projeto->idRelatorioFinal)->current();
 				$this->render();

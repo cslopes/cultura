@@ -246,7 +246,7 @@ class EventoController extends Proexc_Controller_Action {
 
 		// Dados para o combo de Area Temática
 		$areaTematica = new AreaTematica();
-		$this->view->areasTematicas = $areaTematica->fetchAll();
+		$this->view->areasTematicas = $areaTematica->fetchAll('id > 0','nome ASC');
 
 		$this->render();
 	}
