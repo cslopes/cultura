@@ -25,7 +25,7 @@ class Admin_AreatematicaController extends Proexc_Admin_Controller_Action {
 		$this->form();
 		
 		$tabAreaTematica = new AreaTematica();
-		$this->view->modelList = $tabAreaTematica->fetchAll();
+		$this->view->modelList = $tabAreaTematica->fetchAll(null,'nome ASC');
 			
 		$this->render();
 	}

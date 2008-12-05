@@ -92,14 +92,18 @@
 			   constraints="{min:0,max:100000,places:0}"
 			   value="0" value="<?php echo @$this->escape($this->relatorioFinal->publicoAtingido)?>" />
 </fieldset><br/>
-
+<!-- 
 <fieldset>
 <legend>Articulação Externa</legend>
 <p>
-<label for="parceirosExternos">Parceiros Externos</label>
+<label for="parceirosExternos">Parceiros Externos</label><br><center>
+<?php foreach ($this->parceiros as $parceiro): ?>
+	<input name="parceiro" dojoType="dijit.form.TextBox" value="<?php echo $parceiro->nomeInstituicao ?>" /><br>
+<?php endforeach; ?>	
+</center>
 </p>
 </fieldset><br/>
-
+-->
 <fieldset id="fieldsetAtendimentos">
 <legend>Número de atendimentos por semana</legend>
 <p>

@@ -25,7 +25,7 @@ class Admin_TitulacaoController extends Proexc_Admin_Controller_Action {
 		$this->form();
 		
 		$tabTitulacao = new Titulacao();
-		$this->view->modelList = $tabTitulacao->fetchAll();
+		$this->view->modelList = $tabTitulacao->fetchAll(null,'nome ASC');
 			
 		$this->render();
 	}
