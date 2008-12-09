@@ -34,14 +34,8 @@ class FormularioRelatorioProjeto extends Formulario {
 	 * @param String $format Format of the page, default is 'A4'
 	 */
 	function __construct($projeto, $orientation = 'P', $unit = 'mm', $format = 'A4') {
-		$this->projeto = $projeto;
-
-//		$tabRelatorio = new RelatorioFinal();
-//		$this->relatorio = $tabRelatorio->fetchRow('id = ' .$this->projeto->idRelatorioFinal);
 		
-
-				
-
+		$this->projeto = $projeto;
 		parent::__construct($projeto->idCoordenador, $this->projeto->titulo, $orientation, $unit, $format);
 	}
 	
@@ -84,10 +78,11 @@ class FormularioRelatorioProjeto extends Formulario {
 	 *
 	 */
 	private function writeDescricao() {
+		
 		$tabRelatorio = new RelatorioFinal();
 		$this->relatorio = $tabRelatorio->fetchRow('id='.$this->projeto->idRelatorioFinal);
 		$tabParceiro = new Parceiro();
-		$parceiros = $tabParceiro->fetchParceirosByProjeto($this->projeto->id);
+		$this->parceiros[] = $tabParceiro->fetchParceirosByProjeto($this->projeto->id);
 
 		$this->SetFont('vera', 'B', 11);
 		$position = $this->increasePosition();
@@ -120,10 +115,10 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->SetFont('vera','B', 10);
 		$this->Cell(self::BLOCK_SIZE,5,'Ariculação Externa (Parceiros Externos)','LTR',1);
 		$this->SetFont('vera','', 10);
-//		foreach ($parceiros as $parceiro){
-//			$this->Cell(self::BLOCK_SIZE,5,$parceiro->nomeInstituicao,'LR',1);
-//		}
-//		$this->Cell(self::BLOCK_SIZE,5,$parceiro,'LR',1);
+		foreach ($this->parceiros as $parceiro => $parceiro) {
+			$this->Cell(self::BLOCK_SIZE,5,$parceiro->nomeInstituicao,'LR',1);
+		}
+		$this->Cell(self::BLOCK_SIZE,5,"",'LR',1);
 		$this->Cell(self::BLOCK_SIZE,5,'Número de atendimentos por semana','LTR',1);
 		$this->SetFont('vera','', 10);
 		$this->Cell(self::BLOCK_SIZE,5,'Individuais: '.$this->relatorio->atendimentosSemanaisIndividuais,'LR',1);
@@ -131,7 +126,6 @@ class FormularioRelatorioProjeto extends Formulario {
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
 		$this->SetY($this->GetY() + 4);
 		$this->AddPage();
-		
 		$position = $this->increasePosition();
 		$this->SetFont('vera', 'B', 11);
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. MONITORAMENTO DA PRODUÇÃO', 'LTR', 1);
