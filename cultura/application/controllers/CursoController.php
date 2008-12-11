@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 require_once 'Zend/Date.php';
 require_once 'Zend/Validate/Int.php';
@@ -154,6 +154,9 @@ class CursoController extends Proexc_Controller_Action {
 		$this->view->title = "Geral";
 
 		$curso = new Curso();
+		
+		$id = (int) $this->_request->getParam('id', 0);
+		$this->view->curso = $curso->find($id)->current();
 
 		if($this->_request->isPost()) {
 			$errors = null;
@@ -211,7 +214,6 @@ class CursoController extends Proexc_Controller_Action {
 			}
 			$this->view->errors = $errors;
 			
-			$this->view->curso 					= new stdClass();
 			$this->view->curso->id				= $id;
 			$this->view->curso->dataInicio		= $dataInicio;
 			$this->view->curso->dataFinal		= $dataFinal;
@@ -220,18 +222,6 @@ class CursoController extends Proexc_Controller_Action {
 			$this->view->curso->local			= $local;
 			$this->view->curso->idAreaTematica	= $idAreaTematica;
 			// Foi passado o id por 'GET'
-		} else {
-			$id = (int) $this->_request->getParam('id', 0);
-			
-			$this->view->curso 					= new stdClass();
-			$this->view->curso->id				= "";
-			$this->view->curso->dataInicio		= "";
-			$this->view->curso->dataFinal		= "";
-			$this->view->curso->horario			= "";
-			$this->view->curso->cargaHoraria	= "";
-			$this->view->curso->local			= "";
-			$this->view->curso->idAreaTematica	= "";
-			if($id > 0) $this->view->curso = $curso->find($id)->current();
 		}
 
 		// Dados para o combo de Area Temática
@@ -245,6 +235,9 @@ class CursoController extends Proexc_Controller_Action {
 		$this->view->title = 'Equipe';
 
 		$curso = new Curso();
+		
+		$idCurso = (int) $this->_request->getParam('id', 0);
+		$this->view->curso = $curso->find($idCurso)->current();
 
 		if($this->_request->isPost()) {
 			$idCurso = (int) $this->_request->getPost('id');
@@ -269,20 +262,9 @@ class CursoController extends Proexc_Controller_Action {
 			// Se clicou em próximo, segue para formulário de parceiros
 			if($button == 'Proximo') $this->_redirect('/curso/descricao/id/'.$idCurso);
 
-			$this->view->curso 						= new stdClass();
-			$this->view->curso->id					= $idCurso;
 			$this->view->curso->idViceCoordenador	= $idViceCoordenador;
 			$this->view->curso->coordenadorArea		= $coordenadorArea;
 			// Foi passado o id por 'GET'
-		} else {
-			$idCurso = (int) $this->_request->getParam('id', 0);
-			
-			$this->view->curso = new stdClass();
-			$this->view->curso->id					= "";
-			$this->view->curso->idViceCoordenador	= "";
-			$this->view->curso->coordenadorArea		= "";
-			
-			if($idCurso > 0) $this->view->curso = $curso->find($idCurso)->current();
 		}
 
 		// Preenche combo de possíveis vice coordenadores, ou seja, todos coordenadores
@@ -705,42 +687,41 @@ class CursoController extends Proexc_Controller_Action {
 
 	function fecharAction() {
 		// Título da página
-		$this->view->title = "Fechar Curso";
+		$this->view->title = "Concluir Curso";
 
 		// Cria um objeto referente à tabela Curso
-		$curso = new Curso();
-
+		$tabCurso = new Curso();
+		
+		// Pega os dados
+		$idCurso = (int)$this->_request->getParam('id', 0);
+		$curso = $tabCurso->find($idCurso)->current();
+		
 		// Se a requisição for um método post
 		if ($this->_request->isPost()) {
 			// Pega os dados
 			$idCurso = (int)$this->_request->getPost('id');
 			$fecha = $this->_request->getPost('fecha');
 
-			// Se clicou em 'Yes' e existe o Curso
-			if ($fecha == 'Yes' && $idCurso > 0) {
-				$data = array(
-					"fechado"	=> 1
-				);
-				
-				$curso->updateById($data, $idCurso);
+			// Se clicou em 'Yes' e existe o Projeto
+			if ($fecha == 'Sim' && $idCurso > 0) {
+//				$data = array(
+//					"fechado"	=> 1
+//				);
+//				
+//				$projeto->updateById($data, $idProjeto);
+				$curso->fechado = 1;
+				$curso->save();
+						
 			}
-			// A transação é do tipo 'get'
+		// A transação é do tipo 'get'
 		} else {
-			// Pega os dados passados na url
-			$idCurso = (int)$this->_request->getParam('id');
-
-			// Testa o id
-			if ($idCurso > 0) {
-				// somente mostra se achou o curso
-				$this->view->curso = $curso->fetchRow('id='.$idCurso);
-
-				if ($this->view->curso->id > 0) {
-					$this->render();
-					return;
-				}
+			if ($curso) {
+				$this->view->curso = $curso;
+				$this->render();
+				return;
 			}
 		}
-		// volta se não renderizou (se o curso não existe)
+		// volta se não renderizou (se o projeto não existe)
 		$this->_redirect("Index/listCursos");
 	}
 	

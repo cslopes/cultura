@@ -256,6 +256,9 @@ class EventoController extends Proexc_Controller_Action {
 		$this->view->title = "Descrição do evento";
 
 		$evento = new Evento();
+		
+		$idEvento = (int) $this->_request->getParam('id', 0);
+		$this->view->evento = $evento->find($idEvento)->current();
 
 		if($this->_request->isPost()) {
 			$idEvento = (int) $this->_request->getPost('id');
@@ -312,7 +315,6 @@ class EventoController extends Proexc_Controller_Action {
 			}
 			$this->view->errors = $errors;
 
-			$this->view->evento = new stdClass();
 			$this->view->evento->id									= $idEvento;
 			$this->view->evento->publicoAlvo						= $publicoAlvo;
 			$this->view->evento->expectativaPublico					= $expectativaPublico;
@@ -325,22 +327,6 @@ class EventoController extends Proexc_Controller_Action {
 			$this->view->evento->tecnicosEnvolvidos					= $tecnicosEnvolvidos;
 			$this->view->evento->comunidadeEnvolvida				= $comunidadeEnvolvida;
 			// Foi passado o id por 'GET'
-		} else {
-			$idEvento = (int) $this->_request->getParam('id', 0);
-
-			$this->view->evento = new stdClass();
-			$this->view->evento->id									= "";
-			$this->view->evento->publicoAlvo						= "";
-			$this->view->evento->expectativaPublico					= 0;
-			$this->view->evento->objetivos							= "";
-			$this->view->evento->resumo								= "";
-			$this->view->evento->docentesEnvolvidos					= 0;
-			$this->view->evento->bolsistasGraduacaoEnvolvidos		= 0;
-			$this->view->evento->bolsistasPosGraduacaoEnvolvidos	= 0;
-			$this->view->evento->voluntariosEnvolvidos				= 0;
-			$this->view->evento->tecnicosEnvolvidos					= 0;
-			$this->view->evento->comunidadeEnvolvida				= 0;
-			if($idEvento > 0) $this->view->evento = $evento->find($idEvento)->current();
 		}
 
 		$this->render();
