@@ -137,7 +137,6 @@ class ProjetoController extends Proexc_Controller_Action {
 
 			$validator = new Proexc_Validate_NotEmpty();
 
-			$validator = new Zend_Validate_NotEmpty();
 
 			$titulo = trim($this->_request->getPost('titulo'));
 			if(!$validator->isValid($titulo)) {
@@ -176,7 +175,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 			$id = (int) $this->_request->getPost('id');
 			
-			$validator = new Zend_Validate_NotEmpty();
+			$validator = new Proexc_Validate_NotEmpty();
 			$titulo = trim($this->_request->getPost('titulo'));
 			if(!$validator->isValid($titulo)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
@@ -203,7 +202,7 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 
-		/**
+	/**
 	 * Formulário de projeto para preenchimento dos dados gerais.
 	 */
 	function geralAction() {
@@ -211,6 +210,9 @@ class ProjetoController extends Proexc_Controller_Action {
 		$this->view->title = "Geral";
 
 		$projeto = new Projeto();
+
+		$id = (int) $this->_request->getParam('id', 0);
+		if($id > 0) $this->view->projeto = $projeto->find($id)->current();
 
 		if($this->_request->isPost()) {
 			$errors = null;
@@ -224,7 +226,10 @@ class ProjetoController extends Proexc_Controller_Action {
 			$dataInicio = $this->_request->getPost('dataInicio');
 			if(!$validator->isValid($dataInicio)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
-			}else $dataInicio = new Zend_Date($dataInicio);
+			}else {
+				$dataInicio = new Zend_Date($dataInicio);
+				$dataInicio = $dataInicio->get('y-M-d');
+			}
 
 			$dataFinal = null;
 			if(!$continuo) {
@@ -243,7 +248,7 @@ class ProjetoController extends Proexc_Controller_Action {
 					'idAreaTematica'	=> $idAreaTematica,
 					'idLinhaAtuacao'	=> $idLinhaAtuacao,
 					'continuo'			=> $continuo,
-					'dataInicio'		=> $dataInicio->get('y-M-d'),
+					'dataInicio'		=> $dataInicio,
 					'dataFinal'			=> $dataFinal
 				);
 
@@ -255,12 +260,13 @@ class ProjetoController extends Proexc_Controller_Action {
 				if($button == 'Proximo') $this->_redirect('/projeto/equipe/id/'.$id);
 			}
 			$this->view->errors = $errors;
+			$this->view->projeto->idAreaTematica = $idAreaTematica;
+			$this->view->projeto->idLinhaAtuacao = $idLinhaAtuacao;
+			$this->view->projeto->continuo = $continuo;
+			$this->view->projeto->dataInicio = $dataInicio;
+			$this->view->projeto->dataFinal = $dataFinal;
 			// Foi passado o id por 'GET'
-		} else {
-			$id = (int) $this->_request->getParam('id', 0);
 		}
-
-		if($id > 0) $this->view->projeto = $projeto->find($id)->current();
 
 		// Dados para o combo de Programa
 		$programa = new Programa();
@@ -268,11 +274,11 @@ class ProjetoController extends Proexc_Controller_Action {
 
 		// Dados para o combo de Area Temática
 		$areaTematica = new AreaTematica();
-		$this->view->areasTematicas = $areaTematica->fetchAll('id > 0','nome ASC');
+		$this->view->areasTematicas = $areaTematica->fetchAll(null,'nome ASC');
 
 		// Dados para o combo de Linha de Atuação
 		$linhaAtuacao = new LinhaAtuacao();
-		$this->view->linhasAtuacao = $linhaAtuacao->fetchAll('id > 0','nome ASC');
+		$this->view->linhasAtuacao = $linhaAtuacao->fetchAll(null,'nome ASC');
 
 		$this->render();
 	}
@@ -1442,32 +1448,16 @@ class ProjetoController extends Proexc_Controller_Action {
 				$projeto->save();
 						
 			}
-
-			// A transação é do tipo 'get'
+		// A transação é do tipo 'get'
 		} else {
-
-			// Pega os dados passados na url
-			$idProjeto = (int)$this->_request->getParam('id');
-			// Testa o id
-
-			if ($idProjeto > 0) {
 			if ($projeto) {
-				// somente mostra se achou o projeto
-				$this->view->projeto = $projeto;
-
-				if ($this->view->projeto->id > 0) {
-					$this->render();
-					return;
-				}
-
 				$this->view->projeto = $projeto;
 				$this->render();
 				return;
 			}
 		}
 		// volta se não renderizou (se o projeto não existe)
-		$this->_redirect("Index/listValidatedProjetos");
-		}
+		$this->_redirect("Index/listProjetos");
 	}
 	
 	function fecharRelatorioAction(){
@@ -1643,18 +1633,16 @@ class ProjetoController extends Proexc_Controller_Action {
 			}
 			$projeto = $tabProjeto->find($idProjeto)->current();
 			$this->view->projeto = $projeto;
-			// Aqui coloca na view os dados inseridos pelo usuário
+			// Aqui coloca na view os dados inseridos pelo usu�rio
 			$this->view->relatorioFinal = $tabRelatorioFinal->find($projeto->idRelatorioFinal)->current();
 			$this->render();
 		// Get
 		} else {
 			$idProjeto = (int) $this->_request->getParam('id', 0);
 			$projeto = $tabProjeto->find($idProjeto)->current();
-			$parceiros = $tabParceiro->fetchParceirosByProjeto($idProjeto);
 		
 			if($projeto) {
 				$this->view->projeto = $projeto;
-				$this->view->parceiros = $parceiros;
 				if($projeto->idRelatorioFinal)
 					$this->view->relatorioFinal = $tabRelatorioFinal->find($projeto->idRelatorioFinal)->current();
 				$this->render();
@@ -1665,3 +1653,4 @@ class ProjetoController extends Proexc_Controller_Action {
 		//$this->_redirect("Index/listValidatedProjetos");;
 	}
 }
+				
