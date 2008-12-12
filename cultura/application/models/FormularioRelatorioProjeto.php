@@ -116,6 +116,7 @@ class FormularioRelatorioProjeto extends Formulario {
 		if(count($parceiros) > 0){
 		$this->Cell(self::BLOCK_SIZE,5,'Ariculação Externa (Parceiros Externos)','LTR',1);
 		$this->SetFont('vera','', 10);
+			
 			foreach ($parceiros as $parceiro) {
 				$this->Cell(self::BLOCK_SIZE,5,$parceiro->nomeInstituicao,'LR',1);
 			}
