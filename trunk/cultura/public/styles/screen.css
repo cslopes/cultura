@@ -311,6 +311,11 @@ div.help {
 	font-size: xx-small;
 }
 
+.moreHelp{
+	border: 1px solid #000;
+	padding: 3px;
+}
+
 #formDescricao div.help {
 	position: absolute;
 	right: 200px;

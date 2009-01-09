@@ -29,6 +29,6 @@ class Coordenador extends Proexc_Db_Table {
 	
 	public function fetchViceCoordenadores($siape) {
 		$where = $this->getAdapter()->quoteInto('id <> ?', $siape);
-		return $this->fetchAll($where);
+		return $this->fetchAll($where,'nome ASC');
 	}
 }

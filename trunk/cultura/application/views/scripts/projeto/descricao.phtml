@@ -5,13 +5,6 @@
        dojo.require("dijit.form.Textarea");
        dojo.require("dijit.form.NumberSpinner");
        
-	valor = 0;
-	function limpa(){
-	    if(valor == 0){
-	        dojo.byId('textResumo').value = '';
-	        valor++;
-	    }
-	}
 	
 		
 </script>
@@ -28,8 +21,8 @@
 	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
 	
 <div id="helpFundamento" class="help">
-<p>Descrição referenciada que demonstre claramente que o projeto está inserido dentro da proposta de indissociabilidade dos
-parâmetros de Ensino, Pesquisa, Extensão.</p>
+<p>DescriÃ§Ã£o referenciada que demonstre claramente que o projeto estÃ¡ inserido dentro da proposta de indissociabilidade dos
+parÃ¢metros de Ensino, Pesquisa, ExtensÃ£o.</p>
 </div>
 <div>
 	<label for="fundamento">Fundamentação teórica:</label>
@@ -40,9 +33,9 @@ parâmetros de Ensino, Pesquisa, Extensão.</p>
 </div><br />
 
 <div id="helpObjetivos" class="help">
-<p>Neste item deve-se inserir um texto que objetive demonstrar a intenção do projeto frente os benefícios que trará a todas as
-partes envolvidas, descrevendo de modo claro e sucinto o objetivo geral, bem como sua extensão específica para a humanização e
-para a formação acadêmica.</p>
+<p>Neste item deve-se inserir um texto que objetive demonstrar a intenÃ§Ã£o do projeto frente os benefÃ­cios que trarÃ¡ a todas as
+partes envolvidas, descrevendo de modo claro e sucinto o objetivo geral, bem como sua extensÃ£o especÃ­fica para a humanizaÃ§Ã£o e
+para a formaÃ§Ã£o acadÃªmica.</p>
 </div>
 <div>
 	<label for="objetivos">Objetivos:</label>
@@ -53,8 +46,8 @@ para a formação acadêmica.</p>
 </div><br />
 
 <div id="helpMetodologia" class="help">
-<p>O texto deve conter a infra-estrutura que o projeto pretende usar, juntamente com uma explanação metodológica dos procedimentos
-que vão ser realizados no decorrer de seu desenvolvimento.</p>
+<p>O texto deve conter a infra-estrutura que o projeto pretende usar, juntamente com uma explanaÃ§Ã£o metodolÃ³gica dos procedimentos
+que vÃ£o ser realizados no decorrer de seu desenvolvimento.</p>
 </div>
 <div>
 	<label for="metodologia">Metodologia:</label>
@@ -65,7 +58,7 @@ que vão ser realizados no decorrer de seu desenvolvimento.</p>
 </div><br />
 
 <div id="helpPublicoAlvo" class="help">
-<p>Objeto principal de atuação do projeto (a que população se dedica). Sua descrição deve ser a mais específica possível,
+<p>Objeto principal de atuaÃ§Ã£o do projeto (a que populaÃ§Ã£o se dedica). Sua descriÃ§Ã£o deve ser a mais especÃ­fica possÃ­vel,
 objetivando as metas do projeto.</p>
 </div>
 <div>
@@ -77,7 +70,7 @@ objetivando as metas do projeto.</p>
 </div><br />
 
 <div id="helpPessoasAtendidas" class="help">
-<p>Deve conter um número estimado com bom senso e baseado na estrutura apresentada.</p>
+<p>Deve conter um nÃºmero estimado com bom senso e baseado na estrutura apresentada.</p>
 </div>
 <div>
 	<label for="pessoasAtendidas">Expectativa de atendimentos:</label>
@@ -88,34 +81,36 @@ objetivando as metas do projeto.</p>
 </div><br />
 
 <div id="helpResumo" class="help">
-<p>O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e o público alvo que
-permitam uma melhor visualização do projeto , além do local de realização, horários de atendimento ou de execução
-do projeto. Este  resumo será  divulgado na  página da Proexc  e, portanto, o texto deverá ser revisado e é de
-responsabilidade do coordenador. Poderá conter e-mail para contato ou site.</p>
-</div>
-<div>
-	<label for="resumo">Resumo:</label>
-	
-    <?php
-      $ajuda = "O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
+<p>O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
 	    o público alvo que permitam uma melhor visualização do projeto , além do local de realização, 
 	    horários de atendimento ou de execução do projeto. Este  resumo será  divulgado na  página da 
 	    Proexc  e, portanto, o texto deverá ser revisado e é de responsabilidade do coordenador. 
-	    Poderá conter e-mail para contato ou site.";
-	  ?>
-	 
+	    Poderá conter e-mail para contato ou endereço de site.</p>
+</div>
+
+<div>
+	<label for="resumo">Resumo (Informações para o público externo):</label>
+	    
 	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpResumo', true)"  onmouseout="javascript:setVisible('helpResumo', false)"/><br />
-	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px" id="textResumo" onclick="limpa()">
-	<?php if($this->projeto->resumo){echo $this->escape($this->projeto->resumo);} else {echo $ajuda;}?> 
+	<div class="moreHelp">
+		<font color="red">O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
+	    o público alvo que permitam uma melhor visualização do projeto , além do local de realização, 
+	    horários de atendimento ou de execução do projeto. Este  resumo será  divulgado na  página da 
+	    Proexc  e, portanto, o texto deverá ser revisado e é de responsabilidade do coordenador. 
+	    Poderá conter e-mail para contato ou endereço de site.</font>
+	</div>
+	<br>
+	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px" id="textResumo" ">
+	<?php if($this->projeto->resumo){echo $this->escape($this->projeto->resumo);} ?> 
     
     	
     </textarea>
 </div><br />
 
 <div id="helpBolsasJustificativa" class="help">
-<p>Neste item deve-se conter um texto sucinto informando a quantidade de bolsas pretendidas somadas à descrição funcional  dos
-bolsistas, pretendendo demonstrar a utilidade de cada um na execução do projeto, bem como  a ligação de sua  tarefa no projeto
-com o mundo acadêmico.</p>
+<p>Neste item deve-se conter um texto sucinto informando a quantidade de bolsas pretendidas somadas Ã  descriÃ§Ã£o funcional  dos
+bolsistas, pretendendo demonstrar a utilidade de cada um na execuÃ§Ã£o do projeto, bem como  a ligaÃ§Ã£o de sua  tarefa no projeto
+com o mundo acadÃªmico.</p>
 </div>
 <div>
 	<label for="bolsasJustificativa">Justificativa para bolsas:</label>
