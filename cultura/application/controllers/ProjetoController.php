@@ -121,9 +121,9 @@ class ProjetoController extends Proexc_Controller_Action {
 
 
 	/**
-	 * Controller para criação de um novo projeto. Requisita apenas o nome do projeto e cria
-	 * inserindo também o id do coordenador. Logo após criado o usuário é enviado para a tela
-	 * de edição do projeto.
+	 * Controller para criaÃ§Ã£o de um novo projeto. Requisita apenas o nome do projeto e cria
+	 * inserindo tambÃ©m o id do coordenador. Logo apÃ³s criado o usuÃ¡rio Ã© enviado para a tela
+	 * de ediÃ§Ã£o do projeto.
 	 */
 	
 	function addAction() {
@@ -214,6 +214,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		$id = (int) $this->_request->getParam('id', 0);
 		if($id > 0) $this->view->projeto = $projeto->find($id)->current();
 
+		// POST
 		if($this->_request->isPost()) {
 			$errors = null;
 			$id = (int) $this->_request->getPost('id');
@@ -303,7 +304,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 			$button = $this->_request->getPost('button');
 
-			// Se clicou em próximo, segue para formulário de parceiros
+			// Se clicou em prÃ³ximo, segue para formulÃ¡rio de parceiros
 			if($button == 'Proximo') $this->_redirect('/projeto/parceiros/id/'.$idProjeto);
 
 			// Foi passado o id por 'GET'
@@ -337,62 +338,62 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	function addCoordenadorTecnicoAction() {
-		// Se já existir um coordenador técnico, não exibe
+		// Se jÃ¡ existir um coordenador tÃ©cnico, nÃ£o exibe
 		//		$idProjeto = $this->_request->getParam('id');
 		//		$projetoTecnico = new ProjetoTecnico();
 		//		if($projetoTecnico->hasCoordenadorTecnico($idProjeto)) $this->_redirect('/');
 
 		// Inicia
-		$this->view->title = 'Coordenador Técnico';
+		$this->view->title = 'Coordenador TÃ©cnico';
 		$this->view->action = $this->view->baseUrl . "/projeto/addCoordenadorTecnico";
 		$this->formTecnico(Tecnico::COORDENADOR);
 	}
 
 	function addColaboradorTecnicoAction() {
 		// Inicia
-		$this->view->title = 'Colaborador Técnico';
+		$this->view->title = 'Colaborador TÃ©cnico';
 		$this->view->action = $this->view->baseUrl . "/projeto/addColaboradorTecnico";
 		$this->formTecnico(Tecnico::COLABORADOR);
 	}
 
 	function editCoordenadorTecnicoAction() {
-		$this->view->title = 'Coordenador Técnico';
+		$this->view->title = 'Coordenador TÃ©cnico';
 		$this->view->action = $this->view->baseUrl . "/projeto/editCoordenadorTecnico";
 		$this->formTecnico(Tecnico::COORDENADOR, 'edit');
 	}
 
 	function editColaboradorTecnicoAction() {
-		$this->view->title = 'Colaborador Técnico';
+		$this->view->title = 'Colaborador TÃ©cnico';
 		$this->view->action = $this->view->baseUrl . "/projeto/editColaboradorTecnico";
 		$this->formTecnico(Tecnico::COLABORADOR, 'edit');
 	}
 
 	function delCoordenadorTecnicoAction() {
-		// Título da página
-		$this->view->title = "Coordenador Técnico";
+		// TÃ­tulo da pÃ¡gina
+		$this->view->title = "Coordenador TÃ©cnico";
 
 		$this->delTecnico(Tecnico::COORDENADOR);
 	}
 
 	function delColaboradorTecnicoAction() {
-		// Título da página
-		$this->view->title = "Colaborador Técnico";
+		// TÃ­tulo da pÃ¡gina
+		$this->view->title = "Colaborador TÃ©cnico";
 
 		$this->delTecnico(Tecnico::COLABORADOR);
 	}
 
 	private function delTecnico($funcao) {
-		// Cria um objeto referente à tabela Tecnico
+		// Cria um objeto referente Ã  tabela Tecnico
 		$tecnico = new Tecnico();
 
-		// Se a requisição for um método post
+		// Se a requisiÃ§Ã£o for um mÃ©todo post
 		if ($this->_request->isPost()) {
 			// Pega os dados
 			$idTecnico = (int)$this->_request->getPost('idTecnico');
 			$idProjeto = (int)$this->_request->getPost('id');
 			$del = $this->_request->getPost('del');
 
-			// Se clicou em 'Yes' e existe o técnico
+			// Se clicou em 'Yes' e existe o tÃ©cnico
 			if ($del == 'Yes' && $idTecnico > 0) {
 				$db = $tecnico->getAdapter();
 				$db->beginTransaction();
@@ -414,7 +415,7 @@ class ProjetoController extends Proexc_Controller_Action {
 					return ;
 				}
 			}
-			// A transação é do tipo 'get'
+			// A transaÃ§Ã£o Ã© do tipo 'get'
 		} else {
 			// Pega os dados passados na url
 			$idProjeto = (int)$this->_request->getParam('id');
@@ -432,7 +433,7 @@ class ProjetoController extends Proexc_Controller_Action {
 				}
 			}
 		}
-		// volta se não renderizou (se o tecnico não existe)
+		// volta se nÃ£o renderizou (se o tecnico nÃ£o existe)
 		$this->_redirect("projeto/equipe/id/".$idProjeto);
 	}
 
@@ -497,7 +498,7 @@ class ProjetoController extends Proexc_Controller_Action {
 						'cargaHorariaSemanal'	=> $cargaHorariaSemanal
 					);
 
-					// Se for inserção
+					// Se for inserÃ§Ã£o
 					if($tipo == "add") {
 						$idTecnico = $tecnico->insert($data);
 
@@ -511,7 +512,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 						$projetoTecnico->insert($data);
 
-						// Se for atualização
+						// Se for atualizaÃ§Ã£o
 					} elseif ($tipo == "edit") {
 						$where[] = $db->quoteInto('id = ?', $idTecnico);
 
@@ -558,7 +559,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		}
 		$this->view->idProjeto = $idProjeto;
 
-		// Preenche combo de possíveis departamentos
+		// Preenche combo de possÃ­veis departamentos
 		$departamento = new Departamento();
 		$this->view->departamentos = $departamento->fetchAll();
 
@@ -579,13 +580,13 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	function delColaboradorDocenteAction() {
-		// Título da página
+		// TÃ­tulo da pÃ¡gina
 		$this->view->title = "Colaborador Docente";
 
-		// Cria um objeto referente à tabela ColaboradorDocente
+		// Cria um objeto referente Ã  tabela ColaboradorDocente
 		$colaboradorDocente = new ColaboradorDocente();
 
-		// Se a requisição for um método post
+		// Se a requisiÃ§Ã£o for um mÃ©todo post
 		if ($this->_request->isPost()) {
 			// Pega os dados
 			$idColaboradorDocente = (int)$this->_request->getPost('idColaboradorDocente');
@@ -613,7 +614,7 @@ class ProjetoController extends Proexc_Controller_Action {
 					return ;
 				}
 			}
-			// A transação é do tipo 'get'
+			// A transaÃ§Ã£o Ã© do tipo 'get'
 		} else {
 			// Pega os dados passados na url
 			$idProjeto = (int)$this->_request->getParam('id');
@@ -631,7 +632,7 @@ class ProjetoController extends Proexc_Controller_Action {
 				}
 			}
 		}
-		// volta se não renderizou (se o colaborador não existe)
+		// volta se nÃ£o renderizou (se o colaborador nÃ£o existe)
 		$this->_redirect("projeto/equipe/id/".$idProjeto);
 	}
 
@@ -693,7 +694,7 @@ class ProjetoController extends Proexc_Controller_Action {
 						'cargaHorariaSemanal'	=> $cargaHorariaSemanal
 					);
 
-					// Se for inserção
+					// Se for inserÃ§Ã£o
 					if($tipo == "add") {
 						$idColaboradorDocente = $colaboradorDocente->insert($data);
 
@@ -706,7 +707,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 						$projetoColaboradorDocente->insert($data);
 
-						// Se for atualização
+						// Se for atualizaÃ§Ã£o
 					} elseif ($tipo == "edit") {
 						$where = $db->quoteInto('id = ?', $idColaboradorDocente);
 							
@@ -749,7 +750,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		}
 		$this->view->idProjeto = $idProjeto;
 
-		// Preenche combo de possíveis departamentos
+		// Preenche combo de possÃ­veis departamentos
 		$departamento = new Departamento();
 		$this->view->departamentos = $departamento->fetchAll();
 
@@ -770,13 +771,13 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	function delColaboradorExternoAction() {
-		// Título da página
+		// TÃ­tulo da pÃ¡gina
 		$this->view->title = "Colaborador Externo";
 
-		// Cria um objeto referente à tabela ColaboradorExterno
+		// Cria um objeto referente Ã  tabela ColaboradorExterno
 		$colaboradorExterno = new ColaboradorExterno();
 
-		// Se a requisição for um método post
+		// Se a requisiÃ§Ã£o for um mÃ©todo post
 		if ($this->_request->isPost()) {
 			// Pega os dados
 			$idColaboradorExterno = (int)$this->_request->getPost('idColaboradorExterno');
@@ -804,7 +805,7 @@ class ProjetoController extends Proexc_Controller_Action {
 					return ;
 				}
 			}
-			// A transação é do tipo 'get'
+			// A transaÃ§Ã£o Ã© do tipo 'get'
 		} else {
 			// Pega os dados passados na url
 			$idProjeto = (int)$this->_request->getParam('id');
@@ -822,7 +823,7 @@ class ProjetoController extends Proexc_Controller_Action {
 				}
 			}
 		}
-		// volta se não renderizou (se o colaborador não existe)
+		// volta se nÃ£o renderizou (se o colaborador nÃ£o existe)
 		$this->_redirect("projeto/equipe/id/".$idProjeto);
 	}
 
@@ -872,7 +873,7 @@ class ProjetoController extends Proexc_Controller_Action {
 						'celular'	=> $celular
 					);
 
-					// Se for inserção
+					// Se for inserÃ§Ã£o
 					if($tipo == "add") {
 						$idColaboradorExterno = $colaboradorExterno->insert($data);
 
@@ -885,7 +886,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 						$projetoColaboradorExterno->insert($data);
 
-						// Se for atualização
+						// Se for atualizaÃ§Ã£o
 					} elseif ($tipo == "edit") {
 						$where = $db->quoteInto('id = ?', $idColaboradorExterno);
 							
@@ -942,7 +943,7 @@ class ProjetoController extends Proexc_Controller_Action {
 			$idProjeto = (int) $this->_request->getPost('id');
 			$button = $this->_request->getPost('button');
 
-			// Se clicou em próximo, segue para formulário de descricao do projeto
+			// Se clicou em prÃ³ximo, segue para formulÃ¡rio de descricao do projeto
 			if($button == 'Proximo') $this->_redirect('/projeto/descricao/id/'.$idProjeto);
 
 			// Foi passado o id por 'GET'
@@ -952,7 +953,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 		if($idProjeto > 0) $this->view->projeto = $projeto->find($idProjeto)->current();
 
-		// Preenche combo de possíveis parceiros
+		// Preenche combo de possÃ­veis parceiros
 		$tabParceiro = new Parceiro();
 		$this->view->parceiros = $tabParceiro->fetchParceirosByProjeto($idProjeto);
 
@@ -960,9 +961,9 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	/**
-	 * Gerencia o formulário de parceiro externo
+	 * Gerencia o formulÃ¡rio de parceiro externo
 	 *
-	 * @param $tipo Define o tipo do formulário, edição ou novo
+	 * @param $tipo Define o tipo do formulÃ¡rio, ediÃ§Ã£o ou novo
 	 */
 	private function formParceiroExterno($tipo = 'add') {
 		$parceiro = new Parceiro();
@@ -1022,7 +1023,7 @@ class ProjetoController extends Proexc_Controller_Action {
 						'celularContato'	=> $celularContato
 					);
 
-					// Se for inserção
+					// Se for inserÃ§Ã£o
 					if($tipo == "add") {
 						$idParceiro = $parceiro->insert($data);
 
@@ -1035,7 +1036,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 						$projetoParceiro->insert($data);
 
-						// Se for atualização
+						// Se for atualizaÃ§Ã£o
 					} elseif ($tipo == "edit") {
 						$where = $db->quoteInto('id = ?', $idParceiro);
 							
@@ -1096,13 +1097,13 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	function delParceiroExternoAction() {
-		// Título da página
+		// TÃ­tulo da pÃ¡gina
 		$this->view->title = "Parceiro Externo";
 
-		// Cria um objeto referente à tabela Parceiro
+		// Cria um objeto referente Ã  tabela Parceiro
 		$parceiro = new Parceiro();
 
-		// Se a requisição for um método post
+		// Se a requisiÃ§Ã£o for um mÃ©todo post
 		if ($this->_request->isPost()) {
 			// Pega os dados
 			$idParceiro = (int)$this->_request->getPost('idParceiro');
@@ -1130,7 +1131,7 @@ class ProjetoController extends Proexc_Controller_Action {
 					return ;
 				}
 			}
-			// A transação é do tipo 'get'
+			// A transaÃ§Ã£o Ã© do tipo 'get'
 		} else {
 			// Pega os dados passados na url
 			$idProjeto = (int)$this->_request->getParam('id');
@@ -1148,12 +1149,12 @@ class ProjetoController extends Proexc_Controller_Action {
 				}
 			}
 		}
-		// volta se não renderizou (se o colaborador não existe)
+		// volta se nÃ£o renderizou (se o colaborador nÃ£o existe)
 		$this->_redirect("projeto/parceiros/id/".$idProjeto);
 	}
 
 	function descricaoAction () {
-		// Seta o título
+		// Seta o tÃ­tulo
 		$this->view->title = "Descrição do projeto";
 
 		$projeto = new Projeto();
@@ -1191,7 +1192,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 				$button = $this->_request->getPost('button');
 
-				// Se clicou em próximo, segue para formulário de recursos
+				// Se clicou em prÃ³ximo, segue para formulÃ¡rio de recursos
 				if($button == 'Proximo') $this->_redirect('/projeto/recursos/id/'.$idProjeto);
 			}
 			$this->view->errors = $errors;
@@ -1206,13 +1207,13 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	function recursosAction () {
-		// Seta o título
+		// Seta o tÃ­tulo
 		$this->view->title = "Recursos";
 
-		// Referencia à tabela recursos
+		// Referencia Ã  tabela recursos
 		$tabRecursos = new Recursos();
 
-		// Define uma instância do projeto atual
+		// Define uma instÃ¢ncia do projeto atual
 		$idProjeto = (int) $this->_request->getParam('id', 0);
 		$tabProjeto = new Projeto();
 		$projeto = $tabProjeto->find($idProjeto)->current();
@@ -1268,9 +1269,9 @@ class ProjetoController extends Proexc_Controller_Action {
 					'material'				=> $material
 				);
 					
-				// Se existe um id de recurso já ligado a tabela atualiza na tabela de recurso
+				// Se existe um id de recurso jÃ¡ ligado a tabela atualiza na tabela de recurso
 				if($projeto->idRecursos) $tabRecursos->updateById($data, $projeto->idRecursos);
-				// Senão cria registro na tabela recursos e atualiza o id criado na tabela projeto
+				// SenÃ£o cria registro na tabela recursos e atualiza o id criado na tabela projeto
 				else {
 					$db = $tabProjeto->getAdapter();
 					$db->beginTransaction();
@@ -1285,7 +1286,7 @@ class ProjetoController extends Proexc_Controller_Action {
 				}
 
 				$button = $this->_request->getPost('button');
-				// Se usuário clicoe em não possui recursos
+				// Se usuÃ¡rio clicoe em nÃ£o possui recursos
 			} else
 			if($projeto->idRecursos) {
 				$db = $tabRecursos->getAdapter();
@@ -1353,13 +1354,13 @@ class ProjetoController extends Proexc_Controller_Action {
 
 
 	function delAction() {
-		// Título da página
+		// TÃ­tulo da pÃ¡gina
 		$this->view->title = "Apagar Projeto";
 
-		// Cria um objeto referente à tabela Projeto
+		// Cria um objeto referente Ã  tabela Projeto
 		$projeto = new Projeto();
 
-		// Se a requisição for um método post
+		// Se a requisiÃ§Ã£o for um mÃ©todo post
 		if ($this->_request->isPost()) {
 			// Pega os dados
 			$idProjeto = (int)$this->_request->getPost('id');
@@ -1400,7 +1401,7 @@ class ProjetoController extends Proexc_Controller_Action {
 					return ;
 				}
 			}
-			// A transação é do tipo 'get'
+			// A transaÃ§Ã£o Ã© do tipo 'get'
 		} else {
 			// Pega os dados passados na url
 			$idProjeto = (int)$this->_request->getParam('id');
@@ -1421,7 +1422,7 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 	
 	function fecharAction() {
-		// Título da página
+		// Tpitulo da página
 		$this->view->title = "Concluir Projeto";
 
 		// Cria um objeto referente à tabela Projeto
@@ -1456,18 +1457,18 @@ class ProjetoController extends Proexc_Controller_Action {
 				return;
 			}
 		}
-		// volta se não renderizou (se o projeto não existe)
+		// volta se nÃ£o renderizou (se o projeto não existe)
 		$this->_redirect("Index/listProjetos");
 	}
 	
 	function fecharRelatorioAction(){
-		// Título da página
-		$this->view->title = "Concluir Relatório Final de Projeto";
+		// TÃ­tulo da pÃ¡gina
+		$this->view->title = "Concluir RelatÃ³rio Final de Projeto";
 
-		// Cria um objeto referente à tabela Projeto
+		// Cria um objeto referente Ã  tabela Projeto
 		$tabProjeto = new Projeto();
 		
-		//Cria um objeto referente à tabela RelatorioFinal
+		//Cria um objeto referente Ã  tabela RelatorioFinal
 		$tabRelFinal = new RelatorioFinal();
 		
 		// Pega os dados
@@ -1475,7 +1476,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		$projeto = $tabProjeto->find($idProjeto)->current();
 		
 		
-		// Se a requisição for um método post
+		// Se a requisiÃ§Ã£o for um mÃ©todo post
 		if ($this->_request->isPost()) {
 			// Pega os dados
 			$idProjeto = (int)$this->_request->getPost('id');
@@ -1487,7 +1488,7 @@ class ProjetoController extends Proexc_Controller_Action {
 				$relatorioFinal->save();
 			}	
 		
-		// A transação é do tipo 'get'
+		// A transaÃ§Ã£o Ã© do tipo 'get'
 		} else {
 
 			// Pega os dados passados na url
@@ -1508,7 +1509,7 @@ class ProjetoController extends Proexc_Controller_Action {
 				return;
 			}
 		}
-		// volta se não renderizou (se o projeto não existe)
+		// volta se nÃ£o renderizou (se o projeto nÃ£o existe)
 		$this->_redirect("Index/listValidatedProjetos");
 		}
 	
@@ -1518,7 +1519,7 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	function relatorioFinalAction() {
-		$this->view->title = "Relatório Final do Projeto";
+		$this->view->title = "RelatÃ³rio Final do Projeto";
 		$tabRelatorioFinal = new RelatorioFinal();
 		$tabProjeto = new Projeto();
 		$tabParceiro = new Parceiro();
@@ -1633,7 +1634,7 @@ class ProjetoController extends Proexc_Controller_Action {
 			}
 			$projeto = $tabProjeto->find($idProjeto)->current();
 			$this->view->projeto = $projeto;
-			// Aqui coloca na view os dados inseridos pelo usu�rio
+			// Aqui coloca na view os dados inseridos pelo usuário
 			$this->view->relatorioFinal = $tabRelatorioFinal->find($projeto->idRelatorioFinal)->current();
 			$this->render();
 		// Get

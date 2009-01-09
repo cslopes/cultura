@@ -240,7 +240,7 @@ class Formulario extends TCPDF {
 		$this->SetFont('vera', 'B', 11);
 		$this->Cell(self::BLOCK_SIZE, 5, ++$this->position . '. COORDENADOR', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
-		$sLabels = array('Nome: '.$this->coordenador->nome, 'Unidade: '.$unidade->nome, 'Departamento: '.$departamento->nome, 'Telefone: '.$this->coordenador->telefone, 'E-mail: '.$this->coordenador->email);
+		$sLabels = array('Nome: '.$this->coordenador->nome, 'Unidade: '.$unidade->nome, 'Departamento: '.$departamento->nome, 'Telefone: '.$this->coordenador->telefone, 'Celular: '.$this->coordenador->celular , 'Telefone Público: '.$this->coordenador->telefonePublico,'E-mail: '.$this->coordenador->email);
 		$x = self::BLOCK_SIZE + self::MARGIN;
 		foreach ($sLabels as $sLabel) {
 			$y = $this->GetY();
