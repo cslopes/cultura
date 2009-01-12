@@ -10,8 +10,8 @@
 <h2><?php echo $this->escape($this->title); ?></h2>
 
 <div class="help" id="helpCoordenadoresTecnicos">
-<p>O coordenador tÃ©cnico, de competÃªncia tÃ©cnica reconhecida, atua no projeto sob a orientaÃ§Ã£o e tutela do coordenador geral,
-podendo orientar tecnicamente os bolsistas. Neste caso, nÃ£o existe, para a candidatura ao cargo, a necessidade de ser professor
+<p>O coordenador técnico, de competência técnica reconhecida, atua no projeto sob a orientação e tutela do coordenador geral,
+podendo orientar tecnicamente os bolsistas. Neste caso, não existe, para a candidatura ao cargo, a necessidade de ser professor
 da UFJF.</p>
 </div>
 
@@ -21,15 +21,15 @@ definitivamente o projeto.</p> Caso o Vice-Coordenador não apareça na lista de
 </div>
 
 <div class="help" id="helpColaboradoresDocentes">
-<p>Docente da UFJF que irÃ¡ assumir o papel de colaborador no projeto.</p>
+<p>Docente da UFJF que irá assumir o papel de colaborador no projeto.</p>
 </div>
 
 <div class="help" id="helpColaboradoresTecnicos">
-<p>TÃ©cnico-administrativo da UFJF que irÃ¡ assumir o papel de colaborador no projeto.</p>
+<p>Técnico-administrativo da UFJF que irá assumir o papel de colaborador no projeto.</p>
 </div>
 
 <div class="help" id="helpColaboradoresExternos">
-<p>Qualquer pessoa, da UFJF ou nÃ£o, que irÃ¡ assumir o papel de colaborador no projeto.</p>
+<p>Qualquer pessoa, da UFJF ou não, que irá assumir o papel de colaborador no projeto.</p>
 </div>
 
 <form id="myForm" action="<?php echo $this->baseUrl ?>/projeto/equipe" method="post">
@@ -53,7 +53,7 @@ definitivamente o projeto.</p> Caso o Vice-Coordenador não apareça na lista de
 <div>
 	<fieldset>
 	<legend>
-		Coordenadores TÃ©cnicos
+		Coordenadores Técnicos
 	</legend>
 	<span id="coordenadorTecnico">
 		<a href="<?php echo $this->baseUrl?>/projeto/addCoordenadorTecnico/id/<?php echo $this->projeto->id?>">Adicionar</a>
@@ -88,7 +88,7 @@ definitivamente o projeto.</p> Caso o Vice-Coordenador não apareça na lista de
 <img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpColaboradoresTecnicos', true)"  onmouseout="javascript:setVisible('helpColaboradoresTecnicos', false)"/>
 <div>
 	<fieldset>
-	<legend>Colaboradores TÃ©cnicos</legend>
+	<legend>Colaboradores Técnicos</legend>
 	<span id="colaboradorTecnico">
 		<a href="<?php echo $this->baseUrl?>/projeto/addColaboradorTecnico/id/<?php echo $this->projeto->id?>">Adicionar</a>
 		<br />
