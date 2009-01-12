@@ -344,7 +344,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		//		if($projetoTecnico->hasCoordenadorTecnico($idProjeto)) $this->_redirect('/');
 
 		// Inicia
-		$this->view->title = 'Coordenador TÃ©cnico';
+		$this->view->title = 'Coordenador Técnico';
 		$this->view->action = $this->view->baseUrl . "/projeto/addCoordenadorTecnico";
 		$this->formTecnico(Tecnico::COORDENADOR);
 	}

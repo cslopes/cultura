@@ -89,9 +89,6 @@ objetivando as metas do projeto.</p>
 </div>
 
 <div>
-	<label for="resumo">Resumo (Informações para o público externo):</label>
-	    
-	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpResumo', true)"  onmouseout="javascript:setVisible('helpResumo', false)"/><br />
 	<div class="moreHelp">
 		<font color="red">O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
 	    o público alvo que permitam uma melhor visualização do projeto , além do local de realização, 
@@ -100,17 +97,20 @@ objetivando as metas do projeto.</p>
 	    Poderá conter e-mail para contato ou endereço de site.</font>
 	</div>
 	<br>
-	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px" id="textResumo" ">
+	
+	<label for="resumo">Resumo (Informações para o público externo):</label>
+	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpResumo', true)"  onmouseout="javascript:setVisible('helpResumo', false)"/><br />
+		<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px" id="textResumo" >
 	<?php if($this->projeto->resumo){echo $this->escape($this->projeto->resumo);} ?> 
-    
-    	
     </textarea>
-</div><br />
+    
+</div> <br />
 
 <div id="helpBolsasJustificativa" class="help">
 <p>Neste item deve-se conter um texto sucinto informando a quantidade de bolsas pretendidas somadas à descrição funcional  dos
 bolsistas, pretendendo demonstrar a utilidade de cada um na execução do projeto, bem como  a ligação de sua  tarefa no projeto
-com o mundo acadêmico.</p>
+com o mundo acadêmico.
+</p>
 </div>
 <div>
 	<label for="bolsasJustificativa">Justificativa para bolsas:</label>
@@ -118,7 +118,8 @@ com o mundo acadêmico.</p>
 	<textarea name="bolsasJustificativa" dojoType="dijit.form.Textarea" style="width:575px">
     	<?php echo $this->escape($this->projeto->bolsasJustificativa) ?>
     </textarea>
-</div><br />
+</div>
+<br />
 
 <div>
 	<label for="bolsasPretendidas">Bolsas pretendidas:</label>
