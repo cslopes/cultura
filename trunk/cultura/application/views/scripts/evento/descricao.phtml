@@ -97,24 +97,24 @@ parâmetros de Ensino, Pesquisa, Extensão.</p>
 
 <div id="helpResumo" class="help">
 <p>O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
-	    o público alvo que permitam uma melhor visualização do projeto , além do local de realização, 
-	    horários de atendimento ou de execução do projeto. Este  resumo será  divulgado na  página da 
+	    o público alvo que permitam uma melhor visualização do evento , além do local de realização, 
+	    horários de atendimento ou de execução do evento. Este  resumo será  divulgado na  página da 
 	    Proexc  e, portanto, o texto deverá ser revisado e é de responsabilidade do coordenador. 
-	    Poderá conter e-mail para contato ou site.</p>
+	    Poderá conter e-mail para contato ou endereço de site.</p>
 </div>
 <div>
-	<label for="resumo">Resumo:</label>
-	<br />
-	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px">
-	<?php if (trim($this->evento->resumo) == "") : ?>
-	O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
-	    o público alvo que permitam uma melhor visualização do projeto , além do local de realização, 
-	    horários de atendimento ou de execução do projeto. Este  resumo será  divulgado na  página da 
+	<div class="moreHelp">
+		<font color="red">O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
+	    o público alvo que permitam uma melhor visualização do evento, além do local de realização, 
+	    horários de atendimento ou de execução do evento. Este  resumo será  divulgado na  página da 
 	    Proexc  e, portanto, o texto deverá ser revisado e é de responsabilidade do coordenador. 
-	    Poderá conter e-mail para contato ou site.
-	<?php else : ?>
-    	<?php echo $this->escape($this->evento->resumo) ?>
-	<?php endif; ?>
+	    Poderá conter e-mail para contato ou endereço de site.</font>
+	</div>
+	<br />
+	<label for="resumo">Resumo (Informações para o público externo):</label>
+	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px">
+	<?php if($this->evento->resumo){echo $this->escape($this->evento->resumo);} ?> 
+	
     </textarea>
 </div><br />
 

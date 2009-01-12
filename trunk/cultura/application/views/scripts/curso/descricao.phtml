@@ -46,26 +46,28 @@ parâmetros de Ensino, Pesquisa, Extensão.</p>
 
 <div id="helpResumo" class="help">
 <p>O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
-	    o público alvo que permitam uma melhor visualização do projeto , além do local de realização, 
-	    horários de atendimento ou de execução do projeto. Este  resumo será  divulgado na  página da 
+	    o público alvo que permitam uma melhor visualização do curso , além do local de realização, 
+	    horários de atendimento ou de execução do curso. Este  resumo será  divulgado na  página da 
 	    Proexc  e, portanto, o texto deverá ser revisado e é de responsabilidade do coordenador. 
 	    Poderá conter e-mail para contato ou endereço de site. 
 </p>
 </div>
 
 <div>
-	<label for="resumo">Resumo (Informações para o público externo):</label>
-<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" 
-onmouseover="setVisible('helpResumo', true)"  onmouseout="javascript:setVisible('helpResumo', false)"/>	
-	<br />
 	<div class="moreHelp">
 		<font color="red">O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
-	    o público alvo que permitam uma melhor visualização do projeto , além do local de realização, 
-	    horários de atendimento ou de execução do projeto. Este  resumo será  divulgado na  página da 
+	    o público alvo que permitam uma melhor visualização do curso , além do local de realização, 
+	    horários de atendimento ou de execução do curso. Este  resumo será  divulgado na  página da 
 	    Proexc  e, portanto, o texto deverá ser revisado e é de responsabilidade do coordenador. 
 	    Poderá conter e-mail para contato ou endereço de site.</font>
 	</div>
-	<br>
+	<br />
+	
+	<label for="resumo">Resumo (Informações para o público externo):</label>
+	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" 
+	onmouseover="setVisible('helpResumo', true)"  onmouseout="javascript:setVisible('helpResumo', false)"/>	
+	
+	
 	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px">
 	<?php if($this->curso->resumo){echo $this->escape($this->curso->resumo);} ?>
 	
