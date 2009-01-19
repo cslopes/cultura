@@ -44,8 +44,8 @@ class FormularioCurso extends Formulario {
 		
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
 		$this->SetFont('vera', '', 11);
-		$this->Cell(self::BLOCK_SIZE, 5, 'INICIO: ' . date_format(date_create($this->curso->dataInicio), "d/m/Y"), 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 5, 'FINAL: ' . date_format(date_create($this->curso->dataFinal), "d/m/Y"), 'LR', 1);
+//		$this->Cell(self::BLOCK_SIZE, 5, 'INICIO: ' . date_format(date_create($this->curso->dataInicio), "d/m/Y"), 'LR', 1);
+//		$this->Cell(self::BLOCK_SIZE, 5, 'FINAL: ' . date_format(date_create($this->curso->dataFinal), "d/m/Y"), 'LR', 1);
 		$this->Cell(self::BLOCK_SIZE, 5, 'CARGA HORÁRIA: ' . $this->curso->cargaHoraria, 'LR', 1);
 		$this->Cell(self::BLOCK_SIZE, 5, 'EXPECTATIVA DE PÚBLICO: ' . $this->curso->expectativaPublico, 'LBR', 1);
 		$this->SetY($this->GetY() + 4);
