@@ -23,6 +23,7 @@ require_once 'Departamento.php';
 require_once 'Recursos.php';
 require_once 'FormularioCurso.php';
 
+
 class CursoController extends Proexc_Controller_Action {
 
 	/**

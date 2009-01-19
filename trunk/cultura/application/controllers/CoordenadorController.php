@@ -153,7 +153,7 @@ class CoordenadorController extends Proexc_Controller_Action {
 	private function initForm($coordenador = null) {
 		// Inicializa dados do combo Departamento
 		$departamento = new Departamento();
-		$this->view->departamentos = $departamento->fetchAll();
+		$this->view->departamentos = $departamento->fetchAll(null, 'nome ASC');
 
 		// Inicializa dados do combo Titulacao
 		$titulacao = new Titulacao();
