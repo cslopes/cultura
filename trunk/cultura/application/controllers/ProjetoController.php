@@ -121,7 +121,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 
 	/**
-	 * Controller para criaÃ§Ã£o de um novo projeto. Requisita apenas o nome do projeto e cria
+	 * Controller para criação de um novo projeto. Requisita apenas o nome do projeto e cria
 	 * inserindo tambÃ©m o id do coordenador. Logo apÃ³s criado o usuÃ¡rio Ã© enviado para a tela
 	 * de ediÃ§Ã£o do projeto.
 	 */
@@ -351,33 +351,33 @@ class ProjetoController extends Proexc_Controller_Action {
 
 	function addColaboradorTecnicoAction() {
 		// Inicia
-		$this->view->title = 'Colaborador TÃ©cnico';
+		$this->view->title = 'Colaborador Técnico';
 		$this->view->action = $this->view->baseUrl . "/projeto/addColaboradorTecnico";
 		$this->formTecnico(Tecnico::COLABORADOR);
 	}
 
 	function editCoordenadorTecnicoAction() {
-		$this->view->title = 'Coordenador TÃ©cnico';
+		$this->view->title = 'Coordenador Técnico';
 		$this->view->action = $this->view->baseUrl . "/projeto/editCoordenadorTecnico";
 		$this->formTecnico(Tecnico::COORDENADOR, 'edit');
 	}
 
 	function editColaboradorTecnicoAction() {
-		$this->view->title = 'Colaborador TÃ©cnico';
+		$this->view->title = 'Colaborador Técnico';
 		$this->view->action = $this->view->baseUrl . "/projeto/editColaboradorTecnico";
 		$this->formTecnico(Tecnico::COLABORADOR, 'edit');
 	}
 
 	function delCoordenadorTecnicoAction() {
 		// TÃ­tulo da pÃ¡gina
-		$this->view->title = "Coordenador TÃ©cnico";
+		$this->view->title = "Coordenador Técnico";
 
 		$this->delTecnico(Tecnico::COORDENADOR);
 	}
 
 	function delColaboradorTecnicoAction() {
 		// TÃ­tulo da pÃ¡gina
-		$this->view->title = "Colaborador TÃ©cnico";
+		$this->view->title = "Colaborador Técnico";
 
 		$this->delTecnico(Tecnico::COLABORADOR);
 	}
