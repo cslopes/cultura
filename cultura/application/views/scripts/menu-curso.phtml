@@ -1,5 +1,5 @@
 <h2>Curso: <?php echo $this->curso->titulo ?></h2>
-
+<h2>Coordenador: <?php echo $this->curso->findParentCoordenador()->nome ?></h2>
 <div id="projetoMenu">
 	<ul>
 		<li><a href="<?php echo $this->baseUrl?>/curso/geral/id/<?php echo $this->curso->id ?>">Geral</a></li>
