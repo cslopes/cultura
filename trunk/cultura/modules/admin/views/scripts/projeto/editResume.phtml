@@ -1,0 +1,36 @@
+<script>
+       dojo.require("dijit.form.Textarea");
+       dojo.require("dijit.form.Button");
+</script>
+
+
+<?php echo $this->render('header.phtml'); ?>
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<div>
+
+<form method="post" style="width: 600px">
+<input name="id" type="hidden" value="<?php echo $this->convenio->id ?>" />
+<p>
+	<label for="nome">Nome: </label>
+	<?php echo($this->escape($this->projeto->titulo)) ?> 
+</p>
+<p>
+	<label for="coordenador">Coordenador:  </label>
+	<?php echo($this->escape($this->projeto->findParentCoordenador()->nome)) ?>
+</p>
+<p>
+	<label for="resumo">Resumo:  </label> <br /><br />
+	<textarea name="resumo" id="resumo" dojoType="dijit.form.Textarea" style="width: 400px">
+		<?php echo $this->escape($this->projeto->resumo) ?>
+	</textarea>
+</p>
+<p>	
+	<input name="button" type="submit" value="Salvar" dojoType="dijit.form.Button" label="Salvar" />
+</p>
+
+</form>
+</div>
+
+<?php echo $this->render('footer.phtml'); ?>
+
