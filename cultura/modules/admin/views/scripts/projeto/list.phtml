@@ -1,0 +1,43 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<script>
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.Button");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<div>
+
+<form>
+<p><label for="argumentInput">Nome: </label>
+   <input type="text" name="s" id="argumentInput" maxlength="255" dojoType="dijit.form.TextBox" />
+   <input name="button" type="submit" value="Buscar" dojoType="dijit.form.Button" label="Buscar" />
+</p>
+</form>
+
+<?php if(count($this->projetoList) == 0) : ?>
+Não existem projetos salvos.
+
+<?php else : ?>
+<table border="1" width="580px" class="tabela">
+	<thead>
+		<th width="40%">Título</th>
+		<th>Unidade</th>
+		<th>Coordenador</th>
+	</thead>
+	<tbody>
+	<?php foreach ($this->projetoList as $projeto) : ?>
+		<tr>
+			<td><a href="<?php echo $this->baseUrl ?>/admin/projeto/editResume/id/<?php echo $projeto->id?>"><?php echo $projeto->titulo?></a></td>
+			<td><?php echo $projeto->findParentCoordenador()->findParentDepartamento()->findParentUnidade()->nome ?></td>
+			<td><?php echo $projeto->findParentCoordenador()->nome  ?></td>
+		</tr>
+	<?php endforeach; ?>	
+	</tbody>
+</table>	
+<?php endif; ?>
+
+</div>
+<?php echo $this->render('footer.phtml'); ?>	
+	

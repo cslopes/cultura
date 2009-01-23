@@ -75,12 +75,27 @@ class Admin_ProjetoController extends Proexc_Admin_Controller_Action {
 		$this->view->title = 'Buscar Projeto';
 
 		$params = $this->_request->getParams();
-		
+		$tabProjeto = new Projeto();
 		if(isset($params['s'])) {
 			$argument = $this->_request->getParam('s', null);
-			
-			$tabProjeto = new Projeto();
-			$this->view->projetoList = $tabProjeto->findByNome($argument);
+			$this->view->projetoList = $tabProjeto->findByTitulo($argument);
 		}
+		else {
+				$this->view->projetoList = $tabProjeto->fetchAll(null, 'titulo asc');
+			}
 	}
+	
+	
+	function editResumeAction(){
+		$this->view->title = 'Editar Resumo de Projeto';	
+		$param = $this->_request->getParam('id');
+		$tabProjeto = new Projeto();
+		
+		$this->view->projeto = $tabProjeto->find($param)->current();
+		
+		
+		
+	}
+	
+	
 }
