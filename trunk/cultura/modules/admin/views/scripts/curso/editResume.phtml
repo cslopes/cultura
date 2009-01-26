@@ -1,0 +1,67 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<script type="text/javascript">
+       dojo.require("dijit.form.Textarea");
+       dojo.require("dijit.form.Button");
+</script>
+
+
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+
+<div>
+
+<table id="detail">
+	<tbody>
+	<tr>
+		<th>Curso:</th>
+		<td><?php echo $this->escape($this->curso->titulo) ?></td>
+	</tr>
+	<tr>
+		<th>Coordenador:</th>
+		<td><?php echo $this->escape($this->curso->findParentCoordenador()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Unidade:</th>
+		<td><?php echo $this->escape($this->curso->findParentCoordenador()->findParentDepartamento()->findParentUnidade()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Área Temática:</th>
+		<td><?php echo @$this->escape($this->curso->findParentAreaTematica()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Data de Início:</th>
+		<td><?php echo date_format(date_create($this->curso->dataInicio), "d/m/Y") ?></td>
+	</tr>
+	<tr>
+		<th>Data Término:</th>
+		<td><?php echo date_format(date_create($this->curso->dataFinal), "d/m/Y") ?></td>
+	</tr>
+	
+	
+	</tbody>
+</table>
+</div><br />
+
+<div>
+
+<form action="<?php echo $this->baseUrl ?>/admin/curso/editResume" method="post" style="width: 600px">
+<input name="idCurso" type="hidden" value="<?php echo $this->curso->id ?>" />
+<p>
+	<label for="resumo">Resumo:</label>
+	<textarea name="resumo" id="resumo" dojoType="dijit.form.Textarea" style="width: 400px">
+		<?php echo $this->escape($this->curso->resumo) ?>
+	</textarea>
+</p>
+
+
+
+<input name="button" type="submit" value="Salvar" dojoType="dijit.form.Button" label="Salvar" />
+
+
+</form>
+</div>
+
+<?php echo $this->render('footer.phtml'); ?>
+

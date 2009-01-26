@@ -1,0 +1,43 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<script>
+       dojo.require("dijit.form.TextBox");
+       dojo.require("dijit.form.Button");
+</script>
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+<div>
+
+<form>
+<p><label for="argumentInput">Nome: </label>
+   <input type="text" name="s" id="argumentInput" maxlength="255" dojoType="dijit.form.TextBox" />
+   <input name="button" type="submit" value="Buscar" dojoType="dijit.form.Button" label="Buscar" />
+</p>
+</form>
+
+<?php if(count($this->cursoList) == 0) : ?>
+Não existem cursos salvos.
+
+<?php else : ?>
+<table border="1" width="580px" class="tabela">
+	<thead>
+		<th width="40%">Título</th>
+		<th>Unidade</th>
+		<th>Coordenador</th>
+	</thead>
+	<tbody>
+	<?php foreach ($this->cursoList as $curso) : ?>
+		<tr>
+			<td><a href="<?php echo $this->baseUrl ?>/admin/curso/editResume/id/<?php echo $curso->id?>"><?php echo $curso->titulo?></a></td>
+			<td><?php echo $curso->findParentCoordenador()->findParentDepartamento()->findParentUnidade()->nome ?></td>
+			<td><?php echo $curso->findParentCoordenador()->nome  ?></td>
+		</tr>
+	<?php endforeach; ?>	
+	</tbody>
+</table>	
+<?php endif; ?>
+
+</div>
+<?php echo $this->render('footer.phtml'); ?>	
+	

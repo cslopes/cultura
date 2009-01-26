@@ -145,6 +145,20 @@ class Curso extends Proexc_Db_Table {
 	}
 	
 	/**
+	 * Returns a set of validated and unvalidated cursos by titulo
+	 *
+	 * @param String $titulo
+	 * @return Zend_Db_Table_Rowset_Abstract
+	 */
+	public function findCursoByTitulo($titulo) {
+			$titulo = "%" . $titulo . "%";
+			$where[] = $this->getAdapter()->quoteInto('titulo LIKE ?', $titulo);
+			return $this->fetchAll($where);
+		}
+	
+	
+	
+	/**
 	 * Returns a set of validated curso by resumo
 	 *
 	 * @param String $resumo

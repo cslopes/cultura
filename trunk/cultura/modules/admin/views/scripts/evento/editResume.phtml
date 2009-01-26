@@ -1,0 +1,71 @@
+<?php echo $this->render('header.phtml'); ?>
+
+<script type="text/javascript">
+       dojo.require("dijit.form.Textarea");
+       dojo.require("dijit.form.Button");
+</script>
+
+
+
+<h2><?php echo $this->escape($this->title); ?></h2>
+
+
+<div>
+
+<table id="detail">
+	<tbody>
+	<tr>
+		<th>Evento:</th>
+		<td><?php echo $this->escape($this->evento->titulo) ?></td>
+	</tr>
+	<tr>
+		<th>Coordenador:</th>
+		<td><?php echo $this->escape($this->evento->findParentCoordenador()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Unidade:</th>
+		<td><?php echo $this->escape($this->evento->findParentCoordenador()->findParentDepartamento()->findParentUnidade()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Área Temática:</th>
+		<td><?php echo @$this->escape($this->evento->findParentAreaTematica()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Caráter:</th>
+		<td><?php echo @$this->escape($this->evento->carater) ?></td>
+	</tr>
+	<tr>
+		<th>Data de Início:</th>
+		<td><?php echo date_format(date_create($this->evento->dataInicio), "d/m/Y") ?></td>
+	</tr>
+	<tr>
+		<th>Data Término:</th>
+		<td><?php echo date_format(date_create($this->evento->dataFinal), "d/m/Y") ?></td>
+	</tr>
+	
+	
+	</tbody>
+</table>
+</div><br />
+
+<div>
+
+<form action="<?php echo $this->baseUrl ?>/admin/evento/editResume" method="post" style="width: 600px">
+<input name="idEvento" type="hidden" value="<?php echo $this->evento->id ?>" />
+<p>
+	<label for="resumo">Resumo:</label>
+	<textarea name="resumo" id="resumo" dojoType="dijit.form.Textarea" style="width: 400px">
+		<?php echo $this->escape($this->evento->resumo) ?>
+	</textarea>
+</p>
+
+
+
+<input name="button" type="submit" value="Salvar" dojoType="dijit.form.Button" label="Salvar" />
+
+
+</form>
+</div>
+
+<?php echo $this->render('footer.phtml'); ?>
+

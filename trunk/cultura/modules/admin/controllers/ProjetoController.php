@@ -78,7 +78,7 @@ class Admin_ProjetoController extends Proexc_Admin_Controller_Action {
 		$tabProjeto = new Projeto();
 		if(isset($params['s'])) {
 			$argument = $this->_request->getParam('s', null);
-			$this->view->projetoList = $tabProjeto->findByTitulo($argument);
+			$this->view->projetoList = $tabProjeto->findProjectByTitulo($argument);
 		}
 		else {
 				$this->view->projetoList = $tabProjeto->fetchAll(null, 'titulo asc');
@@ -93,8 +93,21 @@ class Admin_ProjetoController extends Proexc_Admin_Controller_Action {
 		
 		$this->view->projeto = $tabProjeto->find($param)->current();
 		
+		if($this->_request->isPost()) {
 		
-		
+			
+			$idProjeto = (int) $this->_request->getPost('idProjeto');
+			$resumoProjeto =  $this->_request->getPost('resumo');
+				
+			$data = array(
+					'resumo'			=> $resumoProjeto
+					
+			);
+			
+			$tabProjeto->updateById($data, $idProjeto);
+			$this->_redirect('admin/projeto/list');
+		}
+		$this->render();
 	}
 	
 	

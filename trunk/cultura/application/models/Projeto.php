@@ -168,6 +168,18 @@ class Projeto extends Proexc_Db_Table {
 	}
 	
 	/**
+	 Returns a set of validated or unvalidated by nome
+	 *
+	 * @param String $titulo
+	 * @return Zend_Db_Table_Rowset_Abstract
+	 */
+	public function findProjectByTitulo($titulo) {
+			$titulo = "%" . $titulo . "%";
+			$where[] = $this->getAdapter()->quoteInto('titulo LIKE ?', $titulo);
+			return $this->fetchAll($where);
+		}
+	
+	/**
 	 * Returns a set of validated projeto by resumo
 	 *
 	 * @param String $resumo

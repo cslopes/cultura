@@ -1,33 +1,73 @@
-<script>
+<?php echo $this->render('header.phtml'); ?>
+
+<script type="text/javascript">
        dojo.require("dijit.form.Textarea");
        dojo.require("dijit.form.Button");
 </script>
 
 
-<?php echo $this->render('header.phtml'); ?>
+
 <h2><?php echo $this->escape($this->title); ?></h2>
+
 
 <div>
 
-<form method="post" style="width: 600px">
-<input name="id" type="hidden" value="<?php echo $this->convenio->id ?>" />
+<table id="detail">
+	<tbody>
+	<tr>
+		<th>Projeto:</th>
+		<td><?php echo $this->escape($this->projeto->titulo) ?></td>
+	</tr>
+	<tr>
+		<th>Coordenador:</th>
+		<td><?php echo $this->escape($this->projeto->findParentCoordenador()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Unidade:</th>
+		<td><?php echo $this->escape($this->projeto->findParentCoordenador()->findParentDepartamento()->findParentUnidade()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Área Temática:</th>
+		<td><?php echo @$this->escape($this->projeto->findParentAreaTematica()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Linha de Atuação:</th>
+		<td><?php echo @$this->escape($this->projeto->findParentLinhaAtuacao()->nome) ?></td>
+	</tr>
+	<tr>
+		<th>Contínuo:</th>
+		<td><?php echo $this->projeto->continuo ? 'Sim' : 'Não'; ?></td>
+	</tr>
+	<tr>
+		<th>Data de Início:</th>
+		<td><?php echo date_format(date_create($this->projeto->dataInicio), "d/m/Y") ?></td>
+	</tr>
+	<?php if (!$this->projeto->continuo) : ?>
+	<tr>
+		<th>Data Término:</th>
+		<td><?php echo date_format(date_create($this->projeto->dataFinal), "d/m/Y") ?></td>
+	</tr>
+	<?php endif; ?>
+	
+	</tbody>
+</table>
+</div><br />
+
+<div>
+
+<form action="<?php echo $this->baseUrl ?>/admin/projeto/editResume" method="post" style="width: 600px">
+<input name="idProjeto" type="hidden" value="<?php echo $this->projeto->id ?>" />
 <p>
-	<label for="nome">Nome: </label>
-	<?php echo($this->escape($this->projeto->titulo)) ?> 
-</p>
-<p>
-	<label for="coordenador">Coordenador:  </label>
-	<?php echo($this->escape($this->projeto->findParentCoordenador()->nome)) ?>
-</p>
-<p>
-	<label for="resumo">Resumo:  </label> <br /><br />
+	<label for="resumo">Resumo:</label>
 	<textarea name="resumo" id="resumo" dojoType="dijit.form.Textarea" style="width: 400px">
 		<?php echo $this->escape($this->projeto->resumo) ?>
 	</textarea>
 </p>
-<p>	
-	<input name="button" type="submit" value="Salvar" dojoType="dijit.form.Button" label="Salvar" />
-</p>
+
+
+
+<input name="button" type="submit" value="Salvar" dojoType="dijit.form.Button" label="Salvar" />
+
 
 </form>
 </div>

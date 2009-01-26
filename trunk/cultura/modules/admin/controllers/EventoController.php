@@ -66,12 +66,39 @@ class Admin_EventoController extends Proexc_Admin_Controller_Action {
 		$this->view->title = 'Buscar Evento';
 
 		$params = $this->_request->getParams();
-		
+		$tabEvento = new Evento();
 		if(isset($params['s'])) {
 			$argument = $this->_request->getParam('s', null);
+			$this->view->eventoList = $tabEvento->findEventoByTitulo($argument);
+		}
+		else {
+				$this->view->eventoList = $tabEvento->fetchAll(null, 'titulo asc');
+			}
+	}
+	
+	function editResumeAction(){
+		$this->view->title = 'Editar Resumo de Evento';	
+		$param = $this->_request->getParam('id');
+		$tabEvento = new Evento();
+		
+		$this->view->evento = $tabEvento->find($param)->current();
+		
+		if($this->_request->isPost()) {
+				
+			$idEvento = (int) $this->_request->getPost('idEvento');
+			$resumoEvento =  $this->_request->getPost('resumo');
+				
+			$data = array(
+					'resumo'			=> $resumoEvento
+					
+			);
 			
-			$tabEvento = new Evento();
-			$this->view->eventoList = $tabEvento->findByNome($argument);
+			$tabEvento->updateById($data, $idEvento);
+			$this->_redirect('admin/evento/list');
 		}
 	}
+	
+	
+	
+	
 }
