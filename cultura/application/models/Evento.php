@@ -149,6 +149,19 @@ class Evento extends Proexc_Db_Table {
 		return $this->fetchAll($where);
 	}
 	
+	/* * Returns a set of validated and unvalidated evento by nome
+	 *
+	 * @param String $titulo
+	 * @return Zend_Db_Table_Rowset_Abstract
+	 */
+	public function findEventoByTitulo($titulo) {
+		$titulo = "%" . $titulo . "%";
+		$where[] = $this->getAdapter()->quoteInto('titulo LIKE ?', $titulo);
+		return $this->fetchAll($where);
+	}
+	
+	
+	
 	/**
 	 * Returns a set of validated evento by resumo
 	 *

@@ -1,6 +1,8 @@
 <?php
 
 require_once 'Proexc/Controller/Action.php';
+require_once 'Proexc/Validate/NotEmpty.php';
+
 require_once 'Zend/Auth.php';
 require_once 'Zend/Validate/Alpha.php';
 require_once 'Zend/Validate/Regex.php';
@@ -75,7 +77,7 @@ class CoordenadorController extends Proexc_Controller_Action {
 
 	private function getValidatedData() {
 		$erros = null;
-		$validator = new Zend_Validate_Alpha(true);
+		$validator = new Proexc_Validate_NotEmpty();
 		
 		$siape = $this->user->siape;
 		$nome = trim($this->_request->getPost('nome'));

@@ -67,12 +67,44 @@ class Admin_CursoController extends Proexc_Admin_Controller_Action {
 		$this->view->title = 'Buscar Curso';
 
 		$params = $this->_request->getParams();
-		
+		$tabCurso = new Curso();		
 		if(isset($params['s'])) {
 			$argument = $this->_request->getParam('s', null);
-			
-			$tabCurso = new Curso();
-			$this->view->cursoList = $tabCurso->findByNome($argument);
+			$this->view->cursoList = $tabCurso->findCursoByTitulo($argument);
+		}
+		else {
+			$this->view->cursoList = $tabCurso->fetchAll(null, 'titulo asc');
 		}
 	}
+
+	function editResumeAction(){
+		$this->view->title = 'Editar Resumo de Curso';	
+		$param = $this->_request->getParam('id');
+		$tabCurso = new Curso();
+		
+		$this->view->curso = $tabCurso->find($param)->current();
+		
+		if($this->_request->isPost()) {
+				
+			$idCurso = (int) $this->_request->getPost('idCurso');
+			$resumoCurso =  $this->_request->getPost('resumo');
+				
+			$data = array(
+					'resumo'			=> $resumoCurso
+					
+			);
+			
+			$tabCurso->updateById($data, $idCurso);
+			$this->_redirect('admin/curso/list');
+		}
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 }
