@@ -39,6 +39,10 @@ class Admin_ConvenioController extends Proexc_Admin_Controller_Action {
 	
 	function listTerminoAction(){
 		$this->view->title = 'Consultar Término de Convênios';
+		$tabConvenio = new Convenio();
+		
+		$this->view->anos = $tabConvenio->getYears() ;
+		
 			
 	
 	}
