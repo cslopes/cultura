@@ -30,6 +30,6 @@ class Convenio extends Proexc_Db_Table {
 	 *
 	 */
 	public function getYears(){
-			
+		/* SELECT DISTINCT EXTRACT(YEAR FROM dataFinal)  FROM `convenio` */	
 	}	
 }
