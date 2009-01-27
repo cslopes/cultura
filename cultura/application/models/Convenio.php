@@ -25,4 +25,11 @@ class Convenio extends Proexc_Db_Table {
 		return $this->fetchAll($where,'nome');
 	}
 	
+	/**
+	 * Retorna os anos em que há convenios encerrando.
+	 *
+	 */
+	public function getYears(){
+			
+	}	
 }

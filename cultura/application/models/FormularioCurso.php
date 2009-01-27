@@ -6,6 +6,8 @@ require_once 'Formulario.php';
 require_once 'Curso.php';
 require_once 'Coordenador.php';
 
+
+
 class FormularioCurso extends Formulario {
 	/**
 	 * Armazena o curso
