@@ -6,44 +6,89 @@
 </script>
 
 <h2><?php echo $this->escape($this->title); ?></h2>
-<table>
-<tr>
 
+
+<form action="<?php echo $this->baseUrl ?>/admin/convenio/listtermino" method="get">
+<table>
+
+<tr>
+	
 <td><label for="argumentInput">Ano: </label>
-   <select dojoType="dijit.form.FilteringSelect" name="ano" autocomplete="false" >
-                <option value="1" selected="selected">ano</option>
-                <option value="2" selected="selected">ano</option>
-                <option value="3" selected="selected">ano</option>
-                <option value="4" selected="selected">ano</option>
-   </select>
+   <select dojoType="dijit.form.FilteringSelect" name="ano" >
+   		<option value="">-----------------------------------</option>
+<?php $i = 0 ?>
+<?php while ($i < count($this->anos)): ?>
+	<?php foreach ($this->anos[$i] as $anos): ?>
+                <option value="<?php echo $anos; ?>"><?php echo $anos; ?></option>
+     <?php endforeach; ?>
+     <?php $i++; ?>
+<?php endwhile; ?>     
+      </select>
 </td>
 <td>   
 <label for="argumentInput">Mês: </label>
-   <select dojoType="dijit.form.FilteringSelect" name="mes" autocomplete="false" >
-                <option value="01" selected="selected" >Janeiro</option>
-                <option value="02" selected="selected">Fevereiro</option>
-                <option value="03" selected="selected">Março</option>
-                <option value="04" selected="selected">Abril</option>
-                <option value="05" selected="selected">Maio</option>
-                <option value="06" selected="selected">Junho</option>
-                <option value="07" selected="selected">Julho</option>
-                <option value="08" selected="selected">Agosto</option>
-                <option value="09" selected="selected">Setembro</option>
-                <option value="10" selected="selected">Outubro</option>
-                <option value="11" selected="selected">Novembro</option>
-                <option value="12" selected="selected">Dezembro</option>
+   <select dojoType="dijit.form.FilteringSelect" name="mes"  >
+                <option value="" >-----------------------------------</option>
+                <option value="01" >Janeiro</option>
+                <option value="02" >Fevereiro</option>
+                <option value="03" >Março</option>
+                <option value="04" >Abril</option>
+                <option value="05" >Maio</option>
+                <option value="06" >Junho</option>
+                <option value="07" >Julho</option>
+                <option value="08" >Agosto</option>
+                <option value="09" >Setembro</option>
+                <option value="10" >Outubro</option>
+                <option value="11" >Novembro</option>
+                <option value="12" >Dezembro</option>
    </select>
 </td>   
-</tr>   
-</table><br><br><br><br>   
+</tr>  
+ 
+</table><br>  
 
-<form>
+
    <input name="button" type="submit" value="Buscar" dojoType="dijit.form.Button" label="Buscar" />
-
 </form>
+<br /><br />
+<div>
 
-<?php foreach ($this->anos as $ano) : ?>
-	<?php echo $ano->nome ?>
-<?php endforeach; ?>
+<?php if(!$this->conveniosList): ?>
+	
+<?php else : ?>
+	<?php if(count($this->conveniosList) == 0) : ?>
+	Não há convênios que terminem no mês e ano selecionados.
+	
+	<?php else : ?>
+	<table border="1" width="580px" class="tabela">
+		<thead>
+			<th width="40%">Nome</th>
+			<th>Registro</th>
+			<th>Data Início</th>
+			<th>Data Final</th>
+		</thead>
+		<tbody>
+		<?php foreach ($this->conveniosList as $convenio) : ?>
+			<tr>
+				<td><?php echo $convenio->nome ?></td>
+				<td><?php echo $convenio->registro ?></td>
+				<td><?php $ano = strtok($convenio->dataInicio,"-");
+												  $mes = strtok("-");
+												  $dia = strtok("-");	
+												  echo $dia."-".$mes."-".$ano ?></td>
+				<td><?php $ano = strtok($convenio->dataFinal,"-");
+												  $mes = strtok("-");
+												  $dia = strtok("-");	
+												  echo $dia."-".$mes."-".$ano ?></td>
+			</tr>
+		<?php endforeach; ?>	
+		</tbody>
+	</table>	
+	<?php endif; ?>
+<?php endif; ?>
+
+
+</div>
+	
 
 <?php echo $this->render("footer.phtml") ?>
