@@ -43,8 +43,15 @@ class Admin_ConvenioController extends Proexc_Admin_Controller_Action {
 		
 		$this->view->anos = $tabConvenio->getYears() ;
 		
-			
-	
+		$params = $this->_request->getParams();
+		if(isset($params['ano']) && isset($params['mes'])){
+			$ano = $this->_request->getParam('ano',null);
+			$mes = $this->_request->getParam('mes',null);
+			$this->view->ano = $ano;		
+			$this->view->conveniosList = $tabConvenio->findFinishConvenios($ano,$mes);
+		}
+		
+				
 	}
 
 	function editAction()

@@ -2,6 +2,7 @@
 
 require_once 'Proexc/Db/Table.php';
 
+
 class Convenio extends Proexc_Db_Table {
 	protected $_name 			= 'convenio';
 	
@@ -30,6 +31,14 @@ class Convenio extends Proexc_Db_Table {
 	 *
 	 */
 	public function getYears(){
-		/* SELECT DISTINCT EXTRACT(YEAR FROM dataFinal)  FROM `convenio` */	
-	}	
+		$stmt = $this->getAdapter()->query("SELECT DISTINCT EXTRACT(YEAR FROM dataFinal)FROM convenio WHERE dataFinal IS NOT NULL ORDER BY dataFinal ASC ") ;
+		return $stmt->fetchAll();	
+		/**/
+	}
+
+	public function findFinishConvenios($ano,$mes){
+		$where[] = $this->getAdapter()->quoteInto("EXTRACT(YEAR FROM dataFinal) = ?",$ano);
+		$where[] = $this->getAdapter()->quoteInto("EXTRACT(MONTH FROM dataFinal) = ?",$mes);
+		return $this->fetchAll($where,'dataFinal ASC');
+		}
 }
