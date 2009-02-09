@@ -81,7 +81,10 @@ class Admin_AgendaController extends Proexc_Admin_Controller_Action {
 			$titulo = $this->_request->getPost('titulo');
 			if(!$validator->isValid($titulo))
 				foreach ($validator->getMessages() as $message) $errors['titulo'][] = $message;
-				
+			
+			$textoImagem = trim($this->_request->getPost('textoImagem'));
+			if($textoImagem == '') $textoImagem = null;				
+			
 			$tituloImagem = trim($this->_request->getPost('tituloImagem'));
 			if($tituloImagem == '') $tituloImagem = null;
 				
@@ -95,7 +98,8 @@ class Admin_AgendaController extends Proexc_Admin_Controller_Action {
 					'tituloImagem'	=> $tituloImagem,
 					'descricao'		=> $descricao,
 					'ativo'			=> $ativo,
-					'login'			=> $this->user->login
+					'login'			=> $this->user->login,
+					'textoImagem'   => $textoImagem	
 				);
 
 				if($tipo == 'add') {
@@ -108,7 +112,9 @@ class Admin_AgendaController extends Proexc_Admin_Controller_Action {
 				$this->_redirect("/admin/agenda");
 			}
 			$this->view->errors = $errors;
-		} else
+		}
+		//Get
+		 else
 			$idAgenda = (int) $this->_request->getParam('id');
 			
 		$this->view->agenda = new stdClass();
@@ -117,7 +123,8 @@ class Admin_AgendaController extends Proexc_Admin_Controller_Action {
 		$this->view->agenda->tituloImagem	= null;
 		$this->view->agenda->descricao 		= null;
 		$this->view->agenda->ativo 			= null;
-
+		$this->view->agenda->textoImagem	= null;
+		
 		if($idAgenda > 0)
 			$this->view->agenda = $tabAgenda->find($idAgenda)->current();
 	}

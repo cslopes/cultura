@@ -34,6 +34,10 @@
    <button type="button" onclick="dojo.byId('tituloImagem').value=''" dojoType="dijit.form.Button">Remover imagem</button><br />
 	Para melhor visualização, insira uma imagem com 270px de largura e 220px de altura.
    </p>
+<p><label for="titulo" style="width: 130px;">Texto da Imagem: </label>
+   <input type="text" name="textoImagem" id="textoImagem" maxlength="200" dojoType="dijit.form.TextBox" value="<?php echo $this->agenda->textoImagem ?>"/>
+   <br />Esse Texto irá aparecer na imagem do banner rotativo quando o usuário passar o mouse sobre a imagem. Deve descrever a notícia como um título por exemplo.
+   </p>   
 <p><label for="descricao" style="width: 75px;">Descrição:</label><br />
    <p><textarea id="descricao" name="descricao" width="200px"><?php echo $this->escape($this->agenda->descricao) ?></textarea></p>
 <p>Ativo: 
