@@ -1149,12 +1149,12 @@ class ProjetoController extends Proexc_Controller_Action {
 				}
 			}
 		}
-		// volta se nÃ£o renderizou (se o colaborador nÃ£o existe)
+		// volta se não renderizou (se o colaborador não existe)
 		$this->_redirect("projeto/parceiros/id/".$idProjeto);
 	}
 
 	function descricaoAction () {
-		// Seta o tÃ­tulo
+		// Seta o título
 		$this->view->title = "Descrição do projeto";
 
 		$projeto = new Projeto();
@@ -1192,7 +1192,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 				$button = $this->_request->getPost('button');
 
-				// Se clicou em prÃ³ximo, segue para formulÃ¡rio de recursos
+				// Se clicou em próximo, segue para formulário de recursos
 				if($button == 'Proximo') $this->_redirect('/projeto/recursos/id/'.$idProjeto);
 			}
 			$this->view->errors = $errors;
