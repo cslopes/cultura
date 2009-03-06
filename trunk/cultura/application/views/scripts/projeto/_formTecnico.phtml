@@ -65,7 +65,7 @@
 	<input type="text" name="telefone" maxlength="13" dojoType="dijit.form.ValidationTextBox"
                 regExp="\([1-9]\d{1}\)\d{4}-\d{4}"
 				promptMessage="Digite um telefone no formato '(XX)XXXX-XXXX'"
-                required="true"
+                required="false"
                 invalidMessage="Telefone inválido"
                 value="<?php echo $this->escape($this->tecnico->telefone)?>" />
 </p>
