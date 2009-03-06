@@ -91,17 +91,22 @@ class CoordenadorController extends Proexc_Controller_Action {
 		
 		$validator = new Zend_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
 		$telefone = trim($this->_request->getPost('telefone'));
+	/**
+	 *  foi retirada a validação sobre o telefone, pois este não é obrigatório.
+	 * 
 		if(!$validator->isValid($telefone)) {
 			foreach ($validator->getMessages() as $message) {
 				$erros[] = $message;
 			}
 		}
+	**/
 		$telefonePublico = trim($this->_request->getPost('telefonePublico'));
 		if(!$validator->isValid($telefonePublico)) {
 			foreach ($validator->getMessages() as $message) {
 				$erros[] = $message;
 			}
 		}
+	
 		$celular = trim($this->_request->getPost('celular'));
 		if($celular && !$validator->isValid($celular)) {
 			foreach ($validator->getMessages() as $message) {

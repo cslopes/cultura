@@ -59,7 +59,7 @@
 <img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpTelefone', true)"  onmouseout="javascript:setVisible('helpTelefone', false)"/>
 <p>
 	<label for="telefone">Telefone 1</label>
-	<input dojoType="dijit.form.ValidationTextBox" required="true" type="text" name="telefone" value="<?php echo $this->escape($this->coordenador->telefone);?>" regExp="\(\d{2}\)\d{4}-\d{4}" invalidMessage="Telefone deve ser no formato (##)####-####" />
+	<input dojoType="dijit.form.ValidationTextBox" required="false" type="text" name="telefone" value="<?php echo $this->escape($this->coordenador->telefone);?>" regExp="\(\d{2}\)\d{4}-\d{4}" invalidMessage="Telefone deve ser no formato (##)####-####" />
 </p>
 
 <img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpTelefonePublico', true)"  onmouseout="javascript:setVisible('helpTelefonePublico', false)"/>

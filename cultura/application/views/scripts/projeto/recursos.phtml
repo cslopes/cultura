@@ -79,6 +79,7 @@
 		
 		dojo.byId('subtotal').innerHTML = subtotal;
 		dojo.byId('total').innerHTML = total;
+		podeSalvar();
 	}
 	
 	function possuiRecursos(b) {
@@ -88,6 +89,15 @@
  				dojo.byId("recursosPane").style.display = "none";
  			}
  		}
+ 		
+ 	function podeSalvar(){
+ 		if (total <= valor.getValue()){
+ 			dojo.byId("save").style.display = "block";
+ 		}else{
+ 			dojo.byId("save").style.display = "none";
+ 		}
+ 	
+ 	}	
 </script>
 
 <h2><?php echo $this->escape($this->title); ?></h2>
@@ -109,6 +119,14 @@
 	
 <div id="recursosPane" dojoType="dijit.TitlePane" title="Planilha de recursos" open="true">
 
+<div class="moreHelp">
+		<font color="red">Atenção!<br />
+		15% do valor da receita de Recursos Externos são descontados por conta das taxas de fomento da UFJF, 
+		taxa da Unidade e taxas da fundação, portanto fique atento para que as despesas não ultrapassem a receita.
+		Caso isso aconteça sua planilha de recursos não será aceita.
+		</font>
+</div>	
+<br />
 <div>
 	<label for="gestora">Fundação gestora:</label>
 	<input name="gestora" type="text" size="255" value="<?php echo $this->recursos->gestora ?>" dojoType="dijit.form.TextBox" />
@@ -259,7 +277,7 @@
 		<tr>
 			<th><b>Total<b></th>
 			<!-- td></td-->
-			<td id="total" style="font-weight: bold"></td>
+			<td id="total" style="font-weight: bold" ></td>
 		</tr>
 		</tbody>
 	</table>
@@ -268,7 +286,7 @@
 </div>
 <br />
 <p>	
-	<input name="button" type="submit" value="Salvar" />
+	<input name="button" type="submit" value="Salvar" id="save" />
 <?php if($this->salvo) : ?>
 	<button type="button" onclick="window.location.href='http://' + window.location.hostname + '<?php echo $this->baseUrl ?>/Index/listProjetos'" >Imprimir</button>
 <?php endif; ?>

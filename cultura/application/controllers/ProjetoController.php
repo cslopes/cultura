@@ -465,9 +465,9 @@ class ProjetoController extends Proexc_Controller_Action {
 
 			$validator = new Proexc_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
 			$telefone = trim($this->_request->getPost('telefone'));
-			if(!$validator->isValid($telefone))
+			/*if(!$validator->isValid($telefone))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
-
+			*/
 			$telefonePublico = trim($this->_request->getPost('telefonePublico'));
 			if($telefonePublico && !$validator->isValid($telefonePublico))
 			foreach ($validator->getMessages() as $message) $errors[] = $message;
