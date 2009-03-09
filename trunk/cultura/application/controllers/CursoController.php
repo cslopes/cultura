@@ -13,6 +13,7 @@ require_once 'Zend/Validate/Between.php';
 require_once 'Proexc/Controller/Action.php';
 require_once 'Proexc/Validate/Siape.php';
 require_once 'Proexc/Validate/Alpha.php';
+require_once 'Proexc/Validate/Date.php';
 
 require_once 'Curso.php';
 require_once 'CursoColaboradorDocente.php';
@@ -165,7 +166,7 @@ class CursoController extends Proexc_Controller_Action {
 			$id = (int) $this->_request->getPost('id');
 			$idAreaTematica = (int) $this->_request->getPost('idAreaTematica');
 
-			$validator = new Zend_Validate_Date();
+			$validator = new Proexc_Validate_Date();
 			$dataInicio = $this->_request->getPost('dataInicio');
 			if(!$validator->isValid($dataInicio)) {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;

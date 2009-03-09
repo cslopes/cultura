@@ -259,8 +259,12 @@ class ProjetoController extends Proexc_Controller_Action {
 
 				// Se clicou em próximo, segue para formulário de equipe
 				if($button == 'Proximo') $this->_redirect('/projeto/equipe/id/'.$id);
+				if($button == 'Salvar') $this->_redirect('/projeto/geral/id/'.$id);
+				
 			}
 			$this->view->errors = $errors;
+			
+			
 			$this->view->projeto->idAreaTematica = $idAreaTematica;
 			$this->view->projeto->idLinhaAtuacao = $idLinhaAtuacao;
 			$this->view->projeto->continuo = $continuo;
