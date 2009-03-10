@@ -64,7 +64,7 @@ class Curso extends Proexc_Db_Table {
 	 */
 	public function fetchUnvalidatedByCoordenador($idCoordenador) {
 		$where[] = $this->getAdapter()->quoteInto('idCoordenador = ?', $idCoordenador);
-		$where[] = 'processo is NULL';
+		$where[] = 'processo is NULL'; 
 		return $this->fetchAll($where);
 	}
 
@@ -127,7 +127,7 @@ class Curso extends Proexc_Db_Table {
 	 */
 	public function fetchClosedByCoordenador($idCoordenador) {
 		$where[] = $this->getAdapter()->quoteInto('idCoordenador = ?', $idCoordenador);
-		$where[] = 'fechado = 1';
+		$where[] = 'fechado = 1'; 
 		return $this->fetchAll($where);
 	}
 	
