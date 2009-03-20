@@ -106,6 +106,7 @@ class Formulario extends TCPDF {
 
 		parent::__construct('P', 'mm', 'A4');
 	}
+	
 
 	/**
 	 * Document's header. Prints a rectangle around the page.
