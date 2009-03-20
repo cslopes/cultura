@@ -809,7 +809,7 @@ class ProjetoController extends Proexc_Controller_Action {
 					return ;
 				}
 			}
-			// A transaÃ§Ã£o Ã© do tipo 'get'
+			// A transaçãoo é do tipo 'get'
 		} else {
 			// Pega os dados passados na url
 			$idProjeto = (int)$this->_request->getParam('id');
@@ -827,7 +827,7 @@ class ProjetoController extends Proexc_Controller_Action {
 				}
 			}
 		}
-		// volta se nÃ£o renderizou (se o colaborador nÃ£o existe)
+		// volta se nÃ£o renderizou (se o colaborador não existe)
 		$this->_redirect("projeto/equipe/id/".$idProjeto);
 	}
 
@@ -877,7 +877,7 @@ class ProjetoController extends Proexc_Controller_Action {
 						'celular'	=> $celular
 					);
 
-					// Se for inserÃ§Ã£o
+					// Se for inserção
 					if($tipo == "add") {
 						$idColaboradorExterno = $colaboradorExterno->insert($data);
 
@@ -890,7 +890,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 						$projetoColaboradorExterno->insert($data);
 
-						// Se for atualizaÃ§Ã£o
+						// Se for atualização
 					} elseif ($tipo == "edit") {
 						$where = $db->quoteInto('id = ?', $idColaboradorExterno);
 							
@@ -947,7 +947,7 @@ class ProjetoController extends Proexc_Controller_Action {
 			$idProjeto = (int) $this->_request->getPost('id');
 			$button = $this->_request->getPost('button');
 
-			// Se clicou em prÃ³ximo, segue para formulÃ¡rio de descricao do projeto
+			// Se clicou em próximo, segue para formulário de descricao do projeto
 			if($button == 'Proximo') $this->_redirect('/projeto/descricao/id/'.$idProjeto);
 
 			// Foi passado o id por 'GET'
@@ -957,7 +957,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 		if($idProjeto > 0) $this->view->projeto = $projeto->find($idProjeto)->current();
 
-		// Preenche combo de possÃ­veis parceiros
+		// Preenche combo de possíveis parceiros
 		$tabParceiro = new Parceiro();
 		$this->view->parceiros = $tabParceiro->fetchParceirosByProjeto($idProjeto);
 
@@ -965,9 +965,9 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	/**
-	 * Gerencia o formulÃ¡rio de parceiro externo
+	 * Gerencia o formulário de parceiro externo
 	 *
-	 * @param $tipo Define o tipo do formulÃ¡rio, ediÃ§Ã£o ou novo
+	 * @param $tipo Define o tipo do formulário, edição ou novo
 	 */
 	private function formParceiroExterno($tipo = 'add') {
 		$parceiro = new Parceiro();
@@ -1027,7 +1027,7 @@ class ProjetoController extends Proexc_Controller_Action {
 						'celularContato'	=> $celularContato
 					);
 
-					// Se for inserÃ§Ã£o
+					// Se for inserção
 					if($tipo == "add") {
 						$idParceiro = $parceiro->insert($data);
 
@@ -1040,7 +1040,7 @@ class ProjetoController extends Proexc_Controller_Action {
 
 						$projetoParceiro->insert($data);
 
-						// Se for atualizaÃ§Ã£o
+						// Se for atualização
 					} elseif ($tipo == "edit") {
 						$where = $db->quoteInto('id = ?', $idParceiro);
 							
@@ -1101,13 +1101,13 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	function delParceiroExternoAction() {
-		// TÃ­tulo da pÃ¡gina
+		// Título da página
 		$this->view->title = "Parceiro Externo";
 
-		// Cria um objeto referente Ã  tabela Parceiro
+		// Cria um objeto referente à  tabela Parceiro
 		$parceiro = new Parceiro();
 
-		// Se a requisiÃ§Ã£o for um mÃ©todo post
+		// Se a requisição for um método post
 		if ($this->_request->isPost()) {
 			// Pega os dados
 			$idParceiro = (int)$this->_request->getPost('idParceiro');
@@ -1135,7 +1135,7 @@ class ProjetoController extends Proexc_Controller_Action {
 					return ;
 				}
 			}
-			// A transaÃ§Ã£o Ã© do tipo 'get'
+			// A transação é do tipo 'get'
 		} else {
 			// Pega os dados passados na url
 			$idProjeto = (int)$this->_request->getParam('id');
@@ -1211,13 +1211,13 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	function recursosAction () {
-		// Seta o tÃ­tulo
+		// Seta o título
 		$this->view->title = "Recursos";
 
-		// Referencia Ã  tabela recursos
+		// Referencia à  tabela recursos
 		$tabRecursos = new Recursos();
 
-		// Define uma instÃ¢ncia do projeto atual
+		// Define uma instância do projeto atual
 		$idProjeto = (int) $this->_request->getParam('id', 0);
 		$tabProjeto = new Projeto();
 		$projeto = $tabProjeto->find($idProjeto)->current();
