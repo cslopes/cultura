@@ -198,7 +198,7 @@ class JustificativasBolsas extends TCPDF {
 		$position = $this->increasePosition();
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. BOLSAS', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 5, 'Bolsas Pretendidas: ' . $projeto->bolsasPretendidas, 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 5, 'Justificativa para Bolsas: ' . $projeto->bolsasJustificativa, 'LBR', 1);
+		$this->MultiCell(self::BLOCK_SIZE, 5, 'Justificativa para Bolsas: ' . $projeto->bolsasJustificativa, 'LBR', 1);
 //		$this->writeInnerBlock('Justificativa para Bolsas:', $projeto->bolsasJustificativa);
 		$this->SetY($this->GetY() + 4);
 		
