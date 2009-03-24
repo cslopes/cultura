@@ -96,7 +96,7 @@ class JustificativasBolsas extends TCPDF {
 	 */
 	function __construct($orientation = 'P', $unit = 'mm', $format = 'A4') {
 		$tabProjeto = new Projeto();
-		$this->projetoList = $tabProjeto->fetchAll();
+		$this->projetoList = $tabProjeto->fetchAll('bolsasPretendidas > 0');
 		
 		
 		parent::__construct('P', 'mm', 'A4');
@@ -158,7 +158,7 @@ class JustificativasBolsas extends TCPDF {
 		$position = $this->increasePosition();
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. IDENTIFICAÇÃO', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 5, 'TÍTULO: ' . $projeto->titulo, 'LR', 1);
+		$this->MultiCell(self::BLOCK_SIZE, 5, 'TÍTULO: ' . $projeto->titulo, 'LR', 1);
 		$this->Cell(self::BLOCK_SIZE, 5, 'NÚMERO DO PROCESSO: ' . $projeto->processo, 'LBR', 1);
 		$this->SetY($this->GetY() + 4);
 	}
