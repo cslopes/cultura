@@ -630,6 +630,7 @@ class CursoController extends Proexc_Controller_Action {
 			$formulario = new FormularioCurso($curso);
 			$formulario->Output('formulario.pdf', 'D');
 		}
+
 	}
 
 	function delAction() {

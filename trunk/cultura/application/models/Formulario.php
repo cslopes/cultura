@@ -8,6 +8,8 @@ require_once 'Unidade.php';
 require_once 'Departamento.php';
 require_once 'Recursos.php';
 
+require_once 'Zend/Date.php';
+
 class Formulario extends TCPDF {
 
 	/**
@@ -132,7 +134,8 @@ class Formulario extends TCPDF {
 	function Footer() {
 		$this->SetY(-15);
 		$this->SetFont('vera', 'I', 8);
-		$this->Cell(0,10,$this->titulo . ' - Página '.$this->PageNo().'/{nb}',0,0,'C');
+		$data = new Zend_Date();
+		$this->Cell(0,10,$this->titulo . ' - Página '.$this->PageNo().'/{nb}'.' em '.$data->get('d-MM-y'),0,0,'C');
 	}
 
 	/**
