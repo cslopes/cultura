@@ -32,26 +32,24 @@ class CursoController extends Proexc_Controller_Action {
 	 */
 	function preDispatch() {
 		parent::preDispatch();
+		
+		$ok = 0;
+		$tabCurso = new Curso();
 
 		// Verifica se o coordenador tem acesso a ações para cursos fechados e não-validados
 		if($this->_request->getActionName() == 'imprimirFormulario') {
-			$tabCurso = new Curso();
 			$cursos = $tabCurso->fetchClosedByCoordenador($this->user->id);
-			$ok = 0;
-			foreach ($cursos as $curso) {
-				if($curso->id == $this->_request->getParam('id')){
-					$ok = 1;
-					break;
-				}
-			}
+
+
 			
-		}
-		
-		// Verifica se o coordenador tem acesso a ações para cursos abertos e validados
-		if($this->_request->getActionName() == 'relatorioFinal') {
-			$tabCurso = new Curso();
-			$cursos = $tabCurso->fetchOpenAndValidatedByCoordenador($this->user->id);
-			$ok = 0;
+//			VERIFICAR ISSO VARGINHA SAFADO	
+//			$curso = $tabCurso->find($this->_request->getParam('id'))->current();
+//			if(!(($curso->fechado == 1) && ($curso->idCoordenador == $this->user->id)))
+//				if(!$ok) $this->_redirect('/');
+
+			
+
+			
 			foreach ($cursos as $curso) {
 				if($curso->id == $this->_request->getParam('id')){
 					$ok = 1;
@@ -59,13 +57,25 @@ class CursoController extends Proexc_Controller_Action {
 				}
 			}
 			if(!$ok) $this->_redirect('/');
-		}
+		} else
+		
+		// Verifica se o coordenador tem acesso a ações para cursos abertos e validados
+		if($this->_request->getActionName() == 'relatorioFinal') {
+			$cursos = $tabCurso->fetchOpenAndValidatedByCoordenador($this->user->id);
+
+			foreach ($cursos as $curso) {
+				if($curso->id == $this->_request->getParam('id')){
+					$ok = 1;
+					break;
+				}
+			}
+			if(!$ok) $this->_redirect('/');
+		} else
 		
 		// Verifica se o coordenador tem acesso a ações para cursos não-validados
 		if($this->_request->getActionName() != 'add' && $this->_request->getActionName() != 'relatorioFinal') {
-			$tabCurso = new Curso();
 			$cursos = $tabCurso->fetchOpenAndUnvalidatedByCoordenador($this->user->id);
-			$ok = 0;
+
 			foreach ($cursos as $curso) {
 				if($curso->id == $this->_request->getParam('id')){
 					$ok = 1;

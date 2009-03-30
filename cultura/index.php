@@ -22,8 +22,9 @@ Zend_Loader::loadClass('Zend_Acl_Resource');
 Zend_Loader::loadClass('Zend_Translate');
 Zend_Loader::loadClass('Zend_Validate');
 Zend_Loader::loadClass('Zend_Locale');
+//Zend_Loader::loadClass('Zend_Session');
 
-
+//Zend_Session::rememberMe(2);
 
 // Zend Acl
 // Define os acessos na área administrativa
