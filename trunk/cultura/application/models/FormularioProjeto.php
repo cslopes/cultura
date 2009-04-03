@@ -158,6 +158,7 @@ class FormularioProjeto extends Formulario {
 		$this->writeInnerBlock('PÚBLICO ALVO', $this->projeto->publicoAlvo);
 		$this->writeInnerBlock('RESUMO', $this->projeto->resumo);
 		$this->writeInnerBlock('BOLSAS PRETENDIDAS', $this->projeto->bolsasPretendidas);
+		$this->writeInnerBlock('JUSTIFICATIVA PARA BOLSAS', $this->projeto->bolsasJustificativa);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
 		$this->SetY($this->GetY() + 4);
 	}
