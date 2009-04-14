@@ -40,7 +40,7 @@ class FormularioProjeto extends Formulario {
 	 *
 	 */
 	private function writeIdentificacao() {
-		$this->SetFont('vera', 'B', 11);
+		$this->SetFont('vera', 'B', 10);
 		$position = $this->increasePosition();
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. IDENTIFICAÇÃO', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
@@ -173,7 +173,7 @@ class FormularioProjeto extends Formulario {
 			$this->writeTitle(self::TITULO);
 
 			$this->Ln(20);
-			$this->SetFont('vera', 'B', 11);
+			$this->SetFont('vera', 'B', 10);
 			$this->Cell(self::BLOCK_SIZE, 5, 'A parceria só será firmada após assinatura do convênio pelas partes.', '', 1);
 			$this->Ln(10);
 			$this->Cell(self::BLOCK_SIZE, 5, 'PROJETO DE EXTENSÃO: ' . $this->projeto->titulo, '', 1);
