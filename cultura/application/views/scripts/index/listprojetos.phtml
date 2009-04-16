@@ -32,6 +32,10 @@ Não existem projetos salvos.
 					<input type="hidden" name="id" value="<?php echo $projeto->id ?>"/>
 					<button type="submit" class="printButton">Imprimir</button>
 				</form>
+				<form action="<?php echo $this->baseUrl ?>/projeto/equipe " method="get" style="display:inline">
+					<input type="hidden" name="id" value="<?php echo $projeto->id ?>"/>
+					<button type="submit" class="renameButton">Editar</button>
+				</form>
 				<?php else : ?>
 				<form action="<?php echo $this->baseUrl ?>/projeto/fechar" method="get" style="display:inline">
 					<input type="hidden" name="id" value="<?php echo $projeto->id ?>"/>
