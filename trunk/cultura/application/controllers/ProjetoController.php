@@ -50,7 +50,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		
 
 		// Verifica se o coordenador tem acesso a ações para projetos fechados e não-validados
-		if($this->_request->getActionName() == 'imprimirFormulario') {
+		if(($this->_request->getActionName() == 'imprimirFormulario') || ($this->_request->getActionName() == 'equipe')) {
 			$tabProjeto = new Projeto();
 			$projetos = $tabProjeto->fetchClosedByCoordenador($this->user->id);
 			$ok = 0;
@@ -61,6 +61,10 @@ class ProjetoController extends Proexc_Controller_Action {
 				}
 			}
 		}
+
+		
+		
+		
 		// Verifica se o coordenador tem acesso ao projeto e este está validado
 		else if($this->_request->getActionName() == 'imprimirRelatorioProjeto') {
 			$tabProjeto = new Projeto();
@@ -373,31 +377,31 @@ class ProjetoController extends Proexc_Controller_Action {
 	}
 
 	function delCoordenadorTecnicoAction() {
-		// TÃ­tulo da pÃ¡gina
+		// Título da página
 		$this->view->title = "Coordenador Técnico";
 
 		$this->delTecnico(Tecnico::COORDENADOR);
 	}
 
 	function delColaboradorTecnicoAction() {
-		// TÃ­tulo da pÃ¡gina
+		// Título da página
 		$this->view->title = "Colaborador Técnico";
 
 		$this->delTecnico(Tecnico::COLABORADOR);
 	}
 
 	private function delTecnico($funcao) {
-		// Cria um objeto referente Ã  tabela Tecnico
+		// Cria um objeto referente à  tabela Tecnico
 		$tecnico = new Tecnico();
 
-		// Se a requisiÃ§Ã£o for um mÃ©todo post
+		// Se a requisição for um método post
 		if ($this->_request->isPost()) {
 			// Pega os dados
 			$idTecnico = (int)$this->_request->getPost('idTecnico');
 			$idProjeto = (int)$this->_request->getPost('id');
 			$del = $this->_request->getPost('del');
 
-			// Se clicou em 'Yes' e existe o tÃ©cnico
+			// Se clicou em 'Yes' e existe o técnico
 			if ($del == 'Yes' && $idTecnico > 0) {
 				$db = $tecnico->getAdapter();
 				$db->beginTransaction();
