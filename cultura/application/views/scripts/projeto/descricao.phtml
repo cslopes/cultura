@@ -16,6 +16,10 @@
 	<?php foreach ($this->errors as $error) echo $error . "<br />" ?>
 </div><br />
 <?php endif; ?>
+<?php if($this->projeto->fechado): ?>
+<?php echo "Operação não permitida para projeto fechado" ?>
+<?php else: ?>
+
 
 <form id="formDescricao" action="<?php echo $this->baseUrl ?>/projeto/descricao" method="post">
 	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
@@ -146,4 +150,5 @@ com o mundo acadêmico.
 	<input name="button" type="submit" value="Proximo" />
 </div>
 </form>
+<?php endif; ?>
 <?php echo $this->render('footer.phtml'); ?>

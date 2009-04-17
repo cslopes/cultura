@@ -101,6 +101,12 @@
 </script>
 
 <h2><?php echo $this->escape($this->title); ?></h2>
+
+<?php if($this->projeto->fechado): ?>
+<?php echo "Operação não permitida para projeto fechado" ?>
+<?php else: ?>
+
+
 <form id="formRecursos" action="<?php echo $this->baseUrl ?>/projeto/recursos" method="post">
 	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
 	
@@ -293,4 +299,6 @@
 </p>
 
 </form>
+
+<?php endif; ?>
 <?php echo $this->render('footer.phtml'); ?>
