@@ -54,7 +54,9 @@ para um  objetivo comum, sendo executado a longo e médio prazo.</p>
 <p>Escolha uma Linha de Extensão que especifique ao máximo a atividade a ser executada em seu projeto. Para dúvidas acesse
 Linhas de Extensão no site da PROEXC.</p>
 </div> 
-
+<?php if($this->projeto->fechado): ?>
+<?php echo "Operação não permitida para projeto fechado" ?>
+<?php else: ?>
 <form id="geralForm" action="<?php echo $this->baseUrl ?>/projeto/geral" method="post">
 	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
 	
@@ -120,6 +122,6 @@ Linhas de Extensão no site da PROEXC.</p>
 </p>
 </form>
 
-
+<?php endif; ?>
 
 <?php echo $this->render('footer.phtml'); ?>
