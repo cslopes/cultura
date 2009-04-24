@@ -36,6 +36,8 @@ require_once 'Recursos.php';
 require_once 'FormularioProjeto.php';
 require_once 'RelatorioFinal.php';
 require_once 'FormularioRelatorioProjeto.php';
+require_once 'FormularioEquipe.php';
+require_once 'FormularioParceiros.php';
 require_once 'Parceiro.php';
 
 class ProjetoController extends Proexc_Controller_Action {
@@ -306,8 +308,9 @@ class ProjetoController extends Proexc_Controller_Action {
 
 			$button = $this->_request->getPost('button');
 
-			// Se clicou em prÃ³ximo, segue para formulÃ¡rio de parceiros
+			// Se clicou em próximo, segue para formulário de parceiros
 			if($button == 'Proximo') $this->_redirect('/projeto/parceiros/id/'.$idProjeto);
+			if($button == 'Imprimir Alterações') $this->_redirect('/projeto/imprimirFormularioEquipe/id/'.$idProjeto);
 
 			// Foi passado o id por 'GET'
 		} else {
@@ -947,7 +950,8 @@ class ProjetoController extends Proexc_Controller_Action {
 
 			// Se clicou em próximo, segue para formulário de descricao do projeto
 			if($button == 'Proximo') $this->_redirect('/projeto/descricao/id/'.$idProjeto);
-
+			if($button == 'Imprimir Alterações') $this->_redirect('/projeto/imprimirFormularioParceiros/id/'.$idProjeto);
+			
 			// Foi passado o id por 'GET'
 		} else {
 			$idProjeto = (int) $this->_request->getParam('id', 0);
@@ -1337,7 +1341,33 @@ class ProjetoController extends Proexc_Controller_Action {
 		}
 	}
 
+	function imprimirFormularioEquipeAction() {
+			$this->_helper->viewRenderer->setNoRender(true);
+	
+			$id = (int) $this->_request->getParam('id', 0);
+			if($id > 0) {
+				$tabProjeto = new Projeto();
+				$projeto = $tabProjeto->fetchRow('id = ' . $id);
+	
+				$formulario = new FormularioEquipe($projeto);
+				$formulario->Output('formularioEquipe.pdf', 'D');
+			}
+		}
 
+		
+	function imprimirFormularioParceirosAction() {
+			$this->_helper->viewRenderer->setNoRender(true);
+	
+			$id = (int) $this->_request->getParam('id', 0);
+			if($id > 0) {
+				$tabProjeto = new Projeto();
+				$projeto = $tabProjeto->fetchRow('id = ' . $id);
+	
+				$formulario = new FormularioParceiros($projeto);
+				$formulario->Output('formularioParceiros.pdf', 'D');
+			}
+		}
+		
 	
 	function imprimirRelatorioProjetoAction(){
 		$this->_helper->viewRenderer->setNoRender(true);
