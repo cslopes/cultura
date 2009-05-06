@@ -40,12 +40,19 @@ class FormularioProjeto extends Formulario {
 	 *
 	 */
 	private function writeIdentificacao() {
-		$this->SetFont('vera', 'B', 10);
+		$this->SetFont('vera', 'B', 9);
 		$position = $this->increasePosition();
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. IDENTIFICAÇÃO', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
 		$this->Cell(self::BLOCK_SIZE, 5, 'TÍTULO: ' . $this->projeto->titulo, 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 5, 'NÚMERO DO PROCESSO: ' . $this->projeto->processo, 'LBR', 1);
+		$this->Cell(self::BLOCK_SIZE, 5, 'NÚMERO DO PROCESSO: ' . $this->projeto->processo, 'LR', 1);
+		if($this->projeto->continuo):{
+			$this->Cell(self::BLOCK_SIZE, 5, 'DATA DE INÍCIO: ' . $this->projeto->dataInicio, 'LR', 1);	
+		}else :{
+			$this->Cell(self::BLOCK_SIZE, 5, 'DATA DE INÍCIO: ' . $this->projeto->dataInicio, 'LR', 1);
+			$this->Cell(self::BLOCK_SIZE, 5, 'DATA FINAL: ' . $this->projeto->dataFinal, 'LBR', 1);
+		}
+		endif;
 		$this->SetY($this->GetY() + 4);
 	}
 
