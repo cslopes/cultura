@@ -35,8 +35,11 @@ definitivamente o projeto.</p> Caso o Vice-Coordenador não apareça na lista de
 <form id="myForm" action="<?php echo $this->baseUrl ?>/projeto/equipe" method="post">
 	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
 	
+
 <img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpViceCoordenador', true)"  onmouseout="javascript:setVisible('helpViceCoordenador', false)"/>
-<div>	
+<div>
+	<label for="idCoordenador">Coordenador:</label>
+	<label for="idCoordenador"><?php echo $this->projeto->findParentCoordenador()->nome ?></label>	
 	<label for="idViceCoordenador">Vice Coordenador:</label>
 	<select name="idViceCoordenador" dojoType="dijit.form.FilteringSelect">
 	<option value="0">Nenhum</option>
@@ -48,6 +51,25 @@ definitivamente o projeto.</p> Caso o Vice-Coordenador não apareça na lista de
 	<?php endforeach; ?>
 	</select>
 </div><br />
+
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpColaboradoresDocentes', true)"  onmouseout="javascript:setVisible('helpColaboradoresDocentes', false)"/>
+<div>
+	<fieldset>
+	<legend>Colaboradores Docentes</legend>
+	<span id="colaboradorDocente">
+		<a href="<?php echo $this->baseUrl?>/projeto/addColaboradorDocente/id/<?php echo $this->projeto->id?>">Adicionar</a>
+		<br />
+		<?php if($this->colaboradoresDocentes) foreach($this->colaboradoresDocentes as $colaboradorDocente) : ?>
+			<?php echo $colaboradorDocente->nome ?> 
+			<a href="<?php echo $this->baseUrl?>/projeto/editColaboradorDocente/id/<?php echo $this->projeto->id?>/idColaboradorDocente/<?php echo $colaboradorDocente->id?>">Editar</a>
+			<a href="<?php echo $this->baseUrl?>/projeto/delColaboradorDocente/id/<?php echo $this->projeto->id?>/idColaboradorDocente/<?php echo $colaboradorDocente->id?>">Apagar</a>
+			<br />
+		<?php endforeach;?>
+	</span>
+	</fieldset>
+</div>
+
+
 
 <img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpCoordenadoresTecnicos', true)"  onmouseout="javascript:setVisible('helpCoordenadoresTecnicos', false)"/>
 <div>
@@ -68,22 +90,6 @@ definitivamente o projeto.</p> Caso o Vice-Coordenador não apareça na lista de
 	</fieldset>
 </div>
 
-<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpColaboradoresDocentes', true)"  onmouseout="javascript:setVisible('helpColaboradoresDocentes', false)"/>
-<div>
-	<fieldset>
-	<legend>Colaboradores Docentes</legend>
-	<span id="colaboradorDocente">
-		<a href="<?php echo $this->baseUrl?>/projeto/addColaboradorDocente/id/<?php echo $this->projeto->id?>">Adicionar</a>
-		<br />
-		<?php if($this->colaboradoresDocentes) foreach($this->colaboradoresDocentes as $colaboradorDocente) : ?>
-			<?php echo $colaboradorDocente->nome ?> 
-			<a href="<?php echo $this->baseUrl?>/projeto/editColaboradorDocente/id/<?php echo $this->projeto->id?>/idColaboradorDocente/<?php echo $colaboradorDocente->id?>">Editar</a>
-			<a href="<?php echo $this->baseUrl?>/projeto/delColaboradorDocente/id/<?php echo $this->projeto->id?>/idColaboradorDocente/<?php echo $colaboradorDocente->id?>">Apagar</a>
-			<br />
-		<?php endforeach;?>
-	</span>
-	</fieldset>
-</div>
 
 <img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpColaboradoresTecnicos', true)"  onmouseout="javascript:setVisible('helpColaboradoresTecnicos', false)"/>
 <div>
