@@ -8,6 +8,9 @@
 </script>
 
 <h2><?php echo $this->escape($this->title); ?></h2>
+<div class="help" id="helpCoordenador">
+<p>Professor responsável pelo Projeto.</p>
+</div>
 
 <div class="help" id="helpCoordenadoresTecnicos">
 <p>O coordenador técnico, de competência técnica reconhecida, atua no projeto sob a orientação e tutela do coordenador geral,
@@ -34,13 +37,22 @@ definitivamente o projeto.</p> Caso o Vice-Coordenador não apareça na lista de
 
 <form id="myForm" action="<?php echo $this->baseUrl ?>/projeto/equipe" method="post">
 	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
-	
+
+<img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpCoordenador', true)"  onmouseout="javascript:setVisible('helpCoordenador', false)"/>	
+<div>
+	<fieldset>
+	<legend>Coordenador</legend>
+	<span id="coordenador">
+	<label for="idCoordenador"><?php echo "<b>".$this->projeto->findParentCoordenador()->nome."</b>" ?></label>	
+	</span>
+	</fieldset>
+</div>
 
 <img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpViceCoordenador', true)"  onmouseout="javascript:setVisible('helpViceCoordenador', false)"/>
 <div>
-	<label for="idCoordenador">Coordenador:</label>
-	<label for="idCoordenador"><?php echo $this->projeto->findParentCoordenador()->nome ?></label>	
-	<label for="idViceCoordenador">Vice Coordenador:</label>
+	<fieldset>
+	<legend>Vice Coordenador</legend>
+	<span id="viceCoordenador">
 	<select name="idViceCoordenador" dojoType="dijit.form.FilteringSelect">
 	<option value="0">Nenhum</option>
 	<?php foreach($this->viceCoordenadores as $viceCoordenador) : ?>
@@ -50,7 +62,9 @@ definitivamente o projeto.</p> Caso o Vice-Coordenador não apareça na lista de
 			><?php echo $viceCoordenador->nome ?> - <?php echo $viceCoordenador->findParentDepartamento()->nome ?></option>			
 	<?php endforeach; ?>
 	</select>
-</div><br />
+	</span>
+	</fieldset>
+</div>
 
 <img class="icon" src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpColaboradoresDocentes', true)"  onmouseout="javascript:setVisible('helpColaboradoresDocentes', false)"/>
 <div>
@@ -123,7 +137,7 @@ definitivamente o projeto.</p> Caso o Vice-Coordenador não apareça na lista de
 		<?php endforeach;?>
 	</span>
 	</fieldset>
-</div>
+</div> <br />
 <div>	
 	<input name="button" type="submit" value="Salvar" />
 	<input name="button" type="submit" value="Proximo" />
