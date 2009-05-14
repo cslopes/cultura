@@ -4,10 +4,17 @@
 <script type="text/javascript">
        dojo.require("dijit.form.Textarea");
        dojo.require("dijit.form.NumberSpinner");
-       
 	
-		
+		function valida() {
+		if ((dijit.byId('local').getValue() == "")){
+			alert("Preencha o campo Local");
+			return false;
+		}
+	}
+	dojo.addOnLoad(valida);
 </script>
+
+
 
 <h2><?php echo $this->escape($this->title); ?></h2>
 
@@ -21,7 +28,7 @@
 <?php else: ?>
 
 
-<form id="formDescricao" action="<?php echo $this->baseUrl ?>/projeto/descricao" method="post">
+<form id="formDescricao" name="formDescricao" action="<?php echo $this->baseUrl ?>/projeto/descricao" method="post" onSubmit="return valida()">
 	<input name="id" type="hidden" value="<?php echo $this->projeto->id ?>" />
 	
 <div id="helpFundamento" class="help">
@@ -120,6 +127,20 @@ objetivando as metas do projeto.</p>
 	<?php if($this->projeto->resumo){echo $this->escape($this->projeto->resumo);} ?> 
     </textarea>
     
+    <label for="local">Local para informações:</label>
+    <textarea name="local" dojoType="dijit.form.Textarea" style="width:575px" id="local" >
+	<?php if($this->projeto->localInformacoes){echo $this->escape($this->projeto->localInformacoes);} ?> 
+    </textarea> 
+    
+    <label for="local">E-mail para informações:</label>
+    <textarea name="email" dojoType="dijit.form.Textarea" style="width:575px" id="email" >
+	<?php if($this->projeto->emailInformacoes){echo $this->escape($this->projeto->emailInformacoes);} ?> 
+    </textarea>
+    
+    <label for="telefone">Telefone para informações:</label>
+    <textarea name="telefone" dojoType="dijit.form.Textarea" style="width:575px" id="telefone" >
+	<?php if($this->projeto->telInformacoes){echo $this->escape($this->projeto->telInformacoes);} ?> 
+    </textarea>
 </div> <br />
 
 <div id="helpBolsasJustificativa" class="help">
