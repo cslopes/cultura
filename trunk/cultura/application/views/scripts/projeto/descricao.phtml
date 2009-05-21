@@ -6,16 +6,17 @@
        dojo.require("dijit.form.NumberSpinner");
 	
 
-/* TERMINAR !!!*/	
-//	function valida() {
-//	local = dijit.byId('local').getValue();
-//	email = dijit.byId('email').getValue();
-//	telefone = dijit.byId('telefone').getValue();
-//	if ((local == "")|| (email == "") || (telefone == "")){
-//		alert('Você precisa preencher pelo menos 1 entre os 3 campos obrigatórios: \n\n Local para informações; \n E-mail para informações; \n Telefone para informações.');
-//		return false;
-//		}
-//	}
+	dojo.addOnLoad();
+	
+	function valida() {
+	local = dijit.byId('local').getValue();
+	email = dijit.byId('email').getValue();
+	telefone = dijit.byId('telefone').getValue();
+	if ((local == "")|| (email == "") || (telefone == "")){
+		alert('Você precisa preencher pelo menos 1 entre os 3 campos obrigatórios: \n\n Local para informações; \n E-mail para informações; \n Telefone para informações.');
+		return false;
+		}
+	}
 	
 </script>
 
