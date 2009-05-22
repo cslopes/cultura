@@ -42,7 +42,8 @@ class Zend_Validate_Regex extends Zend_Validate_Abstract
      * @var array
      */
     protected $_messageTemplates = array(
-        self::NOT_MATCH => "'%value%' does not match against pattern '%pattern%'"
+//      self::NOT_MATCH => "'%value%' does not match against pattern '%pattern%'"
+		self::NOT_MATCH => "Formato não corresponde ao padrão esperado."
     );
 
     /**

@@ -42,7 +42,8 @@ class Zend_Validate_Int extends Zend_Validate_Abstract
      * @var array
      */
     protected $_messageTemplates = array(
-        self::NOT_INT => "'%value%' does not appear to be an integer"
+//        self::NOT_INT => "'%value%' Não é um número válido ou está em branco."
+		  self::NOT_INT => "Não é um número válido ou está em branco."	
     );
 
     /**

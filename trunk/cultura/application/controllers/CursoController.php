@@ -179,7 +179,7 @@ class CursoController extends Proexc_Controller_Action {
 			$validator = new Proexc_Validate_Date();
 			$dataInicio = $this->_request->getPost('dataInicio');
 			if(!$validator->isValid($dataInicio)) {
-				foreach ($validator->getMessages() as $message) $errors[] = $message;
+				foreach ($validator->getMessages() as $message) $errors[] = "Data de Início: ".$message;
 			}else {
 				$dataInicio = new Zend_Date($dataInicio);
 				$dataInicio = $dataInicio->get('y-MM-dd');
@@ -187,7 +187,7 @@ class CursoController extends Proexc_Controller_Action {
 
 			$dataFinal = $this->_request->getPost('dataFinal');
 			if(!$validator->isValid($dataFinal)) {
-				foreach ($validator->getMessages() as $message) $errors[] = $message;
+				foreach ($validator->getMessages() as $message) $errors[] = "Data Final: ".$message;
 			}else {
 				$dataFinal = new Zend_Date($dataFinal);
 				$dataFinal = $dataFinal->get('y-MM-dd');
@@ -196,16 +196,16 @@ class CursoController extends Proexc_Controller_Action {
 			$validator = new Zend_Validate_Int();
 			$cargaHoraria 	= $this->_request->getPost('cargaHoraria');
 			if(!$validator->isValid($cargaHoraria))
-				foreach ($validator->getMessages() as $message) $errors[] = $message;
+				foreach ($validator->getMessages() as $message) $errors[] = "Carga Horária: ".$message;
 			
 			$validator = new Zend_Validate_NotEmpty();
 			$horario 		= trim($this->_request->getPost('horario'));
 			if(!$validator->isValid($horario))
-				foreach ($validator->getMessages() as $message) $errors[] = $message;
+				foreach ($validator->getMessages() as $message) $errors[] = "Horário: ".$message;
 			
 			$local 			= trim($this->_request->getPost('local'));
 			if(!$validator->isValid($local))
-				foreach ($validator->getMessages() as $message) $errors[] = $message;
+				foreach ($validator->getMessages() as $message) $errors[] = "Local: ".$message;
 			
 			if(!$errors) {
 				$data = array(
@@ -293,7 +293,7 @@ class CursoController extends Proexc_Controller_Action {
 
 	function addColaboradorDocenteAction() {
 		// Inicia
-		$this->view->title = 'Colaborador Docente';
+		$this->view->title = 'Docente';
 		$this->view->action = $this->view->baseUrl . "/curso/addColaboradorDocente";
 		$this->formColaboradorDocente();
 	}
@@ -375,24 +375,29 @@ class CursoController extends Proexc_Controller_Action {
 			$validator = new Proexc_Validate_Alpha(true);
 			$nome = trim($this->_request->getPost('nome'));
 			if(!$validator->isValid($nome))
-			foreach ($validator->getMessages() as $message) $errors[] = $message;
+			foreach ($validator->getMessages() as $message) $errors[] = "Nome: ".$message;
 
-			$validator = new Proexc_Validate_Siape();
-			$siape = trim($this->_request->getPost('siape'));
-			if(!$validator->isValid($siape))
-			foreach ($validator->getMessages() as $message) $errors[] = $message;
+			
+			/**
+			  Validação Retirada -> o Docente não precisa ser necessariamente da UFJF.
+			*/
+//			$validator = new Proexc_Validate_Siape();
+     		$siape = trim($this->_request->getPost('siape'));
+//			if(!$validator->isValid($siape))
+//			foreach ($validator->getMessages() as $message) $errors[] = $message;
+			
 			
 			$idDepartamento = (int) $this->_request->getPost('idDepartamento');
 
 			$validator = new Zend_Validate_EmailAddress();
 			$email = trim($this->_request->getPost('email'));
 			if(!$validator->isValid($email))
-			foreach ($validator->getMessages() as $message) $errors[] = $message;
+			foreach ($validator->getMessages() as $message) $errors[] = "E-mail: ".$message;
 
 			$validator = new Zend_Validate_Regex("/^\\(\\d{2}\\)\\d{4}-\\d{4}\$/");
 			$telefone = trim($this->_request->getPost('telefone'));
 			if(!$validator->isValid($telefone))
-			foreach ($validator->getMessages() as $message) $errors[] = $message;
+			foreach ($validator->getMessages() as $message) $errors[] = "Telefone: ".$message;
 
 			$celular = trim($this->_request->getPost('celular'));
 			if($celular && !$validator->isValid($celular))
@@ -401,7 +406,7 @@ class CursoController extends Proexc_Controller_Action {
 			$validator = new Zend_Validate_Int();
 			$cargaHorariaSemanal = trim($this->_request->getPost('cargaHorariaSemanal'));
 			if(!$validator->isValid($cargaHorariaSemanal))
-				foreach ($validator->getMessages() as $message) $errors[] = $message;
+				foreach ($validator->getMessages() as $message) $errors[] = "Carga Horária: ".$message;
 			
 			if(!$errors) {
 				$db = $colaboradorDocente->getDefaultAdapter();
@@ -452,8 +457,10 @@ class CursoController extends Proexc_Controller_Action {
 
 			// Inicializa valores referentes ao colaborador Docente
 			$this->view->colaboradorDocente->nome 					= $nome;
+			/**/
 			$this->view->colaboradorDocente->siape 					= $siape;
 			$this->view->colaboradorDocente->idDepartamento			= $idDepartamento;
+			
 			$this->view->colaboradorDocente->email 					= $email;
 			$this->view->colaboradorDocente->telefone 				= $telefone;
 			$this->view->colaboradorDocente->celular 				= $celular;
@@ -465,8 +472,10 @@ class CursoController extends Proexc_Controller_Action {
 
 			// Inicializa valores referentes ao colaborador Docente
 			$this->view->colaboradorDocente->nome = "";
+			/***/
 			$this->view->colaboradorDocente->siape = "";
 			$this->view->colaboradorDocente->idDepartamento = "";
+			
 			$this->view->colaboradorDocente->email = "";
 			$this->view->colaboradorDocente->telefone = "";
 			$this->view->colaboradorDocente->celular = "";
@@ -495,19 +504,38 @@ class CursoController extends Proexc_Controller_Action {
 			$expectativaPublico = $this->_request->getPost('expectativaPublico');
 			$descricao			= $this->_request->getPost('descricao');
 			$resumo				= $this->_request->getPost('resumo');
+			$email				= trim($this->_request->getPost('email'));
+			$telefone			= trim($this->_request->getPost('telefone'));
+			$local				= trim($this->_request->getPost('local'));
 			
 			$errors = null;
-
+						
 			$validator = new Zend_Validate_Int();
 			if(!$validator->isValid($expectativaPublico))
-				foreach ($validator->getMessages() as $message) $errors[] = $message;
+				foreach ($validator->getMessages() as $message) $errors[] = "Expectativa de Público: ".$message;
 
+			$validator = new Zend_Validate_NotEmpty();
+			if(!$validator->isValid($telefone))
+				foreach ($validator->getMessages() as $message) $errors[] = "Telefone para informações: ".$message;
+			
+			if(!$validator->isValid($local))
+				foreach ($validator->getMessages() as $message) $errors[] = "Local para informações: ".$message;
+						
+			$validator = new Zend_Validate_EmailAddress();	
+			if(!$validator->isValid($email))
+				foreach ($validator->getMessages() as $message) $errors[] = "E-mail para informações: ".$message;
+
+				
+				
 			if(!$errors) {
 				$data = array(
 					'publicoAlvo'			=> $publicoAlvo,
 					'expectativaPublico'	=> $expectativaPublico,
 					'descricao'				=> $descricao,
-					'resumo'				=> $resumo
+					'resumo'				=> $resumo,
+					'localInformacoes'      => $local,
+					'emailInformacoes'      => $email,
+					'telInformacoes'        => $telefone 
 				);
 
 				$curso->updateById($data, $idCurso);
