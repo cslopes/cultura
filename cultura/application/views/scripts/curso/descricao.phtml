@@ -21,13 +21,14 @@
 <p>Descrição referenciada que demonstre claramente que o curso está inserido dentro da proposta de indissociabilidade dos
 parâmetros de Ensino, Pesquisa, Extensão.</p>
 </div-->
+
 <div>
-	<label for="publicoAlvo">Público alvo:</label>
-	<!-- img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpFundamento', true)"  onmouseout="javascript:setVisible('helpFundamento', false)"/--><br />
-	<textarea name="publicoAlvo" dojoType="dijit.form.Textarea" style="width:575px">
-    	<?php echo $this->escape($this->curso->publicoAlvo) ?>
+	<label for="descricao">Descrição:</label><br />
+	<textarea name="descricao" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->curso->descricao) ?>
     </textarea>
-</div><br />
+</div>
+<br />
 
 <div>
 	<label for="expectativaPublico">Expectativa de público:</label>
@@ -37,13 +38,15 @@ parâmetros de Ensino, Pesquisa, Extensão.</p>
                 maxlength="20">pessoas.
 </div><br />
 
-<div>
-	<label for="descricao">Descrição:</label><br />
-	<textarea name="descricao" dojoType="dijit.form.Textarea" style="width:575px">
-    	<?php echo $this->escape($this->curso->descricao) ?>
-    </textarea>
-</div><br />
 
+<div>
+	<label for="publicoAlvo">Público alvo:</label>
+	<!-- img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpFundamento', true)"  onmouseout="javascript:setVisible('helpFundamento', false)"/--><br />
+	<textarea name="publicoAlvo" dojoType="dijit.form.Textarea" style="width:575px">
+    	<?php echo $this->escape($this->curso->publicoAlvo) ?>
+    </textarea>
+</div>
+<br />
 <div id="helpResumo" class="help">
 <p>O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
 	    o público alvo que permitam uma melhor visualização do curso , além do local de realização, 
@@ -52,7 +55,6 @@ parâmetros de Ensino, Pesquisa, Extensão.</p>
 	    Poderá conter e-mail para contato ou endereço de site. 
 </p>
 </div>
-
 <div>
 	<div class="moreHelp">
 		<font color="red">O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
@@ -70,8 +72,23 @@ parâmetros de Ensino, Pesquisa, Extensão.</p>
 	
 	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px">
 	<?php if($this->curso->resumo){echo $this->escape($this->curso->resumo);} ?>
+	</textarea>
 	
+	<label for="local">Local para informações:</label>
+    <textarea name="local" dojoType="dijit.form.Textarea" style="width:575px"  >
+	<?php if($this->curso->localInformacoes){echo $this->escape($this->curso->localInformacoes);} ?> 
+    </textarea> 
+    
+    <label for="local">E-mail para informações:</label>
+    <textarea name="email" dojoType="dijit.form.Textarea" style="width:575px" >
+	<?php if($this->curso->emailInformacoes){echo $this->escape($this->curso->emailInformacoes);} ?> 
     </textarea>
+    
+    <label for="telefone">Telefone para informações:</label>
+    <textarea name="telefone" dojoType="dijit.form.Textarea" style="width:575px"  >
+	<?php if($this->curso->telInformacoes){echo $this->escape($this->curso->telInformacoes);} ?> 
+    </textarea>
+    
 </div><br />
 
 <div>	
