@@ -4,20 +4,7 @@
 <script type="text/javascript">
        dojo.require("dijit.form.Textarea");
        dojo.require("dijit.form.NumberSpinner");
-	
 
-	dojo.addOnLoad();
-	
-	function valida() {
-	local = dijit.byId('local').getValue();
-	email = dijit.byId('email').getValue();
-	telefone = dijit.byId('telefone').getValue();
-	if ((local == "")|| (email == "") || (telefone == "")){
-		alert('Você precisa preencher pelo menos 1 entre os 3 campos obrigatórios: \n\n Local para informações; \n E-mail para informações; \n Telefone para informações.');
-		return false;
-		}
-	}
-	
 </script>
 
 
@@ -45,7 +32,7 @@ parâmetros de Ensino, Pesquisa, Extensão.</p>
 <div class="moreHelp">
 		<font color="red">Atenção!<br />
 		Por questões de segurança o sistema desativa o login automaticamente quando aberto em 
-		uma mesma página por determinado tempo. Se a elaboração dos textos dos campos desta página
+		uma mesma página 20 MINUTOS. Se a elaboração dos textos dos campos desta página
 		forem longas, sugerimos que seja feita em algum editor de texto e depois "colada" nos campos
 		correspondentes, ou que cada campo seja salvo individualmente logo após a inserção clicando 
 		no botão "Salvar" abaixo.
@@ -118,33 +105,31 @@ objetivando as metas do projeto.</p>
 </div>
 
 <div>
-	<div class="moreHelp">
-		<font color="red">O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
-	    o público alvo que permitam uma melhor visualização do projeto , além do local de realização, 
-	    horários de atendimento ou de execução do projeto, <b>telefone para informações</b> e endereço do site, se houver. Este 
-	    resumo será  divulgado na  página da Proexc  e, portanto, o texto deverá ser revisado e é de responsabilidade do coordenador. 
-	    Poderá conter e-mail para contato.</font>
-	</div>
-	<br>
-	
 	<label for="resumo">Resumo (Informações para o público externo):</label>
 	<img src="<?php echo $this->baseUrl ?>/public/images/question-mark-icon.gif" title="Ajuda" onmouseover="setVisible('helpResumo', true)"  onmouseout="javascript:setVisible('helpResumo', false)"/><br />
 		<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px" id="textResumo" >
 	<?php if($this->projeto->resumo){echo $this->escape($this->projeto->resumo);} ?> 
     </textarea>
+    <br />  <br />
+    <div class="moreHelp">
+		<font color="red">
+		Atenção, pelo menos um entre os três próximos campos abaixo deve ser obrigatoriamente preenchido. 
+		</font>
+	</div>
+	<br />
     
-    <label for="local">Local para informações:</label>
-    <textarea name="local" dojoType="dijit.form.Textarea" style="width:575px" id="local" >
+    <label for="local">Local para informações: <font color="red">*</font></label>
+    <textarea name="local" dojoType="dijit.form.Textarea" style="width:575px" id="textLocal" >
 	<?php if($this->projeto->localInformacoes){echo $this->escape($this->projeto->localInformacoes);} ?> 
     </textarea> 
     
-    <label for="local">E-mail para informações:</label>
-    <textarea name="email" dojoType="dijit.form.Textarea" style="width:575px" id="email" >
+    <label for="email">E-mail para informações: <font color="red">*</font></label>
+    <textarea name="email" dojoType="dijit.form.Textarea" style="width:575px" id="textEmail" >
 	<?php if($this->projeto->emailInformacoes){echo $this->escape($this->projeto->emailInformacoes);} ?> 
     </textarea>
     
-    <label for="telefone">Telefone para informações:</label>
-    <textarea name="telefone" dojoType="dijit.form.Textarea" style="width:575px" id="telefone" >
+    <label for="telefone">Telefone para informações: <font color="red">*</font></label>
+    <textarea name="telefone" dojoType="dijit.form.Textarea" style="width:575px" id="textTelefone" >
 	<?php if($this->projeto->telInformacoes){echo $this->escape($this->projeto->telInformacoes);} ?> 
     </textarea>
 </div> <br />

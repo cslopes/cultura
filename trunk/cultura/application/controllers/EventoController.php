@@ -273,6 +273,9 @@ class EventoController extends Proexc_Controller_Action {
 			$voluntariosEnvolvidos 				= (int) $this->_request->getPost('voluntariosEnvolvidos');
 			$tecnicosEnvolvidos 				= (int) $this->_request->getPost('tecnicosEnvolvidos');
 			$comunidadeEnvolvida				= (int) $this->_request->getPost('comunidadeEnvolvida');
+			$local              				= trim($this->_request->getPost('local'));
+			$email              				= trim($this->_request->getPost('email'));
+			$telefone           				= trim($this->_request->getPost('telefone'));
 			
 			$errors = null;
 
@@ -291,6 +294,14 @@ class EventoController extends Proexc_Controller_Action {
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
 			if(!$validator->isValid($comunidadeEnvolvida))
 				foreach ($validator->getMessages() as $message) $errors[] = $message;
+
+			$validator = new Zend_Validate_NotEmpty();
+			if(($validator->isValid($local))|| ($validator->isValid($email)) || ($validator->isValid($telefone)) ) {
+				
+			}
+			else {
+				foreach ($validator->getMessages() as $message) $errors[] = $message;
+			}	
 				
 			if(!$errors) {
 				$data = array(
@@ -303,7 +314,10 @@ class EventoController extends Proexc_Controller_Action {
 					'bolsistasPosGraduacaoEnvolvidos'	=> $bolsistasPosGraduacaoEnvolvidos,
 					'voluntariosEnvolvidos'				=> $voluntariosEnvolvidos,
 					'tecnicosEnvolvidos'				=> $tecnicosEnvolvidos,
-					'comunidadeEnvolvida'				=> $comunidadeEnvolvida
+					'comunidadeEnvolvida'				=> $comunidadeEnvolvida,
+					'localInformacoes'                  => $local,
+					'emailInformacoes'                  => $email,
+					'telInformacoes'                    => $telefone 
 				);
 
 				$evento->updateById($data, $idEvento);
@@ -326,6 +340,9 @@ class EventoController extends Proexc_Controller_Action {
 			$this->view->evento->voluntariosEnvolvidos				= $voluntariosEnvolvidos;
 			$this->view->evento->tecnicosEnvolvidos					= $tecnicosEnvolvidos;
 			$this->view->evento->comunidadeEnvolvida				= $comunidadeEnvolvida;
+			$this->view->evento->localInformacoes      				= $local;
+			$this->view->evento->emailInformacoes  					= $email;
+			$this->view->evento->telInformacoes       				= $telefone;
 			// Foi passado o id por 'GET'
 		}
 
