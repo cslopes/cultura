@@ -1175,12 +1175,21 @@ class ProjetoController extends Proexc_Controller_Action {
 			$resumo = $this->_request->getPost('resumo');
 			$bolsasJustificativa = $this->_request->getPost('bolsasJustificativa');
 			$bolsasPretendidas = $this->_request->getPost('bolsasPretendidas');
+			$local = trim($this->_request->getPost('local'));
+			$email = trim($this->_request->getPost('email'));
+			$telefone = trim($this->_request->getPost('telefone'));
 
 			$errors = null;
+			
+			$validator = new Zend_Validate_NotEmpty();
+			if(($validator->isValid($local))|| ($validator->isValid($email)) || ($validator->isValid($telefone)) ) {}
+			else {
+				foreach ($validator->getMessages() as $message) $errors[] = $message;
+			}
 
 			$validator = new Zend_Validate_Between(0, 200);
 			if(!$validator->isValid($bolsasPretendidas))
-			foreach ($validator->getMessages() as $message) $errors[] = $message;
+			foreach ($validator->getMessages() as $message) $errors[] = "Bolsas Pretendidas: ".$message;
 
 			if(!$errors) {
 				$data = array(
@@ -1191,7 +1200,10 @@ class ProjetoController extends Proexc_Controller_Action {
 					'pessoasAtendidas' 		=> $pessoasAtendidas,
 					'resumo'				=> $resumo,
 					'bolsasJustificativa'	=> $bolsasJustificativa,
-					'bolsasPretendidas'		=> $bolsasPretendidas
+					'bolsasPretendidas'		=> $bolsasPretendidas,
+					'localInformacoes'      => $local,
+					'emailInformacoes'      => $email,
+					'telInformacoes'        => $telefone
 				);
 
 				$projeto->updateById($data, $idProjeto);

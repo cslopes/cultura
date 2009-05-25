@@ -95,6 +95,34 @@ parâmetros de Ensino, Pesquisa, Extensão.</p>
     </textarea>
 </div><br />
 
+<div>
+	<label for="resumo">Resumo (Informações para o público externo):</label>
+	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px">
+	<?php if($this->evento->resumo){echo $this->escape($this->evento->resumo);} ?> 
+	
+    </textarea>
+    <br /><br />
+	<div class="moreHelp">
+		<font color="red">Atenção, pelo menos um entre os três próximos campos abaixo deve ser obrigatoriamente preenchido.</font>
+	</div>
+		
+	<label for="local">Local para informações: <font color="red">*</font></label>
+    <textarea name="local" dojoType="dijit.form.Textarea" style="width:575px"  >
+	<?php if($this->evento->localInformacoes){echo $this->escape($this->evento->localInformacoes);} ?> 
+    </textarea> 
+    
+    <label for="email">E-mail para informações:<font color="red">*</font></label>
+    <textarea name="email" dojoType="dijit.form.Textarea" style="width:575px" >
+	<?php if($this->evento->emailInformacoes){echo $this->escape($this->evento->emailInformacoes);} ?> 
+    </textarea>
+    
+    <label for="telefone">Telefone para informações:<font color="red">*</font></label>
+    <textarea name="telefone" dojoType="dijit.form.Textarea" style="width:575px"  >
+	<?php if($this->evento->telInformacoes){echo $this->escape($this->evento->telInformacoes);} ?> 
+    </textarea>
+	
+</div>
+
 <div id="helpResumo" class="help">
 <p>O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
 	    o público alvo que permitam uma melhor visualização do evento , além do local de realização, 
@@ -102,21 +130,7 @@ parâmetros de Ensino, Pesquisa, Extensão.</p>
 	    Proexc  e, portanto, o texto deverá ser revisado e é de responsabilidade do coordenador. 
 	    Poderá conter e-mail para contato ou endereço de site.</p>
 </div>
-<div>
-	<div class="moreHelp">
-		<font color="red">O resumo deve ser sucinto, contendo informações básicas sobre os objetivos, a metodologia e
-	    o público alvo que permitam uma melhor visualização do evento, além do local de realização, 
-	    horários de atendimento ou de execução do evento. Este  resumo será  divulgado na  página da 
-	    Proexc  e, portanto, o texto deverá ser revisado e é de responsabilidade do coordenador. 
-	    Poderá conter e-mail para contato ou endereço de site.</font>
-	</div>
-	<br />
-	<label for="resumo">Resumo (Informações para o público externo):</label>
-	<textarea name="resumo" dojoType="dijit.form.Textarea" style="width:575px">
-	<?php if($this->evento->resumo){echo $this->escape($this->evento->resumo);} ?> 
-	
-    </textarea>
-</div><br />
+<br />
 
 <div>	
 	<input name="button" type="submit" value="Salvar" />

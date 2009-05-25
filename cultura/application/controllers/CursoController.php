@@ -416,8 +416,8 @@ class CursoController extends Proexc_Controller_Action {
 					// Cria o novo tecnico
 					$data = array(
 						'nome'					=> $nome,
-						'siape'					=> $siape,
-						'idDepartamento'		=> $idDepartamento,
+						'siape'					=> 0000001, // !! alterado 
+						'idDepartamento'		=> 01, // !! alterado
 						'email'					=> $email,
 						'telefone'				=> $telefone,
 						'celular'				=> $celular,
@@ -515,16 +515,10 @@ class CursoController extends Proexc_Controller_Action {
 				foreach ($validator->getMessages() as $message) $errors[] = "Expectativa de Público: ".$message;
 
 			$validator = new Zend_Validate_NotEmpty();
-			if(!$validator->isValid($telefone))
-				foreach ($validator->getMessages() as $message) $errors[] = "Telefone para informações: ".$message;
-			
-			if(!$validator->isValid($local))
-				foreach ($validator->getMessages() as $message) $errors[] = "Local para informações: ".$message;
-						
-			$validator = new Zend_Validate_EmailAddress();	
-			if(!$validator->isValid($email))
-				foreach ($validator->getMessages() as $message) $errors[] = "E-mail para informações: ".$message;
-
+			if(($validator->isValid($local))|| ($validator->isValid($email)) || ($validator->isValid($telefone)) ) {}
+			else {
+				foreach ($validator->getMessages() as $message) $errors[] = $message;
+			}
 				
 				
 			if(!$errors) {
