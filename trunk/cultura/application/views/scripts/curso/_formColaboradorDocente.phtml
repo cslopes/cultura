@@ -75,13 +75,22 @@
 </div>
 
 <div>
-	<label for="cargaHorariaSemanal">Carga horária semanal</label>
+	<label for="cargaHorariaSemanal">Carga horária</label>
 	<input name="cargaHorariaSemanal" type="text" dojoType="dijit.form.NumberTextBox"
                 constraints="{min:0,max:44,places:0}"
                 promptMessage= "Digite a carga horária semanal"
                 required= "true"
                 invalidMessage= "Valor inválido"
                 value="<?php echo $this->escape($this->colaboradorDocente->cargaHorariaSemanal) ?>">
+</div>
+
+<div>
+	<label for="curriculo">Currículo Lattes</label>
+	<input name="curriculo" type="text" dojoType="dijit.form.ValidationTextBox"
+                promptMessage= "Digite o link para o Currículo Lattes"
+                required= "false"
+                invalidMessage= "Valor inválido"
+                value="<?php echo $this->escape($this->colaboradorDocente->curriculo) ?>">
 </div>
 
 <div>	

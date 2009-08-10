@@ -49,7 +49,7 @@ class FormularioCurso extends Formulario {
 //		$this->Cell(self::BLOCK_SIZE, 5, 'INICIO: ' . date_format(date_create($this->curso->dataInicio), "d/m/Y"), 'LR', 1);
 //		$this->Cell(self::BLOCK_SIZE, 5, 'FINAL: ' . date_format(date_create($this->curso->dataFinal), "d/m/Y"), 'LR', 1);
 		$this->Cell(self::BLOCK_SIZE, 5, 'CARGA HORÁRIA: ' . $this->curso->cargaHoraria, 'LR', 1);
-		$this->Cell(self::BLOCK_SIZE, 5, 'EXPECTATIVA DE PÚBLICO: ' . $this->curso->expectativaPublico, 'LBR', 1);
+//		$this->Cell(self::BLOCK_SIZE, 5, 'EXPECTATIVA DE PÚBLICO: ' . $this->curso->expectativaPublico, 'LBR', 1);
 		$this->SetY($this->GetY() + 4);
 	}
 
@@ -62,8 +62,9 @@ class FormularioCurso extends Formulario {
 		$position = $this->increasePosition();
 		$this->Cell(self::BLOCK_SIZE, 5, $position . '. DESCRIÇÃO', 'LTR', 1);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LR', 1);
-		$this->writeInnerBlock('PÚBLICO ALVO', $this->curso->publicoAlvo);
 		$this->writeInnerBlock('DESCRIÇÃO', $this->curso->descricao);
+		$this->writeInnerBlock('PÚBLICO ALVO', $this->curso->publicoAlvo);
+		$this->writeInnerBlock('EXPECTATIVA DE PÚBLICO', $this->curso->expectativaPublico);
 		$this->writeInnerBlock('RESUMO', $this->curso->resumo);
 		$this->Cell(self::BLOCK_SIZE, 4, '', 'LBR', 1);
 		$this->SetY($this->GetY() + 4);
