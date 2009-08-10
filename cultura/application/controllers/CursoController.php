@@ -293,7 +293,7 @@ class CursoController extends Proexc_Controller_Action {
 
 	function addColaboradorDocenteAction() {
 		// Inicia
-		$this->view->title = 'Docente';
+		$this->view->title = 'Professore Ministrante';
 		$this->view->action = $this->view->baseUrl . "/curso/addColaboradorDocente";
 		$this->formColaboradorDocente();
 	}
@@ -408,6 +408,8 @@ class CursoController extends Proexc_Controller_Action {
 			if(!$validator->isValid($cargaHorariaSemanal))
 				foreach ($validator->getMessages() as $message) $errors[] = "Carga Horária: ".$message;
 			
+			$curriculo = $this->_request->getPost('curriculo');
+				
 			if(!$errors) {
 				$db = $colaboradorDocente->getDefaultAdapter();
 				$db->beginTransaction();
@@ -421,7 +423,8 @@ class CursoController extends Proexc_Controller_Action {
 						'email'					=> $email,
 						'telefone'				=> $telefone,
 						'celular'				=> $celular,
-						'cargaHorariaSemanal'	=> $cargaHorariaSemanal
+						'cargaHorariaSemanal'	=> $cargaHorariaSemanal,
+						'curriculo'             => $curriculo
 					);
 
 					// Se for inserção
@@ -465,6 +468,7 @@ class CursoController extends Proexc_Controller_Action {
 			$this->view->colaboradorDocente->telefone 				= $telefone;
 			$this->view->colaboradorDocente->celular 				= $celular;
 			$this->view->colaboradorDocente->cargaHorariaSemanal	= $cargaHorariaSemanal;
+			$this->view->colaboradorDocente->curriculo	            = $curriculo;
 			// Foi passado o id por 'GET'
 		} else {
 			$idCurso = (int) $this->_request->getParam('id', 0);
@@ -480,6 +484,7 @@ class CursoController extends Proexc_Controller_Action {
 			$this->view->colaboradorDocente->telefone = "";
 			$this->view->colaboradorDocente->celular = "";
 			$this->view->colaboradorDocente->cargaHorariaSemanal = "";
+			$this->view->colaboradorDocente->curriculo = "";
 			if($idColaboradorDocente > 0) $this->view->colaboradorDocente = $colaboradorDocente->find($idColaboradorDocente)->current();
 		}
 		$this->view->idCurso = $idCurso;
@@ -503,6 +508,7 @@ class CursoController extends Proexc_Controller_Action {
 			$publicoAlvo 		= $this->_request->getPost('publicoAlvo');
 			$expectativaPublico = $this->_request->getPost('expectativaPublico');
 			$descricao			= $this->_request->getPost('descricao');
+			$conteudo			= $this->_request->getPost('descricao');
 			$resumo				= $this->_request->getPost('resumo');
 			$email				= trim($this->_request->getPost('email'));
 			$telefone			= trim($this->_request->getPost('telefone'));
@@ -526,6 +532,7 @@ class CursoController extends Proexc_Controller_Action {
 					'publicoAlvo'			=> $publicoAlvo,
 					'expectativaPublico'	=> $expectativaPublico,
 					'descricao'				=> $descricao,
+					'conteudo'				=> $conteudo,				
 					'resumo'				=> $resumo,
 					'localInformacoes'      => $local,
 					'emailInformacoes'      => $email,
