@@ -55,7 +55,7 @@
 
 
 <fieldset>
-<legend>Total de pessoas da equipe de trabalho envolvidas na execução</legend>
+<legend>Total de pessoas da equipe de trabalho envolvidas na execução do projeto</legend>
 	<label for="docentes">Docentes: </label>
     <input name="docentes" dojoType="dijit.form.NumberSpinner"
     	   constraints="{min:0,max:200,places:0}"
@@ -87,11 +87,11 @@
 	<input name="comunidade" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:200,places:0}"
 			   value="0" value="<?php echo @$this->escape($this->relatorioFinal->pessoasComunidadeEnvolvidas)?>" /><br/>
-	<label for="publicoAtingido">Público atingido</label>
+	<label for="publicoAtingido">Público atingido:</label>
 	<input name="publicoAtingido" dojoType="dijit.form.NumberSpinner"
 			   constraints="{min:0,max:100000,places:0}"
 			   value="0" value="<?php echo @$this->escape($this->relatorioFinal->publicoAtingido)?>" />
-</fieldset><br/>
+</fieldset>
 <!-- 
 <fieldset>
 <legend>Articulação Externa</legend>
@@ -103,7 +103,7 @@
 </center>
 </p>
 </fieldset><br/>
- -->
+ 
 <fieldset id="fieldsetAtendimentos">
 <legend>Número de atendimentos por semana</legend>
 <p>
@@ -112,6 +112,7 @@
 			   constraints="{min:0,max:100000,places:0}"
 			   value="0" value="<?php echo @$this->escape($this->relatorioFinal->atendimentosSemanaisGrupo)?>"/>
 </p>
+
 <p>
 <label for="atendimentosIndividuais">Individual</label>
 <input name="atendimentosIndividuais" dojoType="dijit.form.NumberSpinner"
@@ -119,7 +120,7 @@
 			   value="0" value="<?php echo @$this->escape($this->relatorioFinal->atendimentosSemanaisIndividuais)?>"/>
 </p>
 </fieldset>
-
+-->
 <fieldset id="fieldsetProducao">
 <legend>Monitoramento da produção</legend>
 	<table>
