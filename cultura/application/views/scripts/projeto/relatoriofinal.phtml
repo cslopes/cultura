@@ -6,16 +6,38 @@
        dojo.require("dijit.form.NumberSpinner");
        dojo.require("dijit.form.Textarea");
        
-//       var nro_texto = 1;
-//       function adicionaText(){
-//       		var d = document.createElement("div");
-//       		d.setAttribute("id", "texto_" + nro_texto);
-//       		
-//       		var linkRem = dojo.createElement("a");
-//       		linkRem.setAttribute("href","javascript:removeTexto(" + nro_texto + ");");
-//       		linkRem.
-//       
-//       }
+       var nro_texto = 1;
+       function adicionaText(){
+       		      			
+      		var d = document.createElement("div");
+       		d.setAttribute("id", "texto_" + nro_texto);
+ //    		d.setAttribute("style","color:#00FF00");
+     		d.setAttribute("align", "center");
+       		
+       		var linkRem = document.createElement("a");
+       		linkRem.setAttribute("href","javascript:removeTexto(" + nro_texto + ");");
+       		linkRem.appendChild(document.createTextNode(" [-]"));
+       		
+       		var texto = new dijit.form.TextBox({type:"text", name:"texto_" + nro_texto},dojo.byId("texto_" + nro_texto));
+       		       		
+//    		d.appendChild(texto);
+       		d.appendChild(linkRem);
+       					
+			dv = document.getElementById("divTextos");
+			dv.appendChild(d);
+			var espaco = document.createElement("br");
+				
+//			document.getElementById("divTextos").innerHTML = d.innerHTML;			
+       		nro_texto++;
+				
+       }
+       
+       function removeTexto(i){
+       		var texto = document.getElementById("texto_" + i) ;
+       		document.getElementById("divTextos").removeChild(texto);
+       		nro_texto = nro_texto - 1;
+       
+       }
        
        
 </script>
@@ -41,12 +63,16 @@
 	<label class="none" for="renovado2">Não</label>
 </p>
 <?php endif; ?>
+<br>
 
+<br>
 <fieldset>
 <legend>Articulação com o ensino</legend>
 	<p>	
 		<label for="disciplinas">Disciplinas:</label>
 		<input name="disciplinas" value="<?php echo @$this->escape($this->relatorioFinal->disciplinas) ?>" dojoType="dijit.form.TextBox"/>
+		<a href="javascript:adicionaText();">[+]</a>
+		<div id="divTextos" style="padding-bottom:10px;"></div>
 	</p>
 	<p>
 		<label for="estagio">Estágio:</label>
