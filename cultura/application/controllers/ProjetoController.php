@@ -1567,6 +1567,7 @@ class ProjetoController extends Proexc_Controller_Action {
 		$tabRelatorioFinal = new RelatorioFinal();
 		$tabProjeto = new Projeto();
 		$tabParceiro = new Parceiro();
+		$tabDisciplinas = new Disciplinas();
 
 		if($this->_request->isPost()) {
 			$idProjeto = (int) $this->_request->getPost('id');

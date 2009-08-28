@@ -5,39 +5,77 @@
        dojo.require("dijit.form.CheckBox");
        dojo.require("dijit.form.NumberSpinner");
        dojo.require("dijit.form.Textarea");
+       dojo.require("dijit.layout.ContentPane");
        
-       var nro_texto = 1;
-       function adicionaText(){
-       		      			
+       var nro_disciplina = 1;
+       var nro_projeto = 1;
+       function adicionaText(campo,div,tam){
+         	        		
+			// este div ira conter a estrutura criada ao clicar no [+]
       		var d = document.createElement("div");
-       		d.setAttribute("id", "texto_" + nro_texto);
- //    		d.setAttribute("style","color:#00FF00");
+       		
      		d.setAttribute("align", "center");
+       		d.setAttribute("style", "padding:2px;");
        		
        		var linkRem = document.createElement("a");
-       		linkRem.setAttribute("href","javascript:removeTexto(" + nro_texto + ");");
+       		
        		linkRem.appendChild(document.createTextNode(" [-]"));
        		
-       		var texto = new dijit.form.TextBox({type:"text", name:"texto_" + nro_texto},dojo.byId("texto_" + nro_texto));
-       		       		
-//    		d.appendChild(texto);
+       		
+       		var text = document.createElement("input");
+       		text.setAttribute("type", "text");
+       		
+       		text.setAttribute("size", tam);
+       		if(campo == "disciplina"){
+       			text.setAttribute("name", campo + "_" + (nro_disciplina + 1));
+       			linkRem.setAttribute("href","javascript:removeTexto(" + 1 + "," + nro_disciplina + ");");
+       			d.setAttribute("id", "texto_" + nro_disciplina);
+       			text.setAttribute("id", "text_" + nro_disciplina);
+       			nro_disciplina++;
+       		}
+			if(campo == 'projeto'){
+				text.setAttribute("name", campo + "_" + (nro_projeto + 1));
+				linkRem.setAttribute("href","javascript:removeTexto(" + 2 + "," + nro_projeto + ");");
+				d.setAttribute("id", "texto_" + nro_projeto);
+       			text.setAttribute("id", "text_" + nro_projeto);
+       			nro_projeto++;
+			}    		       		
+    		d.appendChild(text);
        		d.appendChild(linkRem);
        					
-			dv = document.getElementById("divTextos");
+			dv = document.getElementById(div);
 			dv.appendChild(d);
 			var espaco = document.createElement("br");
-				
-//			document.getElementById("divTextos").innerHTML = d.innerHTML;			
-       		nro_texto++;
-				
+      		  
        }
        
-       function removeTexto(i){
+       function removeTexto(j,i){
        		var texto = document.getElementById("texto_" + i) ;
-       		document.getElementById("divTextos").removeChild(texto);
-       		nro_texto = nro_texto - 1;
-       
+       		if(j == 1){
+       			var div = document.getElementById("divTextos");
+       			nro_disciplina--;
+       		}
+       		if(j == 2){
+       			var div = document.getElementById("divProjetos");
+       			nro_projeto--;
+       		}
+       		div.removeChild(texto);
+       	/*
+       		if(div == "divTextos"){
+       			nro_disciplina--;
+       		}
+       		if(div == "divProjetos"){
+       			nro_projeto--;
+       		} */
        }
+       
+       function projeto(b) {
+ 			if (b) {
+ 				dojo.byId("projetoP").style.display = "none";
+ 			} else {
+ 				dojo.byId("projetoP").style.display = "block";
+ 			}
+ 		}
        
        
 </script>
@@ -63,32 +101,52 @@
 	<label class="none" for="renovado2">Não</label>
 </p>
 <?php endif; ?>
-<br>
 
-<br>
+
+
 <fieldset>
 <legend>Articulação com o ensino</legend>
 	<p>	
 		<label for="disciplinas">Disciplinas:</label>
-		<input name="disciplinas" value="<?php echo @$this->escape($this->relatorioFinal->disciplinas) ?>" dojoType="dijit.form.TextBox"/>
-		<a href="javascript:adicionaText();">[+]</a>
-		<div id="divTextos" style="padding-bottom:10px;"></div>
+		<input name="disciplina_1" value="<?php echo @$this->escape($this->relatorioFinal->disciplinas) ?>" dojoType="dijit.form.TextBox"/>
+		<a href="javascript:adicionaText('disciplina','divTextos','30');">[+]</a>
+		<div id="divTextos"></div>
 	</p>
 	<p>
 		<label for="estagio">Estágio:</label>
-		<input name="estagio" dojoType="dijit.form.TextBox" value="<?php echo @$this->escape($this->relatorioFinal->estagio) ?>"/>
+		
+		<input dojoType="dijit.form.RadioButton" id="estagio1" name="estagio" type="radio" value="1" />
+		<label class="none" for="estagio1">Sim</label>
+		<input dojoType="dijit.form.RadioButton" id="estagio2" name="estagio" type="radio" value="0" />
+		<label class="none" for="estagio2">Não</label>
+		
 	</p>
 	<p>
 		<label for="credito">Crédito (flexibilização curricular):</label>
-		<input name="credito" dojoType="dijit.form.TextBox" value="<?php echo @$this->escape($this->relatorioFinal->creditos) ?>"/>
+		
+		<input dojoType="dijit.form.RadioButton" id="credito1" name="credito" type="radio" value="1" />
+		<label class="none" for="credito1">Sim</label>
+		<input dojoType="dijit.form.RadioButton" id="credito2" name="credito" type="radio" value="0" />
+		<label class="none" for="credito2">Não</label>
+		
 	</p>
 </fieldset>
 
 <fieldset>
 <legend>Articulação com a pesquisa</legend>
+	
+	
 	<p>
 		<label for="projeto">Projeto:</label>
-		<input name="projeto" dojoType="dijit.form.TextBox" value="<?php echo @$this->escape($this->relatorioFinal->projeto)?>"/>
+		<input dojoType="dijit.form.RadioButton" id="projeto1" name="projeto" type="radio" value="1" onchange="projeto(false)"/>
+		<label class="none" for="projeto1">Sim</label>
+		<input dojoType="dijit.form.RadioButton" id="projeto2" name="projeto" type="radio" value="0" checked="checked" onchange="projeto(true)"/>
+		<label class="none" for="projeto2">Não</label>				
+	</p>
+	<p id="projetoP" align="center">
+		<input name="projeto_1" dojoType="dijit.form.TextBox" value="<?php echo @$this->escape($this->relatorioFinal->projeto)?>" style="width:27em"/>	
+		<a href="javascript:adicionaText('projeto','divProjetos','57');">[+]</a>
+		<div id="divProjetos" style="padding-bottom:3px;"></div>
 	</p>
 </fieldset>
 
@@ -274,6 +332,11 @@
 	</table>
 </fieldset><br />
 
+<p>
+	<label for="dificuldades" style="width: auto">Dificuldades Encontradas</label><br/>
+	<textarea name="dificuldades" dojoType="dijit.form.Textarea" style="width:575px" value="">
+    </textarea>
+</p>
 
 <p>
 	<label for="relatorioFinal" style="width: auto">Relatório final</label><br/>
