@@ -7,38 +7,48 @@
        dojo.require("dijit.form.Textarea");
        dojo.require("dijit.layout.ContentPane");
        
-       var nro_disciplina = 1;
-       var nro_projeto = 1;
+       var nro_disciplina = 0;
+       var nro_projeto = 0;
+       
+       /**
+       * função que adiciona compos texto para disciplinas e projetos ao formulario 
+       **/
        function adicionaText(campo,div,tam){
+         	/** comum a disciplina e projeto  	**/
          	        		
-			// este div ira conter a estrutura criada ao clicar no [+]
+			// declara um div ira conter a estrutura criada ao clicar no [+]
       		var d = document.createElement("div");
-       		
      		d.setAttribute("align", "center");
        		d.setAttribute("style", "padding:2px;");
-       		
+       	      		
+       		// cria um link para remover o campo
        		var linkRem = document.createElement("a");
-       		
        		linkRem.appendChild(document.createTextNode(" [-]"));
-       		
-       		
+       		       		
+       		// cria o input text
        		var text = document.createElement("input");
        		text.setAttribute("type", "text");
-       		
        		text.setAttribute("size", tam);
+
        		if(campo == "disciplina"){
-       			text.setAttribute("name", campo + "_" + (nro_disciplina + 1));
-       			linkRem.setAttribute("href","javascript:removeTexto(" + 1 + "," + nro_disciplina + ");");
+       			var num = document.getElementById("totalDisc");
+       			num.value++;
+       			nro_disciplina = num.value;
+       			text.setAttribute("name", "disciplina_" + nro_disciplina);
+       			linkRem.setAttribute("href","javascript:removeTexto(" + 1 + ");");
        			d.setAttribute("id", "texto_" + nro_disciplina);
        			text.setAttribute("id", "text_" + nro_disciplina);
-       			nro_disciplina++;
+       	       			
        		}
 			if(campo == 'projeto'){
-				text.setAttribute("name", campo + "_" + (nro_projeto + 1));
-				linkRem.setAttribute("href","javascript:removeTexto(" + 2 + "," + nro_projeto + ");");
+				var num = document.getElementById("totalProj");
+				num.value++;
+       			nro_projeto = num.value;
+				text.setAttribute("name", campo + "_" + nro_projeto);
+				linkRem.setAttribute("href","javascript:removeTexto(" + 2 + ");");
 				d.setAttribute("id", "texto_" + nro_projeto);
        			text.setAttribute("id", "text_" + nro_projeto);
-       			nro_projeto++;
+       			       			
 			}    		       		
     		d.appendChild(text);
        		d.appendChild(linkRem);
@@ -49,24 +59,22 @@
       		  
        }
        
-       function removeTexto(j,i){
-       		var texto = document.getElementById("texto_" + i) ;
+       function removeTexto(j){
+       		var ult = 0;
        		if(j == 1){
        			var div = document.getElementById("divTextos");
-       			nro_disciplina--;
-       		}
-       		if(j == 2){
+       			var num = document.getElementById("totalDisc"); 
+       			ult = num.value;
+       			num.value--;
+       		} 
+       		else if(j == 2){
        			var div = document.getElementById("divProjetos");
-       			nro_projeto--;
+       			var num = document.getElementById("totalProj"); 
+       			ult = num.value;
+       			num.value--;       			
        		}
+       		var texto = document.getElementById("texto_" + ult);
        		div.removeChild(texto);
-       	/*
-       		if(div == "divTextos"){
-       			nro_disciplina--;
-       		}
-       		if(div == "divProjetos"){
-       			nro_projeto--;
-       		} */
        }
        
        function projeto(b) {
@@ -108,9 +116,11 @@
 <legend>Articulação com o ensino</legend>
 	<p>	
 		<label for="disciplinas">Disciplinas:</label>
-		<input name="disciplina_1" value="<?php echo @$this->escape($this->relatorioFinal->disciplinas) ?>" dojoType="dijit.form.TextBox"/>
+		<input name="disciplina_0" value="<?php echo @$this->escape($this->relatorioFinal->disciplinas) ?>" dojoType="dijit.form.TextBox"/>
 		<a href="javascript:adicionaText('disciplina','divTextos','30');">[+]</a>
-		<div id="divTextos"></div>
+		<div id="divTextos">
+			<input type="hidden" name="totalD" id="totalDisc" value="0" />
+		</div>
 	</p>
 	<p>
 		<label for="estagio">Estágio:</label>
@@ -144,9 +154,11 @@
 		<label class="none" for="projeto2">Não</label>				
 	</p>
 	<p id="projetoP" align="center">
-		<input name="projeto_1" dojoType="dijit.form.TextBox" value="<?php echo @$this->escape($this->relatorioFinal->projeto)?>" style="width:27em"/>	
+		<input name="projeto_0" dojoType="dijit.form.TextBox" value="<?php echo @$this->escape($this->relatorioFinal->projeto)?>" style="width:27em"/>	
 		<a href="javascript:adicionaText('projeto','divProjetos','57');">[+]</a>
-		<div id="divProjetos" style="padding-bottom:3px;"></div>
+		<div id="divProjetos" style="padding-bottom:3px;">
+			<input type="hidden" name="totalP" id="totalProj" value="0" />
+		</div>
 	</p>
 </fieldset>
 
