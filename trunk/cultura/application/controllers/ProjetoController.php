@@ -39,6 +39,7 @@ require_once 'FormularioRelatorioProjeto.php';
 require_once 'FormularioEquipe.php';
 require_once 'FormularioParceiros.php';
 require_once 'Parceiro.php';
+require_once 'Disciplina.php';
 
 class ProjetoController extends Proexc_Controller_Action {
 
@@ -1566,17 +1567,16 @@ class ProjetoController extends Proexc_Controller_Action {
 		$this->view->title = "Relatório Final do Projeto";
 		$tabRelatorioFinal = new RelatorioFinal();
 		$tabProjeto = new Projeto();
-		$tabParceiro = new Parceiro();
-		$tabDisciplinas = new Disciplinas();
+		//$tabParceiro = new Parceiro();
 
 		if($this->_request->isPost()) {
 			$idProjeto = (int) $this->_request->getPost('id');
 			$projeto = $tabProjeto->find($idProjeto)->current();
-		
+						
 			$errors = null;
 			
 			$renovado = (int) $this->_request->getPost('renovado'); 
-			$disciplinas = $this->_request->getPost('disciplinas');
+//			$disciplinas = $this->_request->getPost('disciplinas');
 			$estagio = $this->_request->getPost('estagio');
 			$credito = $this->_request->getPost('credito');
 			$projetoPost = $this->_request->getPost('projeto');
@@ -1614,10 +1614,11 @@ class ProjetoController extends Proexc_Controller_Action {
 			$detalheProducao = $this->_request->getPost('detalheProducao');
 			$relatorioFinal = $this->_request->getPost('relatorioFinal');
 			
+			
 			if(!$errors) {
 				$data = array(
 					
-					'disciplinas'						=> $disciplinas,
+//					'disciplinas'						=> $disciplinas,
 					'estagio'							=> $estagio,
 					'creditos'							=> $credito,
 					'projeto'							=> $projetoPost,
@@ -1657,6 +1658,8 @@ class ProjetoController extends Proexc_Controller_Action {
 				);
 				if($projeto->idRelatorioFinal != null) {
 					$tabRelatorioFinal->updateById($data, $projeto->idRelatorioFinal);
+
+					
 				} else {
 					$db = $tabRelatorioFinal->getDefaultAdapter();
 					$db->beginTransaction();
@@ -1695,7 +1698,6 @@ class ProjetoController extends Proexc_Controller_Action {
 				return;
 			}
 		}
-		//c
 		//$this->_redirect("Index/listValidatedProjetos");;
 	}
 }
